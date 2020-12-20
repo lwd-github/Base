@@ -1,0 +1,9 @@
+G:\Myself\练习\C#\框架\Base\Framework\Common\bin\Debug\netstandard2.1\Common.deps.json
+G:\Myself\练习\C#\框架\Base\Framework\Common\bin\Debug\netstandard2.1\Common.dll
+G:\Myself\练习\C#\框架\Base\Framework\Common\bin\Debug\netstandard2.1\Common.pdb
+G:\Myself\练习\C#\框架\Base\Framework\Common\obj\Debug\netstandard2.1\Common.csprojAssemblyReference.cache
+G:\Myself\练习\C#\框架\Base\Framework\Common\obj\Debug\netstandard2.1\Common.AssemblyInfoInputs.cache
+G:\Myself\练习\C#\框架\Base\Framework\Common\obj\Debug\netstandard2.1\Common.AssemblyInfo.cs
+G:\Myself\练习\C#\框架\Base\Framework\Common\obj\Debug\netstandard2.1\Common.csproj.CoreCompileInputs.cache
+G:\Myself\练习\C#\框架\Base\Framework\Common\obj\Debug\netstandard2.1\Common.dll
+G:\Myself\练习\C#\框架\Base\Framework\Common\obj\Debug\netstandard2.1\Common.pdb
