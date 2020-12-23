@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gNDzSKf7WMTDy7En9kLRqLNq80O4EUGilrmS9JjybU6bMIXIbR1Xc4mcTpYF+KNfs+r0g5qZ1O1cTcrwLw6lXw==",
+  "dgSpecHash": "IsCIS2YO7mlxnd+Y5dfmUyrfIi9QEod+k61mPklZFzTb5pCieZ30ymD6iDRmK9W6Agm1q+f7ydfMBWz0k9Kjdg==",
   "success": true,
-  "projectFilePath": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Validator\\Validator.csproj",
+  "projectFilePath": "G:\\Example\\Base\\Framework\\Validator\\Validator.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

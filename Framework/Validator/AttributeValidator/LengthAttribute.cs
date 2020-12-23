@@ -1,4 +1,6 @@
-﻿namespace Validator.AttributeValidator
+﻿using Validator.Extension;
+
+namespace Validator.AttributeValidator
 {
     /// <summary>
     /// 字符长度特性
@@ -15,7 +17,12 @@
         public override bool Valitate(object value)
         {
             if (value == null) return true;
-            return value.ToString().Length <= MaxLength;
+
+            //如果为字符串
+            string str = value as string;
+            if (str.IsNull()) return true;
+
+            return str.Length <= MaxLength;
         }
     }
 }

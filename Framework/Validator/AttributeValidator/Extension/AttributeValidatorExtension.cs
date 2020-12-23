@@ -1,6 +1,7 @@
 ﻿using Common.Results;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Validator.AttributeValidator.Extension
 {
@@ -29,7 +30,7 @@ namespace Validator.AttributeValidator.Extension
 
             return new Result
             {
-                Status = ErrorMessageList.Count == 0,
+                Status = !ErrorMessageList.Any(),
                 Message = string.Join(";", ErrorMessageList)
             };
         }
