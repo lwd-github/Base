@@ -17,7 +17,7 @@ namespace Validator.AttributeValidator
             if(str != null && str.IsNullOrWhiteSpace()) return false;
 
             //如果为时间类型
-            if (value is DateTime && (DateTime)value == DateTime.MinValue) return false;
+            if (value is DateTime && ((DateTime)value).IsMinValue()) return false;
 
             return true;
         }

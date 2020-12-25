@@ -94,6 +94,16 @@ namespace Validator.Extension
         }
 
         /// <summary>
+        /// 判断是否为最小值
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool IsMinValue(this DateTime input)
+        {
+            return input == DateTime.MinValue;
+        }
+
+        /// <summary>
         /// 判断是否为空值或者最小值
         /// </summary>
         /// <param name="input"></param>
