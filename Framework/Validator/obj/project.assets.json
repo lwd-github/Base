@@ -27,25 +27,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\future\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\duan\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Example\\Base\\Framework\\Validator\\Validator.csproj",
+      "projectUniqueName": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Validator\\Validator.csproj",
       "projectName": "Validator",
-      "projectPath": "G:\\Example\\Base\\Framework\\Validator\\Validator.csproj",
-      "packagesPath": "C:\\Users\\future\\.nuget\\packages\\",
-      "outputPath": "G:\\Example\\Base\\Framework\\Validator\\obj\\",
+      "projectPath": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Validator\\Validator.csproj",
+      "packagesPath": "C:\\Users\\duan\\.nuget\\packages\\",
+      "outputPath": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Validator\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\future\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\duan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.1"
@@ -58,8 +57,8 @@
         "netstandard2.1": {
           "targetAlias": "netstandard2.1",
           "projectReferences": {
-            "G:\\Example\\Base\\Framework\\Common\\Common.csproj": {
-              "projectPath": "G:\\Example\\Base\\Framework\\Common\\Common.csproj"
+            "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Common\\Common.csproj": {
+              "projectPath": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Common\\Common.csproj"
             }
           }
         }
@@ -88,7 +87,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

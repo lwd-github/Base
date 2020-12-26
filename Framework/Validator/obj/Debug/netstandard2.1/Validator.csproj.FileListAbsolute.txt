@@ -10,15 +10,3 @@ G:\Myself\练习\C#\框架\Base\Framework\Validator\obj\Debug\netstandard2.1\Val
 G:\Myself\练习\C#\框架\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.csproj.CopyComplete
 G:\Myself\练习\C#\框架\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.dll
 G:\Myself\练习\C#\框架\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.pdb
-G:\Example\Base\Framework\Validator\bin\Debug\netstandard2.1\Validator.deps.json
-G:\Example\Base\Framework\Validator\bin\Debug\netstandard2.1\Validator.dll
-G:\Example\Base\Framework\Validator\bin\Debug\netstandard2.1\Validator.pdb
-G:\Example\Base\Framework\Validator\bin\Debug\netstandard2.1\Common.dll
-G:\Example\Base\Framework\Validator\bin\Debug\netstandard2.1\Common.pdb
-G:\Example\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.csprojAssemblyReference.cache
-G:\Example\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.AssemblyInfoInputs.cache
-G:\Example\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.AssemblyInfo.cs
-G:\Example\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.csproj.CoreCompileInputs.cache
-G:\Example\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.csproj.CopyComplete
-G:\Example\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.dll
-G:\Example\Base\Framework\Validator\obj\Debug\netstandard2.1\Validator.pdb

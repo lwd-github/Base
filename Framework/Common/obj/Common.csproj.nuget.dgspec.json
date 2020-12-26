@@ -1,25 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Example\\Base\\Framework\\Common\\Common.csproj": {}
+    "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Common\\Common.csproj": {}
   },
   "projects": {
-    "G:\\Example\\Base\\Framework\\Common\\Common.csproj": {
+    "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Example\\Base\\Framework\\Common\\Common.csproj",
+        "projectUniqueName": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Common\\Common.csproj",
         "projectName": "Common",
-        "projectPath": "G:\\Example\\Base\\Framework\\Common\\Common.csproj",
-        "packagesPath": "C:\\Users\\future\\.nuget\\packages\\",
-        "outputPath": "G:\\Example\\Base\\Framework\\Common\\obj\\",
+        "projectPath": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Common\\Common.csproj",
+        "packagesPath": "C:\\Users\\duan\\.nuget\\packages\\",
+        "outputPath": "G:\\Myself\\练习\\C#\\框架\\Base\\Framework\\Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\future\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\duan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.1"
@@ -58,7 +57,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
