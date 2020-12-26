@@ -11,10 +11,13 @@ namespace XUnitTest.Validator.AttributeValidator
         public void Test1()
         {
             //**************** 验证 ****************
-            Student student = new Student();
-            student.Age = 2;
-            student.Name = "afdadfadfadfadfadsa";
-            student.Email = "a";
+            Student student = new Student
+            {
+                Age = 2,
+                Name = "afdadfadfadfadfadsa",
+                Email = "a"
+            };
+
             Assert.True(student.Validate().Status);
         }
     }

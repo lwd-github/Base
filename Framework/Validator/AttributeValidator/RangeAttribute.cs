@@ -7,8 +7,8 @@ namespace Validator.AttributeValidator
     /// </summary>
     public class RangeAttribute : BaseValidator
     {
-        private double Min = 0;
-        private double Max = 0;
+        readonly double Min;
+        readonly double Max;
 
         public RangeAttribute(double min, double max)
         {

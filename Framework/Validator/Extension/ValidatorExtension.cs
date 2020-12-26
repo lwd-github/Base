@@ -61,35 +61,35 @@ namespace Validator.Extension
         /// <summary>
         /// 指示所指定的正则表达式是否使用指定的匹配选项在指定的输入字符串中找到了匹配项
         /// </summary>
-        /// <param name="input">字符串</param>
+        /// <param name="str">字符串</param>
         /// <param name="pattern">要匹配的正则表达式模式</param>
         /// <param name="ro">枚举值的一个按位组合，默认值为指定不区分大小写的匹配</param>
         /// <returns></returns>
-        public static bool IsMatch(this string input, string pattern, RegexOptions ro = RegexOptions.IgnoreCase)
+        public static bool IsMatch(this string str, string pattern, RegexOptions ro = RegexOptions.IgnoreCase)
         {
-            if (string.IsNullOrEmpty(input)) return false;
-            return Regex.IsMatch(input, pattern, ro);
+            if (string.IsNullOrEmpty(str)) return false;
+            return Regex.IsMatch(str, pattern, ro);
         }
 
         /// <summary>
         /// 判断参数是否为Email
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
-        public static bool IsEmail(this string input)
+        public static bool IsEmail(this string str)
         {
-            return input.IsMatch("^[a-z_0-9.-]{1,64}@([a-z0-9-]{1,200}.){1,5}[a-z]{1,6}$");
+            return str.IsMatch("^[a-z_0-9.-]{1,64}@([a-z0-9-]{1,200}.){1,5}[a-z]{1,6}$");
         }
 
         /// <summary>
         /// 判断参数是否为电话号码
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
-        public static bool IsMobile(this string input)
+        public static bool IsMobile(this string str)
         {
             return
-                input.IsMatch(
+                str.IsMatch(
                     @"^\d{11}$");
         }
 
