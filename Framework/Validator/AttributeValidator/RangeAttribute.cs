@@ -1,4 +1,4 @@
-﻿using Validator.Extension;
+﻿using Common.Extension;
 
 namespace Validator.AttributeValidator
 {

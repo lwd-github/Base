@@ -1,33 +1,9 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
-namespace Validator.Extension
+namespace Common.Extension
 {
-    /// <summary>
-    /// 验证器扩展
-    /// </summary>
-    public static class ValidatorExtension
+    public static class StringExtension
     {
-        /// <summary>
-        /// 判断对象是否为null
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsNull(this object obj)
-        {
-            return obj == null;
-        }
-
-        /// <summary>
-        /// 判断是否不为null
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsNotNull(this object obj)
-        {
-            return obj != null;
-        }
-
         /// <summary>
         /// 判断指定的字符串否空字符串
         /// </summary>
@@ -63,12 +39,12 @@ namespace Validator.Extension
         /// </summary>
         /// <param name="str">字符串</param>
         /// <param name="pattern">要匹配的正则表达式模式</param>
-        /// <param name="ro">枚举值的一个按位组合，默认值为指定不区分大小写的匹配</param>
+        /// <param name="options">枚举值的一个按位组合，默认值为指定不区分大小写的匹配</param>
         /// <returns></returns>
-        public static bool IsMatch(this string str, string pattern, RegexOptions ro = RegexOptions.IgnoreCase)
+        public static bool IsMatch(this string str, string pattern, RegexOptions options = RegexOptions.IgnoreCase)
         {
             if (string.IsNullOrEmpty(str)) return false;
-            return Regex.IsMatch(str, pattern, ro);
+            return Regex.IsMatch(str, pattern, options);
         }
 
         /// <summary>
@@ -94,33 +70,14 @@ namespace Validator.Extension
         }
 
         /// <summary>
-        /// 判断是否为最小值
+        /// 将json序列化成对象
         /// </summary>
-        /// <param name="input"></param>
+        /// <typeparam name="T">序列化的类型</typeparam>
+        /// <param name="json">json格式的字符串</param>
         /// <returns></returns>
-        public static bool IsMinValue(this DateTime input)
+        public static T ToObject<T>(this string json)
         {
-            return input == DateTime.MinValue;
-        }
-
-        /// <summary>
-        /// 判断是否为空值或者最小值
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static bool IsNullOrMinValue(this DateTime? input)
-        {
-            return (input == null || input.Value == DateTime.MinValue);
-        }
-
-        /// <summary>
-        /// 判断是否非空并且非最小值
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static bool IsNotNullOrMinValue(this DateTime? input)
-        {
-            return !input.IsNullOrMinValue();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

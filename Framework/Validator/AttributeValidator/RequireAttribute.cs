@@ -1,5 +1,5 @@
-﻿using System;
-using Validator.Extension;
+﻿using Common.Extension;
+using System;
 
 namespace Validator.AttributeValidator
 {
