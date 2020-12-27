@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Common.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Common.Extension
 {
@@ -16,7 +16,7 @@ namespace Common.Extension
         {
             if (!type.IsEnum)
             {
-                throw new Exception("参数不属于枚举类型");
+                throw new ValidationException("参数不属于枚举类型");
             }
             
             List<NameValue<int>> enumInfos = new List<NameValue<int>>();

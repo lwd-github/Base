@@ -28,9 +28,16 @@ namespace TestWebApi
         {
 
             services.AddControllers();
+
+            //net5.0 自带swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestWebApi", Version = "v1" });
+            });
+
+            services.AddMvc(o => {
+                //全局注册异常过滤器
+                o.Filters.Add(typeof(ExceptionHandling));
             });
         }
 

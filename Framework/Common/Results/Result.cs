@@ -6,6 +6,16 @@ namespace Common.Results
 {
     public class Result<T>
     {
+        public Result()
+        {
+            Status = true;
+        }
+
+        public Result(bool status)
+        {
+            Status = status;
+        }
+
         /// <summary>
         /// true:成功；false:失败
         /// </summary>

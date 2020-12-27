@@ -1,5 +1,7 @@
 ﻿using Common;
+using Common.Exceptions;
 using Common.Extension;
+using Common.Results;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,17 +20,27 @@ namespace TestWebApi.Controllers
             dicEnum["OrderStatus"] = typeof(OrderStatus);
         }
 
+        /// <summary>
+        /// 获取枚举信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet("/enum/{name}")]
-        public IEnumerable<NameValue<int>> Get(string name)
+        public Result<IEnumerable<NameValue<int>>> Get(string name)
         {
+            var result = new Result<IEnumerable<NameValue<int>>>();
+
             if (dicEnum.ContainsKey(name))
             {
-                return dicEnum[name].GetItems();
+                result.Status = true;
+                result.Data = dicEnum[name].GetItems();
+                return result;
             }
 
-            throw new Exception("未匹配到对应的枚举信息");
+            throw new ValidationException("未匹配到对应的枚举信息");
         }
     }
+
 
     public enum OrderStatus
     {
