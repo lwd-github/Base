@@ -9,7 +9,7 @@ namespace Config
         /// <summary>
         /// 配置信息
         /// </summary>
-        protected abstract IEnumerable<ConfigItem> ConfigItems { get; set; }
+        protected static IEnumerable<ConfigItem> ConfigItems;
 
         ///// <summary>
         ///// 加载配置信息
@@ -22,7 +22,7 @@ namespace Config
         /// </summary>
         public static T Instance { get; private set; }
 
-        public ConfigAgent()
+        static ConfigAgent()
         {
             if (Instance.IsNull())
             {
