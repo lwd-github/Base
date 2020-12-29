@@ -18,7 +18,16 @@ namespace TestWebApi.Controllers
         {
             return new Result<Auth>
             {
-                Data = SysConfig<Auth>.Instance
+                Data = new SysConfig<Auth>().Value
+            };
+        }
+
+        [HttpGet("/config/wms")]
+        public Result<WMS> GetWMS()
+        {
+            return new Result<WMS>
+            {
+                Data = new BusinessConfig<WMS>().Value
             };
         }
     }
