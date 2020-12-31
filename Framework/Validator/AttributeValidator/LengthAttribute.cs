@@ -6,8 +6,8 @@ namespace Validator.AttributeValidator
     /// </summary>
     public class LengthAttribute : BaseValidator
     {
-        private int MinLength = 0; //最少长度
-        private int MaxLength = 0; //最大长度
+        readonly int MinLength = 0; //最少长度
+        readonly int MaxLength = 0; //最大长度
 
         public LengthAttribute(int maxLength)
         {

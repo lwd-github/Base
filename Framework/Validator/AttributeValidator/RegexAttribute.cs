@@ -7,7 +7,7 @@ namespace Validator.AttributeValidator
     /// </summary>
     public class RegexAttribute : BaseValidator
     {
-        string Pattern; //正则表达式
+        readonly string Pattern; //正则表达式
 
         public RegexAttribute(string pattern)
         {

@@ -44,7 +44,7 @@ namespace Config
                 return config.Value.ToObject<T>();
             }
 
-            return default(T);
+            return default;
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Common.Extension
 {
     public static class TypeExtension
     {
+        static bool IsNullable(this Type type) => Nullable.GetUnderlyingType(type) != null;
+
         /// <summary>
         /// 从类型成员获取指定Attribute特性
         /// </summary>
