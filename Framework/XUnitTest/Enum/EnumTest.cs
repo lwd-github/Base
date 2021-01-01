@@ -10,21 +10,21 @@ namespace XUnitTest.Enum
         public void GetEnumItems()
         {
             //获取枚举成员信息
-            var items = typeof(OrderStatus).GetItems();
+            var items = typeof(EOrderStatus).GetEnumItems();
 
             items.ForEach(item => {
                 System.Console.WriteLine(item);
             });
 
-            var des = new Order().Id.GetType().GetDescription();
-
-            var status = OrderStatus.等待付款;
-            
+            var status = EOrderStatus.等待付款;
+            var nameValue = status.GetNameValue();
+            var des = status.GetDescription();
+            nameValue = new Order().Status.GetNameValue();
         }
     }
 
 
-    public enum OrderStatus
+    public enum EOrderStatus
     { 
         [Description("订单等待付款")]
         等待付款 = 0,
@@ -37,5 +37,7 @@ namespace XUnitTest.Enum
     {
         [Description("订单唯一标识")]
         public string Id { get; set; }
+
+        public EOrderStatus? Status { get; set; }
     }
 }

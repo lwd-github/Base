@@ -12,4 +12,12 @@ namespace Common
 
         public string Description { get; set; }
     }
+
+    /// <summary>
+    /// NameValue类型：值为Int
+    /// </summary>
+    public class NameValue : NameValue<int>
+    { 
+    
+    }
 }

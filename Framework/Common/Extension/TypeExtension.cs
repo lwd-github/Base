@@ -7,7 +7,22 @@ namespace Common.Extension
 {
     public static class TypeExtension
     {
-        static bool IsNullable(this Type type) => Nullable.GetUnderlyingType(type) != null;
+        /// <summary>
+        /// 判断类型是否为可空类型，如int?
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsNullable(this Type type) => Nullable.GetUnderlyingType(type) != null;
+
+        /// <summary>
+        /// 获取可空类型的基础类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Type GetUnderlyingType(this Type type)
+        {
+            return type.IsNullable() ? Nullable.GetUnderlyingType(type) : type;
+        }
 
         /// <summary>
         /// 从类型成员获取指定Attribute特性

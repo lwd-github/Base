@@ -26,14 +26,14 @@ namespace TestWebApi.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("/enum/{name}")]
-        public Result<IEnumerable<NameValue<int>>> Get(string name)
+        public Result<IEnumerable<NameValue>> Get(string name)
         {
-            var result = new Result<IEnumerable<NameValue<int>>>();
+            var result = new Result<IEnumerable<NameValue>>();
 
             if (dicEnum.ContainsKey(name))
             {
                 result.Status = true;
-                result.Data = dicEnum[name].GetItems();
+                result.Data = dicEnum[name].GetEnumItems();
                 return result;
             }
 
