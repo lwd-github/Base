@@ -7,16 +7,19 @@ using System.Text;
 
 namespace MQ.RabbitMQ
 {
-    public class RabbitMQProducer : IMQProducer,IDisposable
+    /// <summary>
+    /// RabbitMQ消息队列生产者
+    /// </summary>
+    public class RabbitMQProducer : IMQProducer, IDisposable
     {
         readonly RabbitMQContext _context;
         readonly string _queue;
         readonly Exchange _exchange;
         IConnection _connection;
 
-        internal RabbitMQProducer(RabbitMQContext context, string queue):this(context, queue,null)
-        { 
-        
+        internal RabbitMQProducer(RabbitMQContext context, string queue) : this(context, queue, null)
+        {
+
         }
 
         internal RabbitMQProducer(RabbitMQContext context, string queue, Exchange exchange)
@@ -52,19 +55,21 @@ namespace MQ.RabbitMQ
                 _connection = _context.CreateConnection();
             }
 
-            using (var session = _connection.CreateModel())
+            using (var channel = _connection.CreateModel())
             {
-                if (_exchange.IsNotNull()) 
+                //创建队列
+                channel.QueueDeclare(_queue, true, false, false, null);
+
+                if (_exchange.IsNotNull())
                 {
-                    session.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
+                    //创建交接机
+                    channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
                 }
 
-                session.QueueDeclare(_queue, true, false, false, null);
-
                 var body = Encoding.UTF8.GetBytes(message);
-                IBasicProperties properties = session.CreateBasicProperties();
+                IBasicProperties properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
-                session.BasicPublish(_exchange?.Name?? string.Empty, this._queue, properties, body);
+                channel.BasicPublish(_exchange?.Name ?? string.Empty, this._queue, properties, body);
             }
         }
     }

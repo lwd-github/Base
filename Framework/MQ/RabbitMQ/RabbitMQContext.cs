@@ -57,14 +57,26 @@ namespace MQ.RabbitMQ
             return connection.IsNotNull() || connection.IsOpen;
         }
 
+        /// <summary>
+        /// 创建消费者
+        /// </summary>
+        /// <param name="queue">队列名</param>
+        /// <returns></returns>
         public IMQConsumer CreateConsumer(string queue)
         {
-            throw new NotImplementedException();
+            return new RabbitMQConsumer(this, queue);
         }
 
+        /// <summary>
+        /// 创建消费者
+        /// </summary>
+        /// <param name="queue">队列名</param>
+        /// <param name="exchange">交换机</param>
+        /// <param name="routingKey"></param>
+        /// <returns></returns>
         public IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "")
         {
-            throw new NotImplementedException();
+            return new RabbitMQConsumer(this, queue, exchange, routingKey);
         }
 
         /// <summary>
