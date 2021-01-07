@@ -11,8 +11,8 @@ namespace MQ
         /// 发送消息
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
-        void Send<T>(T item);
+        /// <param name="obj"></param>
+        void Send<T>(T obj);
 
         /// <summary>
         /// 发送消息

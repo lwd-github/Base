@@ -9,7 +9,7 @@ namespace Config
         /// <summary>
         /// 配置信息集
         /// </summary>
-        static IEnumerable<ConfigItem> Configs;
+        static IEnumerable<ConfigItem> _configs;
 
         /// <summary>
         /// 加载配置信息
@@ -31,13 +31,13 @@ namespace Config
         /// <returns></returns>
         T GetValue()
         {
-            if (Configs.IsNull())
+            if (_configs.IsNull())
             {
-                Configs = LoadConfig();
+                _configs = LoadConfig();
             }
 
             var name = typeof(T).Name.ToLower();
-            var config = Configs.FirstOrDefault(p => p.Key.ToLower() == name);
+            var config = _configs.FirstOrDefault(p => p.Key.ToLower() == name);
 
             if (config.IsNotNull())
             {
