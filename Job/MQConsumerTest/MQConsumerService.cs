@@ -26,13 +26,21 @@ namespace MQConsumerTest
 
         private void Start()
         {
-            var consumer = _mqContext.CreateConsumer("Test_123",new Exchange { Name= "Bps-PaySuccessed", Type = ExchangeType.Fanout });
-            consumer.Receive(MyReceive);
+            var consumer1 = _mqContext.CreateConsumer("Test_123");
+            consumer1.Receive(MyReceive1);
+
+            var consumer2 = _mqContext.CreateConsumer("Test_123");
+            consumer2.Receive(MyReceive2);
         }
 
-        private void MyReceive(string msg)
+        private void MyReceive1(string msg)
         {
-            Console.WriteLine($"MQ消息：{msg}");
+            Console.WriteLine($"第1个消费者获取的MQ消息：{msg}");
+        }
+
+        private void MyReceive2(string msg)
+        {
+            Console.WriteLine($"第2个消费者获取的MQ消息：{msg}");
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

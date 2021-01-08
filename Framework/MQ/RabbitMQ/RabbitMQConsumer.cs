@@ -51,7 +51,7 @@ namespace MQ.RabbitMQ
             var channel = _connection.CreateModel();
 
             //创建队列
-            channel.QueueDeclare(_queue, true, false, false, null);
+            channel.QueueDeclare(_queue?? string.Empty, true, false, false, null);
 
             if (_exchange.IsNotNull())
             {
@@ -63,6 +63,16 @@ namespace MQ.RabbitMQ
                                   exchange: _exchange.Name,
                                   routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
             }
+
+            //这个设置会告诉RabbitMQ 每次给Workder只分配一个task，只有当task执行完了，才分发下一个任务
+            /*
+             * 可以通过设置prefetchCount来限制Queue每次发送给每个消费者的消息数，
+             * 比如我们设置prefetchCount=1，则Queue每次给每个消费者发送一条消息；
+             * 消费者处理完这条消息后Queue会再给该消费者发送一条消息。
+             * 
+             * prefetchCount 的默认值为0，即没有限制，队列会将所有消息尽快发给消费者
+             */
+            channel.BasicQos(0, 1, false);
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (sender, ea) =>

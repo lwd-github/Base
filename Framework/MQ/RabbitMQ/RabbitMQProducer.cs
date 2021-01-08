@@ -72,7 +72,7 @@ namespace MQ.RabbitMQ
                 var body = Encoding.UTF8.GetBytes(message);
                 IBasicProperties properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
-                channel.BasicPublish(_exchange?.Name, this._queue, properties, body);
+                channel.BasicPublish(_exchange?.Name?? string.Empty, this._queue?? string.Empty, properties, body);
             }
         }
     }
