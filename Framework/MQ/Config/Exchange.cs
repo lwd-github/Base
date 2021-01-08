@@ -15,6 +15,6 @@ namespace MQ.Config
         /// <summary>
         /// 交换机类型
         /// </summary>
-        public string Type { get; set; }
+        public string Type { get; set; } = ExchangeType.Fanout;
     }
 }

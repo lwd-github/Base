@@ -57,10 +57,13 @@ namespace MQ.RabbitMQ
 
             using (var channel = _connection.CreateModel())
             {
-                //创建队列
-                channel.QueueDeclare(_queue, true, false, false, null);
+                if(_queue.IsNotNull())
+                { 
+                    //创建队列
+                    channel.QueueDeclare(_queue, true, false, false, null);
+                }
 
-                if (_exchange.IsNotNull())
+                if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
                 {
                     //创建交接机
                     channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
@@ -69,7 +72,7 @@ namespace MQ.RabbitMQ
                 var body = Encoding.UTF8.GetBytes(message);
                 IBasicProperties properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
-                channel.BasicPublish(_exchange?.Name ?? string.Empty, this._queue, properties, body);
+                channel.BasicPublish(_exchange?.Name, this._queue, properties, body);
             }
         }
     }

@@ -54,11 +54,11 @@ namespace MQ.RabbitMQ
         /// <returns></returns>
         public bool IsConnected(IConnection connection)
         {
-            return connection.IsNotNull() || connection.IsOpen;
+            return connection.IsNotNull() && connection.IsOpen;
         }
 
         /// <summary>
-        /// 创建消费者
+        /// 创建消费者（用于工作队列）
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <returns></returns>
@@ -80,7 +80,7 @@ namespace MQ.RabbitMQ
         }
 
         /// <summary>
-        /// 创建生产者
+        /// 创建生产者（用于工作队列）
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <returns></returns>
@@ -98,6 +98,22 @@ namespace MQ.RabbitMQ
         public IMQProducer CreateProducer(string queue, Exchange exchange)
         {
             return new RabbitMQProducer(this, queue, exchange);
+        }
+
+        /// <summary>
+        /// 删除队列
+        /// </summary>
+        /// <param name="queue">队列名</param>
+        /// <returns>返回删除队列期间清除的消息数</returns>
+        public uint QueueDelete(string queue)
+        {
+            using (var connection = CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    return channel.QueueDelete(queue);
+                }
+            }
         }
     }
 }

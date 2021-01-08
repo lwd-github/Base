@@ -5,7 +5,7 @@ namespace Common.Extension
     public static class StringExtension
     {
         /// <summary>
-        /// 判断指定的字符串否空字符串
+        /// 判断字符串是否为空字符串
         /// </summary>
         /// <param name="str">要判断的字符串</param>
         /// <returns></returns>
@@ -15,7 +15,7 @@ namespace Common.Extension
         }
 
         /// <summary>
-        /// 判断指定的字符串否空字符串
+        /// 判断字符串是否不为空字符串
         /// </summary>
         /// <param name="str">要判断的字符串</param>
         /// <returns></returns>
@@ -25,13 +25,23 @@ namespace Common.Extension
         }
 
         /// <summary>
-        /// 判断指定的字符串否null或者空白字符串
+        /// 判断字符串是否为null或者空白字符串
         /// </summary>
         /// <param name="str">要判断的字符串</param>
         /// <returns></returns>
         public static bool IsNullOrWhiteSpace(this string str)
         {
             return string.IsNullOrWhiteSpace(str);
+        }
+
+        /// <summary>
+        /// 判断字符串是否不为null或者空白字符串
+        /// </summary>
+        /// <param name="str">要判断的字符串</param>
+        /// <returns></returns>
+        public static bool IsNotNullOrWhiteSpace(this string str)
+        {
+            return !string.IsNullOrWhiteSpace(str);
         }
 
         /// <summary>

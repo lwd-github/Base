@@ -11,7 +11,7 @@ namespace MQ
     public interface IMQContext
     {
         /// <summary>
-        /// 创建生产者
+        /// 创建生产者（用于工作队列）
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <returns></returns>
@@ -26,7 +26,7 @@ namespace MQ
         IMQProducer CreateProducer(string queue, Exchange exchange);
 
         /// <summary>
-        /// 创建消费者
+        /// 创建消费者（用于工作队列）
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <returns></returns>
@@ -40,5 +40,12 @@ namespace MQ
         /// <param name="routingKey"></param>
         /// <returns></returns>
         IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "");
+
+        /// <summary>
+        /// 删除队列
+        /// </summary>
+        /// <param name="queue">队列名</param>
+        /// <returns>返回删除队列期间清除的消息数</returns>
+        uint QueueDelete(string queue);
     }
 }
