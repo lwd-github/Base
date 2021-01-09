@@ -72,11 +72,10 @@ namespace MQ.RabbitMQ
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <param name="exchange">交换机</param>
-        /// <param name="routingKey"></param>
         /// <returns></returns>
-        public IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "")
+        public IMQConsumer CreateConsumer(string queue, Exchange exchange)
         {
-            return new RabbitMQConsumer(this, queue, exchange, routingKey);
+            return new RabbitMQConsumer(this, queue, exchange);
         }
 
         /// <summary>
@@ -112,6 +111,21 @@ namespace MQ.RabbitMQ
                 using (var channel = connection.CreateModel())
                 {
                     return channel.QueueDelete(queue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除交换机
+        /// </summary>
+        /// <param name="exchange">交换机名称</param>
+        public void ExchangeDelete(string exchange)
+        {
+            using (var connection = CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    channel.ExchangeDelete(exchange);
                 }
             }
         }

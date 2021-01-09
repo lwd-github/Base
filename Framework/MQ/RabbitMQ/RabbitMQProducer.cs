@@ -25,7 +25,7 @@ namespace MQ.RabbitMQ
         internal RabbitMQProducer(RabbitMQContext context, string queue, Exchange exchange)
         {
             _context = context;
-            _queue = queue;
+            _queue = queue ?? string.Empty;
             _exchange = exchange;
         }
 
@@ -38,17 +38,19 @@ namespace MQ.RabbitMQ
         /// 发送消息
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        public void Send<T>(T obj)
+        /// <param name="obj">消息对象</param>
+        /// <param name="expiration">消息有效期（单位：秒）</param>
+        public void Send<T>(T obj, uint expiration = 0)
         {
-            Send(obj.ToJson());
+            Send(obj.ToJson(), expiration);
         }
 
         /// <summary>
         /// 发送消息
         /// </summary>
-        /// <param name="message"></param>
-        public void Send(string message)
+        /// <param name="message">消息</param>
+        /// <param name="expiration">消息有效期（单位：秒）</param>
+        public void Send(string message, uint expiration = 0)
         {
             if (!_context.IsConnected(_connection))
             {
@@ -57,22 +59,30 @@ namespace MQ.RabbitMQ
 
             using (var channel = _connection.CreateModel())
             {
-                if(_queue.IsNotNull())
-                { 
-                    //创建队列
-                    channel.QueueDeclare(_queue, true, false, false, null);
-                }
+                //创建队列
+                channel.QueueDeclare(_queue, true, false, false, null);
 
                 if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
                 {
                     //创建交接机
                     channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
+
+                    //绑定交换机和队列
+                    channel.QueueBind(queue: _queue,
+                                  exchange: _exchange.Name,
+                                  routingKey: _queue);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
                 }
 
                 var body = Encoding.UTF8.GetBytes(message);
                 IBasicProperties properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
-                channel.BasicPublish(_exchange?.Name?? string.Empty, this._queue?? string.Empty, properties, body);
+
+                if (expiration > 0)
+                {
+                    properties.Expiration = $"{expiration * 1000}";
+                }
+
+                channel.BasicPublish(_exchange?.Name ?? string.Empty, this._queue, properties, body);
             }
         }
     }

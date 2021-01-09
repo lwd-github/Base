@@ -26,11 +26,32 @@ namespace MQConsumerTest
 
         private void Start()
         {
-            var consumer1 = _mqContext.CreateConsumer("Test_123");
+            //工作队列
+            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1");
+            //consumer1.Receive(MyReceive1);
+
+            //var consumer2 = _mqContext.CreateConsumer("Test_Queue_1");
+            //consumer2.Receive(MyReceive2);
+
+            //发布/订阅
+            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
+            //consumer1.Receive(MyReceive1);
+
+            //var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
+            //consumer2.Receive(MyReceive2);
+
+            //var consumer3 = _mqContext.CreateConsumer("", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
+            //consumer3.Receive(MyReceive3);
+
+            //RoutingKey（单播）
+            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct });
             consumer1.Receive(MyReceive1);
 
-            var consumer2 = _mqContext.CreateConsumer("Test_123");
+            var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct });
             consumer2.Receive(MyReceive2);
+
+            var consumer3 = _mqContext.CreateConsumer("", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct });
+            consumer3.Receive(MyReceive3);
         }
 
         private void MyReceive1(string msg)
@@ -43,6 +64,24 @@ namespace MQConsumerTest
             Console.WriteLine($"第2个消费者获取的MQ消息：{msg}");
         }
 
+        private void MyReceive3(string msg)
+        {
+            Console.WriteLine($"第3个消费者获取的MQ消息：{msg}");
+        }
+
+        private void QueueDelete()
+        {
+            var i = _mqContext.QueueDelete("Test_Queue_1");
+            Console.WriteLine($"删除队列时，清除的消息数：{i}");
+
+            var j = _mqContext.QueueDelete("Test_Queue_2");
+            Console.WriteLine($"删除队列时，清除的消息数：{j}");
+
+            _mqContext.ExchangeDelete("Test_Exchange_1");
+            _mqContext.ExchangeDelete("Test_Exchange_2");
+            Console.Read();
+        }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             return Task.Run(Start);
@@ -50,7 +89,8 @@ namespace MQConsumerTest
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            return null;
+            return Task.Run(QueueDelete);
+            //return null;
             //throw new NotImplementedException();
         }
     }

@@ -25,12 +25,21 @@ namespace MQProducerTest
 
         private void Start()
         {
-            var producer = _mqContext.CreateProducer("Test_123");
+            //工作队列
+            //var producer = _mqContext.CreateProducer("Test_Queue_1");
 
-            for (int i = 0; i < 20; i++)
-            {
-                producer.Send($"第{i}个MQ消息");
-            }
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    producer.Send($"第{i}个MQ消息", uint.Parse(i.ToString()));
+            //}
+
+            //发布/订阅（广播）
+            //var producer = _mqContext.CreateProducer("", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
+            //producer.Send($"MQ发布/订阅{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+
+            //RoutingKey（单播）
+            var producer = _mqContext.CreateProducer("Test_Queue_2", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct });
+            producer.Send($"MQ单播{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
