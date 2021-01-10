@@ -13,6 +13,7 @@ namespace MQ.RabbitMQ
     public class RabbitMQProducer : IMQProducer, IDisposable
     {
         readonly RabbitMQContext _context;
+        readonly bool _isUnnamedQueue; //队列是否未命名：true=未命名，false=已命名
         readonly string _queue;
         readonly Exchange _exchange;
         IConnection _connection;
@@ -26,6 +27,7 @@ namespace MQ.RabbitMQ
         {
             _context = context;
             _queue = queue ?? string.Empty;
+            _isUnnamedQueue = _queue.IsNullOrEmpty();
             _exchange = exchange;
         }
 
@@ -59,18 +61,24 @@ namespace MQ.RabbitMQ
 
             using (var channel = _connection.CreateModel())
             {
-                //创建队列
-                channel.QueueDeclare(_queue, true, false, false, null);
+                if (!_isUnnamedQueue)
+                {
+                    //创建队列：如果队列名为空字符串，会生成随机名称的队列
+                    channel.QueueDeclare(_queue, true, false, false, null);
+                }
 
                 if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
                 {
                     //创建交接机
                     channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
 
-                    //绑定交换机和队列
-                    channel.QueueBind(queue: _queue,
+                    if (!_isUnnamedQueue)
+                    {
+                        //绑定交换机和队列
+                        channel.QueueBind(queue: _queue,
                                   exchange: _exchange.Name,
                                   routingKey: _queue);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
+                    }
                 }
 
                 var body = Encoding.UTF8.GetBytes(message);

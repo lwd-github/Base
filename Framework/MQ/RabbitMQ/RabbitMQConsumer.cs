@@ -25,8 +25,9 @@ namespace MQ.RabbitMQ
 
         internal RabbitMQConsumer(RabbitMQContext context, string queue, Exchange exchange)
         {
+            if (queue.IsNullOrEmpty()) throw new ArgumentNullException(nameof(queue));
             _context = context;
-            _queue = queue?? string.Empty;
+            _queue = queue;
             _exchange = exchange;
         }
 
@@ -48,10 +49,10 @@ namespace MQ.RabbitMQ
 
             var channel = _connection.CreateModel();
 
-            //创建队列
+            //创建队列：如果队列名为空字符串，会生成随机名称的队列
             channel.QueueDeclare(_queue, true, false, false, null);
 
-            if (_exchange.IsNotNull())
+            if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
             {
                 //创建交接机
                 channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
