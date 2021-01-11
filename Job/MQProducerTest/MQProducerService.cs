@@ -34,12 +34,28 @@ namespace MQProducerTest
             //}
 
             //发布/订阅（广播）
-            //var producer = _mqContext.CreateProducer("", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
-            //producer.Send($"MQ发布/订阅{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+            //var producer = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
+            //producer.Send($"MQ广播{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
 
             //RoutingKey（单播）
-            var producer = _mqContext.CreateProducer("Test_Queue_2", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct });
-            producer.Send($"MQ单播{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+            //var producer1 = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct }, "Info");
+            //producer1.Send($"MQ单播{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+
+            //var producer2 = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct }, "Erro");
+            //producer2.Send($"MQ单播{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+
+            //组播：自定义RoutingKey：系统名.消息类型.级别
+            var producer1 = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_3", Type = ExchangeType.Topic }, "Sys1.Info.1");
+            producer1.Send($"MQ组播Sys1.Info.1 {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+
+            var producer2 = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_3", Type = ExchangeType.Topic }, "Sys1.Info.1.1-1");
+            producer2.Send($"MQ组播Sys1.Info.1.1-1 {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+
+            var producer3 = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_3", Type = ExchangeType.Topic }, "Sys1.Erro.1.1-1");
+            producer3.Send($"MQ组播Sys1.Erro.1.1-1 {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+
+            var producer4 = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_3", Type = ExchangeType.Topic }, "Sys2.Erro.3");
+            producer4.Send($"MQ组播Sys2.Erro.3 {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

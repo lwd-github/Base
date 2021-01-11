@@ -13,22 +13,38 @@ namespace MQ.RabbitMQ
     public class RabbitMQProducer : IMQProducer, IDisposable
     {
         readonly RabbitMQContext _context;
-        readonly bool _isUnnamedQueue; //队列是否未命名：true=未命名，false=已命名
+        readonly bool _isUnnamedQueue = true; //队列是否未命名：true=未命名，false=已命名
         readonly string _queue;
         readonly Exchange _exchange;
+        readonly string _routingKey;
         IConnection _connection;
 
-        internal RabbitMQProducer(RabbitMQContext context, string queue) : this(context, queue, null)
-        {
+        /*
+         * 主题交换器（Topic Exchange）
+         * 发送到主题交换器的消息不能有任意的routing key，必须是由点号分开的一串单词，这些单词可以是任意的，但通常是与消息相关的一些特征。比如以下是几个有效的routing key："nyse.vmw", "quick.orange.rabbit"，routing key的单词可以有很多，最大限制是255 bytes。
+         * 使用特定路由键发送的消息将被发送到所有使用匹配绑定键绑定的队列，然而，绑定键有两个特殊的情况，如下：
+         * 【* 表示匹配任意一个单词】
+         * 【# 表示匹配任意一个或多个单词】
+         */
 
-        }
-
-        internal RabbitMQProducer(RabbitMQContext context, string queue, Exchange exchange)
+        internal RabbitMQProducer(RabbitMQContext context, string queue) : this(context, null, "")
         {
-            _context = context;
             _queue = queue ?? string.Empty;
             _isUnnamedQueue = _queue.IsNullOrEmpty();
+
+            if (_routingKey.IsNullOrEmpty())
+            {
+                _routingKey = _queue;
+            }
+        }
+
+        internal RabbitMQProducer(RabbitMQContext context, Exchange exchange, string routingKey = "")
+        {
+            _context = context;
+            //_queue = queue ?? string.Empty;
+            //_isUnnamedQueue = _queue.IsNullOrEmpty();
             _exchange = exchange;
+            _routingKey = routingKey;
         }
 
         public void Dispose()
@@ -77,7 +93,7 @@ namespace MQ.RabbitMQ
                         //绑定交换机和队列
                         channel.QueueBind(queue: _queue,
                                   exchange: _exchange.Name,
-                                  routingKey: _queue);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
+                                  routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
                     }
                 }
 
@@ -90,7 +106,7 @@ namespace MQ.RabbitMQ
                     properties.Expiration = $"{expiration * 1000}";
                 }
 
-                channel.BasicPublish(_exchange?.Name ?? string.Empty, this._queue, properties, body);
+                channel.BasicPublish(_exchange?.Name ?? string.Empty, _routingKey, properties, body);
             }
         }
     }

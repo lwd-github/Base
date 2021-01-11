@@ -33,18 +33,25 @@ namespace MQConsumerTest
             //var consumer2 = _mqContext.CreateConsumer("Test_Queue_1");
             //consumer2.Receive(MyReceive2);
 
-            //发布/订阅
+            //发布/订阅（广播）
             //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
             //consumer1.Receive(MyReceive1);
 
             //var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
             //consumer2.Receive(MyReceive2);
 
-            //RoutingKey（单播）
-            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct });
+            //RoutingKey（单播：可以有选择性地接收消息）
+            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct }, "Info");
+            //consumer1.Receive(MyReceive1);
+
+            //var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct }, "Erro");
+            //consumer2.Receive(MyReceive2);
+
+            //组播：自定义RoutingKey：系统名.消息类型.级别
+            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_3", Type = ExchangeType.Topic }, "*.Erro.#"); //获取所有系统的所有Erro类型的消息，能匹配到：Sys2.Erro.3；Sys1.Erro.1.1-1
             consumer1.Receive(MyReceive1);
 
-            var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct });
+            var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_3", Type = ExchangeType.Topic }, "Sys1.Info.*"); //获取系统1，消息类型为Info，任意级别的消息，能匹配到：Sys1.Info.1，不能匹配：Sys1.Info.1.1-1
             consumer2.Receive(MyReceive2);
         }
 
@@ -60,15 +67,16 @@ namespace MQConsumerTest
 
         private void QueueDelete()
         {
-            //var i = _mqContext.QueueDelete("Test_Queue_1");
-            //Console.WriteLine($"删除队列时，清除的消息数：{i}");
+            var i = _mqContext.QueueDelete("Test_Queue_1");
+            Console.WriteLine($"删除队列时，清除的消息数：{i}");
 
-            //var j = _mqContext.QueueDelete("Test_Queue_2");
-            //Console.WriteLine($"删除队列时，清除的消息数：{j}");
+            var j = _mqContext.QueueDelete("Test_Queue_2");
+            Console.WriteLine($"删除队列时，清除的消息数：{j}");
 
-            //_mqContext.ExchangeDelete("Test_Exchange_1");
-            //_mqContext.ExchangeDelete("Test_Exchange_2");
-            //Console.Read();
+            _mqContext.ExchangeDelete("Test_Exchange_1");
+            _mqContext.ExchangeDelete("Test_Exchange_2");
+            _mqContext.ExchangeDelete("Test_Exchange_3");
+            Console.Read();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

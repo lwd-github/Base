@@ -72,10 +72,11 @@ namespace MQ.RabbitMQ
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <param name="exchange">交换机</param>
+        /// <param name="routingKey">routingKey</param>
         /// <returns></returns>
-        public IMQConsumer CreateConsumer(string queue, Exchange exchange)
+        public IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "")
         {
-            return new RabbitMQConsumer(this, queue, exchange);
+            return new RabbitMQConsumer(this, queue, exchange, routingKey);
         }
 
         /// <summary>
@@ -91,12 +92,12 @@ namespace MQ.RabbitMQ
         /// <summary>
         /// 创建生产者
         /// </summary>
-        /// <param name="queue">队列名</param>
         /// <param name="exchange">交换机</param>
+        /// <param name="routingKey">routingKey</param>
         /// <returns></returns>
-        public IMQProducer CreateProducer(string queue, Exchange exchange)
+        public IMQProducer CreateProducer(Exchange exchange, string routingKey = "")
         {
-            return new RabbitMQProducer(this, queue, exchange);
+            return new RabbitMQProducer(this, exchange, routingKey);
         }
 
         /// <summary>

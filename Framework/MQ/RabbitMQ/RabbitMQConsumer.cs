@@ -16,6 +16,7 @@ namespace MQ.RabbitMQ
         readonly RabbitMQContext _context;
         readonly string _queue;
         readonly Exchange _exchange;
+        readonly string _routingKey;
         IConnection _connection;
 
         internal RabbitMQConsumer(RabbitMQContext context, string queue) : this(context, queue, null)
@@ -23,12 +24,13 @@ namespace MQ.RabbitMQ
 
         }
 
-        internal RabbitMQConsumer(RabbitMQContext context, string queue, Exchange exchange)
+        internal RabbitMQConsumer(RabbitMQContext context, string queue, Exchange exchange, string routingKey = "")
         {
             if (queue.IsNullOrEmpty()) throw new ArgumentNullException(nameof(queue));
             _context = context;
             _queue = queue;
             _exchange = exchange;
+            _routingKey = routingKey;
         }
 
         public void Dispose()
@@ -60,7 +62,7 @@ namespace MQ.RabbitMQ
                 //绑定交换机和队列
                 channel.QueueBind(queue: _queue,
                                   exchange: _exchange.Name,
-                                  routingKey: _queue);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
+                                  routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
             }
 
             //这个设置会告诉RabbitMQ 每次给Workder只分配一个task，只有当task执行完了，才分发下一个任务
@@ -85,6 +87,7 @@ namespace MQ.RabbitMQ
                 }
                 catch
                 {
+                    //异常，队列会重新推送
                     (sender as IBasicConsumer)?.Model?.BasicNack(ea.DeliveryTag, false, true);
                     throw;
                 }
