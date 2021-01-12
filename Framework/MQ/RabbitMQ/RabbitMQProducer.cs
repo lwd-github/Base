@@ -13,11 +13,12 @@ namespace MQ.RabbitMQ
     public class RabbitMQProducer : IMQProducer, IDisposable
     {
         readonly RabbitMQContext _context;
-        readonly bool _isUnnamedQueue = true; //队列是否未命名：true=未命名，false=已命名
+        readonly bool _isHasdQueue = false; //是否有队列：true=有，false=否
         readonly string _queue;
         readonly Exchange _exchange;
         readonly string _routingKey;
-        IConnection _connection;
+        readonly IConnection _connection;
+
 
         /*
          * 主题交换器（Topic Exchange）
@@ -30,7 +31,7 @@ namespace MQ.RabbitMQ
         internal RabbitMQProducer(RabbitMQContext context, string queue) : this(context, null, "")
         {
             _queue = queue ?? string.Empty;
-            _isUnnamedQueue = _queue.IsNullOrEmpty();
+            _isHasdQueue = _queue.IsNotNullOrEmpty();
 
             if (_routingKey.IsNullOrEmpty())
             {
@@ -41,15 +42,44 @@ namespace MQ.RabbitMQ
         internal RabbitMQProducer(RabbitMQContext context, Exchange exchange, string routingKey = "")
         {
             _context = context;
-            //_queue = queue ?? string.Empty;
-            //_isUnnamedQueue = _queue.IsNullOrEmpty();
             _exchange = exchange;
             _routingKey = routingKey;
+            _connection = _context.CreateConnection(); //创建连接
+            DeclareExchangeAndQueue();
         }
 
         public void Dispose()
         {
             _connection?.Dispose();
+        }
+
+        /// <summary>
+        /// 定义交换机和队列
+        /// </summary>
+        private void DeclareExchangeAndQueue()
+        {
+            using (var channel = _connection.CreateModel())
+            {
+                if (_isHasdQueue)
+                {
+                    //创建队列：如果队列名为空字符串，会生成随机名称的队列
+                    channel.QueueDeclare(_queue, true, false, false, null);
+                }
+
+                if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
+                {
+                    //创建交接机
+                    channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
+
+                    if (_isHasdQueue)
+                    {
+                        //绑定交换机和队列
+                        channel.QueueBind(queue: _queue,
+                                  exchange: _exchange.Name,
+                                  routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -70,32 +100,32 @@ namespace MQ.RabbitMQ
         /// <param name="expiration">消息有效期（单位：秒）</param>
         public void Send(string message, uint expiration = 0)
         {
-            if (!_context.IsConnected(_connection))
-            {
-                _connection = _context.CreateConnection();
-            }
+            //if (!_context.IsConnected(_connection))
+            //{
+            //    _connection = _context.CreateConnection();
+            //}
 
             using (var channel = _connection.CreateModel())
             {
-                if (!_isUnnamedQueue)
-                {
-                    //创建队列：如果队列名为空字符串，会生成随机名称的队列
-                    channel.QueueDeclare(_queue, true, false, false, null);
-                }
+                //if (!_isUnnamedQueue)
+                //{
+                //    //创建队列：如果队列名为空字符串，会生成随机名称的队列
+                //    channel.QueueDeclare(_queue, true, false, false, null);
+                //}
 
-                if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
-                {
-                    //创建交接机
-                    channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
+                //if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
+                //{
+                //    //创建交接机
+                //    channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
 
-                    if (!_isUnnamedQueue)
-                    {
-                        //绑定交换机和队列
-                        channel.QueueBind(queue: _queue,
-                                  exchange: _exchange.Name,
-                                  routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
-                    }
-                }
+                //    if (!_isUnnamedQueue)
+                //    {
+                //        //绑定交换机和队列
+                //        channel.QueueBind(queue: _queue,
+                //                  exchange: _exchange.Name,
+                //                  routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
+                //    }
+                //}
 
                 var body = Encoding.UTF8.GetBytes(message);
                 IBasicProperties properties = channel.CreateBasicProperties();

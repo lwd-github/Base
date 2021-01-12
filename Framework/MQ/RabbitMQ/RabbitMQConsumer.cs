@@ -17,20 +17,26 @@ namespace MQ.RabbitMQ
         readonly string _queue;
         readonly Exchange _exchange;
         readonly string _routingKey;
-        IConnection _connection;
+        readonly bool _isSetDeadLetter = false; //是否已设置死信队列：true=已设置，false=未设置
+        readonly DeadLetter _deadLetter;
+        readonly IConnection _connection;
 
         internal RabbitMQConsumer(RabbitMQContext context, string queue) : this(context, queue, null)
         {
 
         }
 
-        internal RabbitMQConsumer(RabbitMQContext context, string queue, Exchange exchange, string routingKey = "")
+        internal RabbitMQConsumer(RabbitMQContext context, string queue, Exchange exchange, string routingKey = "", DeadLetter deadLetter = null)
         {
             if (queue.IsNullOrEmpty()) throw new ArgumentNullException(nameof(queue));
             _context = context;
             _queue = queue;
             _exchange = exchange;
             _routingKey = routingKey;
+            _deadLetter = deadLetter;
+            _isSetDeadLetter = _deadLetter.IsNotNull() && _deadLetter.Exchange.IsNotNull() && _deadLetter.Exchange.Name.IsNotNullOrEmpty();
+            _connection = _context.CreateConnection(); //创建连接
+            DeclareExchangeAndQueue();
         }
 
         public void Dispose()
@@ -39,31 +45,69 @@ namespace MQ.RabbitMQ
         }
 
         /// <summary>
+        /// 定义交换机和队列
+        /// </summary>
+        private void DeclareExchangeAndQueue()
+        {
+            using (var channel = _connection.CreateModel())
+            {
+                IDictionary<string, object> keys = null;
+
+                if (_isSetDeadLetter)
+                {
+                    keys = new Dictionary<string, object>() 
+                    {
+                        { "x-dead-letter-exchange", _deadLetter.Exchange.Name },
+                        { "x-dead-letter-routing-key",_deadLetter.RoutingKey}
+                    };
+
+                    //创建死信交换机
+                    channel.ExchangeDeclare(_deadLetter.Exchange.Name, _deadLetter.Exchange.Type, true, false, null);
+                }
+
+                //创建队列：如果队列名为空字符串，会生成随机名称的队列
+                //绑定死信交换机
+                channel.QueueDeclare(_queue, true, false, false, keys);
+
+                if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
+                {
+                    //创建交接机
+                    channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
+
+                    //绑定交换机和队列
+                    channel.QueueBind(queue: _queue,
+                                      exchange: _exchange.Name,
+                                      routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
+                }
+            }
+        }
+
+        /// <summary>
         /// 接收消息
         /// </summary>
         /// <param name="action"></param>
         public void Receive(Action<string> action)
         {
-            if (!_context.IsConnected(_connection))
-            {
-                _connection = _context.CreateConnection();
-            }
+            //if (!_context.IsConnected(_connection))
+            //{
+            //    _connection = _context.CreateConnection();
+            //}
 
             var channel = _connection.CreateModel();
 
-            //创建队列：如果队列名为空字符串，会生成随机名称的队列
-            channel.QueueDeclare(_queue, true, false, false, null);
+            ////创建队列：如果队列名为空字符串，会生成随机名称的队列
+            //channel.QueueDeclare(_queue, true, false, false, null);
 
-            if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
-            {
-                //创建交接机
-                channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
+            //if (_exchange.IsNotNull() && _exchange.Name.IsNotNull())
+            //{
+            //    //创建交接机
+            //    channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
 
-                //绑定交换机和队列
-                channel.QueueBind(queue: _queue,
-                                  exchange: _exchange.Name,
-                                  routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
-            }
+            //    //绑定交换机和队列
+            //    channel.QueueBind(queue: _queue,
+            //                      exchange: _exchange.Name,
+            //                      routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
+            //}
 
             //这个设置会告诉RabbitMQ 每次给Workder只分配一个task，只有当task执行完了，才分发下一个任务
             /*
@@ -87,8 +131,9 @@ namespace MQ.RabbitMQ
                 }
                 catch
                 {
-                    //异常，队列会重新推送
-                    (sender as IBasicConsumer)?.Model?.BasicNack(ea.DeliveryTag, false, true);
+                    //requeue=true：队列会重新推送
+                    //(sender as IBasicConsumer)?.Model?.BasicNack(ea.DeliveryTag, false, true);
+                    (sender as IBasicConsumer)?.Model?.BasicNack(ea.DeliveryTag, false, !_isSetDeadLetter);
                     throw;
                 }
             };
@@ -100,7 +145,8 @@ namespace MQ.RabbitMQ
         /// </summary>
         public void Stop()
         {
-            _connection?.Dispose();
+            Dispose();
         }
+
     }
 }

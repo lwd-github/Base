@@ -72,11 +72,12 @@ namespace MQ.RabbitMQ
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <param name="exchange">交换机</param>
-        /// <param name="routingKey">routingKey</param>
+        /// <param name="routingKey">路由Key</param>
+        /// <param name="deadLetter">死信设置</param>
         /// <returns></returns>
-        public IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "")
+        public IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "", DeadLetter deadLetter = null)
         {
-            return new RabbitMQConsumer(this, queue, exchange, routingKey);
+            return new RabbitMQConsumer(this, queue, exchange, routingKey, deadLetter);
         }
 
         /// <summary>

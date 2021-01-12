@@ -37,9 +37,10 @@ namespace MQ
         /// </summary>
         /// <param name="queue">队列名</param>
         /// <param name="exchange">交换机</param>
-        /// <param name="routingKey">routingKey</param>
+        /// <param name="routingKey">路由Key</param>
+        /// <param name="deadLetter">死信设置</param>
         /// <returns></returns>
-        IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "");
+        IMQConsumer CreateConsumer(string queue, Exchange exchange, string routingKey = "", DeadLetter deadLetter = null);
 
         /// <summary>
         /// 删除队列
