@@ -16,6 +16,12 @@ namespace MQ
         void Receive(Action<string> action);
 
         /// <summary>
+        /// 拉取消息
+        /// </summary>
+        /// <param name="action"></param>
+        void Pull(Action<string> action);
+
+        /// <summary>
         /// 停止接收消息
         /// </summary>
         void Stop();

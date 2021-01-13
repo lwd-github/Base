@@ -56,18 +56,26 @@ namespace MQConsumerTest
             //consumer2.Receive(MyReceive2);
 
             //测试死信队列
-            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", 
-                new Exchange { Name = "Test_Exchange_4", Type = ExchangeType.Fanout },
-                deadLetter:new DeadLetter { Exchange = new Exchange { Name= MQConstant.DeadLetterExchange,Type=ExchangeType.Fanout} });
-            consumer1.Receive(MyReceive3);
+            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1",
+            //    new Exchange { Name = "Test_Exchange_4", Type = ExchangeType.Fanout },
+            //    deadLetter: new DeadLetter
+            //    {
+            //        Queue = "DeadLetter_Test_Queue_1", //在原有队列名加前缀：DeadLetter_
+            //        Exchange = new Exchange { Name = MQConstant.DeadLetterExchange, Type = ExchangeType.Fanout }
+            //    });
+            //consumer1.Receive(MyReceive3);
 
-            var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = MQConstant.DeadLetterExchange, Type = ExchangeType.Fanout });
-            consumer2.Receive(MyReceive4);
+            //var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = MQConstant.DeadLetterExchange, Type = ExchangeType.Fanout });
+            //consumer2.Receive(MyReceive4);
+
+            //var consumer3 = _mqContext.CreateConsumer("DeadLetter_Test_Queue_1");
+            //consumer3.Pull(MyPull);
         }
 
         private void MyReceive1(string msg)
         {
             Console.WriteLine($"第1个消费者获取的MQ消息：{msg}");
+            //throw new Exception("测试队列消费异常");
         }
 
         private void MyReceive2(string msg)
@@ -78,7 +86,7 @@ namespace MQConsumerTest
         private void MyReceive3(string msg)
         {
             Console.WriteLine($"第3个消费者获取的MQ消息：{msg}");
-            throw new Exception("测试队列消费异常");
+            //throw new Exception("测试队列消费异常");
         }
 
         private void MyReceive4(string msg)
@@ -86,20 +94,32 @@ namespace MQConsumerTest
             Console.WriteLine($"接收到死信队列消息：{msg}");
         }
 
+        private void MyPull(string msg)
+        {
+            Console.WriteLine($"拉取死信队列消息：{msg}");
+            //throw new Exception("测试队列消费异常");
+            //处理死信队列，修复错误后将消息重新推送
+            var producer = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_4", Type = ExchangeType.Fanout });
+            producer.Send(msg);
+        }
+
         private void QueueDelete()
         {
-            var i = _mqContext.QueueDelete("Test_Queue_1");
-            Console.WriteLine($"删除队列时，清除的消息数：{i}");
+            //var i = _mqContext.QueueDelete("Test_Queue_1");
+            //Console.WriteLine($"删除队列时，清除的消息数：{i}");
 
-            var j = _mqContext.QueueDelete("Test_Queue_2");
-            Console.WriteLine($"删除队列时，清除的消息数：{j}");
+            //var j = _mqContext.QueueDelete("Test_Queue_2");
+            //Console.WriteLine($"删除队列时，清除的消息数：{j}");
+
+            //var k = _mqContext.QueueDelete("DeadLetter_Test_Queue_1");
+            //Console.WriteLine($"删除队列时，清除的消息数：{k}");
 
             //_mqContext.ExchangeDelete("Test_Exchange_1");
             //_mqContext.ExchangeDelete("Test_Exchange_2");
             //_mqContext.ExchangeDelete("Test_Exchange_3");
-            _mqContext.ExchangeDelete("Test_Exchange_4");
-            _mqContext.ExchangeDelete(MQConstant.DeadLetterExchange);
-            Console.Read();
+            //_mqContext.ExchangeDelete("Test_Exchange_4");
+            //_mqContext.ExchangeDelete(MQConstant.DeadLetterExchange);
+            //Console.Read();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
