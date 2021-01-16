@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CommonService.Config
 {
-    public class BusinessConfig<T> : ConfigAgent<T> where T : new()
+    public class BusinessConfig: ConfigAgent
     {
         /// <summary>
         /// 加载配置信息

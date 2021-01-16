@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CommonService.Config
 {
-    public class SysConfig<T> : ConfigAgent<T> where T : new()
+    public class SysConfig : ConfigAgent
     {
         /// <summary>
         /// 加载配置信息
@@ -35,7 +35,7 @@ namespace CommonService.Config
                 new ConfigItem
                 {
                     Key ="MQConfig",
-                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"5672\",\"user\": \"admin\",\"password\": \"admin@689\",\"virtualHost\": \"/\"}"
+                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"5673\",\"user\": \"admin\",\"password\": \"admin@689\",\"virtualHost\": \"/\"}"
                 }
             };
         }

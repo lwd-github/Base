@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Config
 {
-    public abstract class ConfigAgent<T> where T : new()
+    public abstract class ConfigAgent
     {
         /// <summary>
         /// 配置信息集
@@ -20,16 +20,7 @@ namespace Config
         /// <summary>
         /// 配置值
         /// </summary>
-        public T Value 
-        {
-            get { return GetValue(); }
-        }
-
-        /// <summary>
-        /// 获取配置值
-        /// </summary>
-        /// <returns></returns>
-        T GetValue()
+        public T Value<T>() where T : new()
         {
             if (_configs.IsNull())
             {
