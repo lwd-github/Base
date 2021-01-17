@@ -6,10 +6,10 @@ namespace Config
 {
     public abstract class ConfigAgent
     {
-        /// <summary>
-        /// 配置信息集
-        /// </summary>
-        static IEnumerable<ConfigItem> _configs;
+        ///// <summary>
+        ///// 配置信息集
+        ///// </summary>
+        //static IEnumerable<ConfigItem> _configs;
 
         /// <summary>
         /// 加载配置信息
@@ -22,13 +22,14 @@ namespace Config
         /// </summary>
         public T Value<T>() where T : new()
         {
-            if (_configs.IsNull())
-            {
-                _configs = LoadConfig();
-            }
+            //if (_configs.IsNull())
+            //{
+            //    _configs = LoadConfig();
+            //}
 
             var name = typeof(T).Name.ToLower();
-            var config = _configs.FirstOrDefault(p => p.Key.ToLower() == name);
+            //var config = _configs.FirstOrDefault(p => p.Key.ToLower() == name);
+            var config = LoadConfig().FirstOrDefault(p => p.Key.ToLower() == name);
 
             if (config.IsNotNull())
             {
