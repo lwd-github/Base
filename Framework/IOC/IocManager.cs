@@ -11,15 +11,15 @@ namespace IOC
     public class IocManager
     {
         //readonly static IContainer _container;
-        readonly static ContainerBuilder _builder;
+        //readonly static ContainerBuilder _builder;
 
-        static IocManager()
-        {
-            _builder = new ContainerBuilder();
-            //_container = _builder.Build();
-        }
+        //static IocManager()
+        //{
+        //    //_builder = new ContainerBuilder();
+        //    //_container = _builder.Build();
+        //}
 
-        public static void Init(params string[] assemblyNames)
+        public static void Init(ContainerBuilder builder, params string[] assemblyNames)
         {
             //预先加载dll
             var a = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
@@ -36,7 +36,7 @@ namespace IOC
                 .Where(t => assemblyNames.Contains(Path.GetFileName(t.Location)))
                 .ToArray();
 
-            _builder.RegisterAssemblyTypes(assemblies)
+            builder.RegisterAssemblyTypes(assemblies)
                 .As<ISingleInstance>()
                 .AsSelf()
                 .AsImplementedInterfaces()

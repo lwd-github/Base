@@ -41,8 +41,15 @@ namespace TestWebApi
                 //全局注册异常过滤器
                 o.Filters.Add(typeof(ExceptionHandling));
             });
+        }
 
-            IocManager.Init(MQConstant.IOCAssemblies.Split(';'));
+        /// <summary>
+        /// 新增该方法：用于IOC注册程序集类型
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(Autofac.ContainerBuilder builder)
+        {  
+            IocManager.Init(builder, MQConstant.IOCAssemblies.Split(';'));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -22,7 +22,7 @@ namespace TestWebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                }).UseServiceProviderFactory(new AutofacServiceProviderFactory()) //指定 Autofac 工厂替换默认工厂
             ;
     }
 }

@@ -8,7 +8,7 @@ using IOC;
 
 namespace CommonService.Config
 {
-    public class SysConfig : ConfigAgent
+    public class SysConfig : ConfigAgent, ISingleInstance
     {
         /// <summary>
         /// 加载配置信息
