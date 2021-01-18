@@ -1,3 +1,5 @@
+using CommonModel.Constant;
+using IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,6 +41,8 @@ namespace TestWebApi
                 //全局注册异常过滤器
                 o.Filters.Add(typeof(ExceptionHandling));
             });
+
+            IocManager.Init(MQConstant.IOCAssemblies.Split(';'));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

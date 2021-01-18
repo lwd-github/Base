@@ -10,5 +10,7 @@ namespace CommonModel.Constant
         /// 死信交换机
         /// </summary>
         public const string DeadLetterExchange = "Sys1-DeadLetter-Exchange";
+
+        public const string IOCAssemblies = "MQ.dll;CommonService.dll";
     }
 }

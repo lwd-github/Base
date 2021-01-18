@@ -15,9 +15,9 @@ namespace TestWebApi.Controllers
     {
         readonly SysConfig _sysConfig;
 
-        public ConfigController()
+        public ConfigController(SysConfig sysConfig)
         {
-            _sysConfig = new SysConfig();
+            _sysConfig = sysConfig;
         }
 
         [HttpGet("/config/auth")]

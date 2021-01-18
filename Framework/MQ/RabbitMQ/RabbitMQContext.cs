@@ -28,13 +28,14 @@ namespace MQ.RabbitMQ
         {
             if (_factory.IsNull())
             {
-                var factory = new ConnectionFactory();
-                factory.HostName = _config.Host;
-                factory.Port = _config.Port;
-                factory.UserName = _config.User ?? string.Empty;
-                factory.Password = _config.Password ?? string.Empty;
-                factory.VirtualHost = _config.VirtualHost ?? "/";
-                _factory = factory;
+                _factory = new ConnectionFactory
+                {
+                    HostName = _config.Host,
+                    Port = _config.Port,
+                    UserName = _config.User ?? string.Empty,
+                    Password = _config.Password ?? string.Empty,
+                    VirtualHost = _config.VirtualHost ?? "/"
+                };
             }
         }
 
