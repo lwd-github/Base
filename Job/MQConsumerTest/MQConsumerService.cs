@@ -35,11 +35,11 @@ namespace MQConsumerTest
             //consumer2.Receive(MyReceive2);
 
             //发布/订阅（广播）
-            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
-            consumer1.Receive(MyReceive1);
+            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
+            //consumer1.Receive(MyReceive1);
 
-            var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
-            consumer2.Receive(MyReceive2);
+            //var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
+            //consumer2.Receive(MyReceive2);
 
             //RoutingKey（单播：可以有选择性地接收消息）
             //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_2", Type = ExchangeType.Direct }, "Info");
@@ -56,20 +56,20 @@ namespace MQConsumerTest
             //consumer2.Receive(MyReceive2);
 
             //测试死信队列
-            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1",
-            //    new Exchange { Name = "Test_Exchange_4", Type = ExchangeType.Fanout },
-            //    deadLetter: new DeadLetter
-            //    {
-            //        Queue = "DeadLetter_Test_Queue_1", //在原有队列名加前缀：DeadLetter_
-            //        Exchange = new Exchange { Name = MQConstant.DeadLetterExchange, Type = ExchangeType.Fanout }
-            //    });
-            //consumer1.Receive(MyReceive3);
+            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1",
+                new Exchange { Name = "Test_Exchange_4", Type = ExchangeType.Fanout },
+                deadLetter: new DeadLetter
+                {
+                    Queue = "DeadLetter_Test_Queue_1", //在原有队列名加前缀：DeadLetter_
+                    Exchange = new Exchange { Name = MQConstant.DeadLetterExchange, Type = ExchangeType.Fanout }
+                });
+            consumer1.Receive(MyReceive3);
 
-            //var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = MQConstant.DeadLetterExchange, Type = ExchangeType.Fanout });
-            //consumer2.Receive(MyReceive4);
+            var consumer2 = _mqContext.CreateConsumer("Test_Queue_2", new Exchange { Name = MQConstant.DeadLetterExchange, Type = ExchangeType.Fanout });
+            consumer2.Receive(MyReceive4);
 
-            //var consumer3 = _mqContext.CreateConsumer("DeadLetter_Test_Queue_1");
-            //consumer3.Pull(MyPull);
+            var consumer3 = _mqContext.CreateConsumer("DeadLetter_Test_Queue_1");
+            consumer3.Pull(MyPull);
         }
 
         private void MyReceive1(string msg)

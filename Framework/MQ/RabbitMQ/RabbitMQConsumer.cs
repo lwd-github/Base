@@ -57,8 +57,10 @@ namespace MQ.RabbitMQ
 
                 if (_isSetDeadLetter)
                 {
-                    keys = new Dictionary<string, object>() 
+                    keys = new Dictionary<string, object>()
                     {
+                        //{"x-expires",1800000}, //过期时间，参数值以毫秒为单位
+                        //{ "x-max-length", 100 }, //队列的最大长度
                         { "x-dead-letter-exchange", _deadLetter.Exchange.Name },
                         { "x-dead-letter-routing-key",_deadLetter.RoutingKey}
                     };
@@ -92,6 +94,46 @@ namespace MQ.RabbitMQ
                                       exchange: _exchange.Name,
                                       routingKey: _routingKey);  //bingding key（即参数的routingKey）的意义取决于exchange的类型。fanout类型的exchange会忽略这个值。
                 }
+            }
+        }
+
+        /// <summary>
+        /// 演示代码
+        /// </summary>
+        private void DeclareExchangeAndQueueTest()
+        {
+            using (var channel = _connection.CreateModel())
+            {
+                IDictionary<string, object> keys = null;
+
+                //死信交换机和路由key
+                keys = new Dictionary<string, object>()
+                {
+                    { "x-dead-letter-exchange", _deadLetter.Exchange.Name },
+                    { "x-dead-letter-routing-key",_deadLetter.RoutingKey}
+                };
+
+                //创建业务队列，并为业务队列配置死信交换机和路由key
+                channel.QueueDeclare(_queue, true, false, false, keys);
+
+                //创建业务交换机
+                channel.ExchangeDeclare(_exchange.Name, _exchange.Type, true, false, null);
+
+                //绑定业务队列和业务交换机
+                channel.QueueBind(queue: _queue,
+                                  exchange: _exchange.Name,
+                                  routingKey: _routingKey);
+
+                //创建死信队列
+                channel.QueueDeclare(_deadLetter.Queue, true, false, false, null);
+
+                //创建死信交换机
+                channel.ExchangeDeclare(_deadLetter.Exchange.Name, _deadLetter.Exchange.Type, true, false, null);
+
+                //绑定死信交换机和死信队列
+                channel.QueueBind(queue: _deadLetter.Queue,
+                                  exchange: _deadLetter.Exchange.Name,
+                                  routingKey: _deadLetter.RoutingKey);
             }
         }
 
