@@ -14,10 +14,12 @@ namespace TestWebApi.Controllers
     public class ConfigController : ControllerBase
     {
         readonly SysConfig _sysConfig;
+        readonly BusinessConfig _businessConfig;
 
-        public ConfigController(SysConfig sysConfig)
+        public ConfigController(SysConfig sysConfig, BusinessConfig businessConfig)
         {
             _sysConfig = sysConfig;
+            _businessConfig = businessConfig;
         }
 
         [HttpGet("/config/auth")]
@@ -34,7 +36,7 @@ namespace TestWebApi.Controllers
         {
             return new Result<WMS>
             {
-                Data = new BusinessConfig().Value<WMS>()
+                Data = _businessConfig.Value<WMS>()
             };
         }
     }

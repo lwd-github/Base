@@ -17,9 +17,9 @@ namespace MQProducerTest
         readonly SysConfig _sysConfig;
         readonly IMQContext _mqContext;
 
-        public MQProducerService()
+        public MQProducerService(SysConfig sysConfig)
         {
-            _sysConfig = new SysConfig();
+            _sysConfig = sysConfig;
             _mqContext = new RabbitMQContext(_sysConfig.Value<MQConfig>());
         }
 

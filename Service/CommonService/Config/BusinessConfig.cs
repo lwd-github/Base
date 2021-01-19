@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IOC;
 
 namespace CommonService.Config
 {
-    public class BusinessConfig: ConfigAgent
+    public class BusinessConfig: ConfigAgent, ISingleInstance
     {
         /// <summary>
         /// 加载配置信息
