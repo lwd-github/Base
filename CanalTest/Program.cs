@@ -9,6 +9,7 @@ namespace CanalTest
 {
     class Program
     {
+        //canal客户端测试
         static void Main(string[] args)
         {
             //canal 配置的 destination，默认为 example
