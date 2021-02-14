@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Autofac.Features.AttributeFilters;
+using IOC.LifetimeScope;
 using System;
 using System.IO;
 using System.Linq;
@@ -28,6 +28,21 @@ namespace IOC
                 .SingleInstance()
                 .WithAttributeFiltering();
 
+            builder.RegisterAssemblyTypes(assemblies)
+                //.Except<IDependencySingleton>()
+                //.Except<IDependencyRequestSingleton>()
+                .As<IInstancePerDependency>()
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .InstancePerDependency()
+                .WithAttributeFiltering();
+
+            builder.RegisterAssemblyTypes(assemblies)
+                .As<IInstancePerLifetimeScope>()
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope()
+                .WithAttributeFiltering();
         }
     }
 }

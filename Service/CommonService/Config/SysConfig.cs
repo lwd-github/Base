@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IOC;
+using IOC.LifetimeScope;
 
 namespace CommonService.Config
 {
@@ -36,7 +36,7 @@ namespace CommonService.Config
                 new ConfigItem
                 {
                     Key ="MQConfig",
-                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"5673\",\"user\": \"admin\",\"password\": \"admin@689\",\"virtualHost\": \"/\"}"
+                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"5672\",\"user\": \"admin\",\"password\": \"admin@689\",\"virtualHost\": \"/\"}"
                 }
             };
         }
