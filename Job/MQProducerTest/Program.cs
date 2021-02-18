@@ -1,7 +1,5 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using CommonModel.Constant;
-using IOC;
+﻿using CommonModel.Constant;
+using CommonService.ServiceProviderFactory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -23,7 +21,7 @@ namespace MQProducerTest
                 {
                     services.AddHostedService<MQProducerService>();
                 })
-                .UseServiceProviderFactory(new IOC.AutofacServiceProviderFactory(MQConstant.IOCAssemblies.Split(';')))
+                .UseServiceProviderFactory(new CustomServiceProviderFactory())
                 .Build();
         }
 

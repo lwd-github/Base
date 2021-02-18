@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommonService.ServiceProviderFactory;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
@@ -19,6 +20,7 @@ namespace MQConsumerTest
                 {
                     services.AddHostedService<MQConsumerService>();
                 })
+                .UseServiceProviderFactory(new CustomServiceProviderFactory())
                 .Build();
         }
     }

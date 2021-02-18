@@ -16,13 +16,12 @@ namespace MQConsumerTest
 {
     public class MQConsumerService : IHostedService
     {
-        readonly SysConfig _sysConfig;
+        //readonly SysConfig _sysConfig;
         readonly IMQContext _mqContext;
 
-        public MQConsumerService()
+        public MQConsumerService(IMQContext mqContext)
         {
-            _sysConfig = new SysConfig();
-            _mqContext = new RabbitMQContext(_sysConfig.Value<MQConfig>());
+            _mqContext = mqContext;
         }
 
         private void Start()

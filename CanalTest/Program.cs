@@ -23,6 +23,7 @@ namespace CanalTest
             //允许所有数据 .*\\..*
             //允许某个库数据 库名\\..*
             //允许某些表 库名.表名,库名.表名
+            //多个规则组合使用：canal\\..*,mysql.test1,mysql.test2 (逗号分隔)；注意：此过滤条件只针对row模式的数据有效
             connector.Subscribe(".*\\..*");
 
             while (true)
