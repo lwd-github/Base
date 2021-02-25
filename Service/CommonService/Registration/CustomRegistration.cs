@@ -1,13 +1,10 @@
 ﻿using Autofac;
+using Canal;
+using Canal.Config;
 using CommonService.Config;
 using MQ;
 using MQ.Config;
 using MQ.RabbitMQ;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonService.Registration
 {
@@ -26,6 +23,13 @@ namespace CommonService.Registration
             containerBuilder.Register<IMQContext>(c =>
             {
                 var content = new RabbitMQContext(new SysConfig().Value<MQConfig>());
+                return content;
+            }).SingleInstance();
+
+            //注册Canal客户端
+            containerBuilder.Register<ICanalClient>(c =>
+            {
+                var content = new CanalClient(new SysConfig().Value<CanalConfig>());
                 return content;
             }).SingleInstance();
         }

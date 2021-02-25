@@ -19,7 +19,7 @@ namespace CanalTest
             var connector = CanalConnectors.NewSingleConnector("127.0.0.1", 11111, destination, "", "");
             //连接 Canal
             connector.Connect();
-            //订阅，同时传入 Filter。Filter是一种过滤规则，通过该规则的表数据变更才会传递过来
+            //订阅，Filter是一种过滤规则，通过该规则的表数据变更才会传递过来
             //允许所有数据 .*\\..*
             //允许某个库数据 库名\\..*
             //允许某些表 库名.表名,库名.表名

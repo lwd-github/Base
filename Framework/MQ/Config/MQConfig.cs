@@ -17,7 +17,7 @@ namespace MQ.Config
         /// <summary>
         /// 端口
         /// </summary>
-        public int Port { get; set; } = 5672;
+        public ushort Port { get; set; } = 5672;
 
         /// <summary>
         /// 虚拟主机

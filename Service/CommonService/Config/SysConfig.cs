@@ -37,7 +37,12 @@ namespace CommonService.Config
                 {
                     Key ="MQConfig",
                     Value = "{\"host\": \"47.242.83.236\",\"port\": \"5672\",\"user\": \"admin\",\"password\": \"admin@689\",\"virtualHost\": \"/\"}"
-                }
+                },
+                new ConfigItem
+                {
+                    Key ="CanalConfig",
+                    Value = "{\"host\": \"127.0.0.1\",\"port\": \"1111\",\"user\": \"\",\"password\": \"\",\"Subscribe\": \".*\\\\..*\"}"
+                },
             };
         }
     }
