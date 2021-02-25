@@ -26,12 +26,12 @@ namespace MQProducerTest
         private void Start()
         {
             //工作队列
-            //var producer = _mqContext.CreateProducer("Test_Queue_1");
+            var producer = _mqContext.CreateProducer("Test_Queue_1");
 
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    producer.Send($"第{i}个MQ消息", uint.Parse(i.ToString()));
-            //}
+            for (int i = 0; i < 20; i++)
+            {
+                producer.Send($"第{i}个MQ消息", uint.Parse(i.ToString()));
+            }
 
             //发布/订阅（广播）
             //var producer = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
@@ -58,8 +58,8 @@ namespace MQProducerTest
             //producer4.Send($"MQ组播Sys2.Erro.3 {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
 
             //测试死信队列
-            var producer = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_4", Type = ExchangeType.Fanout });
-            producer.Send($"MQ广播{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
+            //var producer = _mqContext.CreateProducer(new Exchange { Name = "Test_Exchange_4", Type = ExchangeType.Fanout });
+            //producer.Send($"MQ广播{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ffff")}");
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

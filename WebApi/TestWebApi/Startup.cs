@@ -43,14 +43,18 @@ namespace TestWebApi
             });
         }
 
+        /*
         /// <summary>
         /// 新增该方法：用于IOC注册程序集类型
         /// </summary>
         /// <param name="builder"></param>
         public void ConfigureContainer(Autofac.ContainerBuilder builder)
-        {  
+        {
             IocManager.Init(builder, MQConstant.IOCAssemblies.Split(';'));
+            CommonService.Registration.CustomRegistration.Register(builder);//自定义接口注册
         }
+        */
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

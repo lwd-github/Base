@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using CommonModel.Constant;
 using CommonService.Config;
+using CommonService.Registration;
 using MQ;
 using MQ.Config;
 using MQ.RabbitMQ;
@@ -13,18 +14,14 @@ using System.Threading.Tasks;
 namespace CommonService.ServiceProviderFactory
 {
     /// <summary>
-    /// 定制的接口注册
+    /// 自定义服务工厂
     /// </summary>
-    public class CustomServiceProviderFactory : IOC.AutofacServiceProviderFactory
+    public class CustomServiceProviderFactory : IOC.ServiceProviderFactory
     {
         public CustomServiceProviderFactory() : base(MQConstant.IOCAssemblies.Split(';'))
         {
-            //注册MQ
-            ContainerBuilder.Register<IMQContext>(c =>
-            {
-                var content = new RabbitMQContext(new SysConfig().Value<MQConfig>());
-                return content;
-            }).SingleInstance();
+            //自定义接口注册
+            CustomRegistration.Register(ContainerBuilder);
         }
     }
 }

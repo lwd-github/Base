@@ -1,4 +1,5 @@
 using Autofac.Extensions.DependencyInjection;
+using CommonService.ServiceProviderFactory;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +23,11 @@ namespace TestWebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseServiceProviderFactory(new AutofacServiceProviderFactory()); //指定 Autofac 工厂替换默认工厂
+                })
+                //方式一：需在Startup.cs 增加方法注册接口：public void ConfigureContainer(Autofac.ContainerBuilder builder)
+                //.UseServiceProviderFactory(new AutofacServiceProviderFactory()); //指定 Autofac 工厂替换默认工厂
+
+                //方式二
+                .UseServiceProviderFactory(new CustomServiceProviderFactory());
     }
 }

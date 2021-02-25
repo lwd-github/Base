@@ -7,12 +7,12 @@ using System.Text;
 
 namespace IOC
 {
-    public class AutofacServiceProviderFactory : IServiceProviderFactory<ContainerBuilder>
+    public class ServiceProviderFactory : IServiceProviderFactory<ContainerBuilder>
     {
         protected ContainerBuilder ContainerBuilder;
         private string[] _iocAssemblies;
 
-        public AutofacServiceProviderFactory(string[] iocAssemblies)
+        public ServiceProviderFactory(string[] iocAssemblies)
         {
             ContainerBuilder = new ContainerBuilder();
             _iocAssemblies = iocAssemblies;
