@@ -1,12 +1,16 @@
 ﻿using Canal.Config;
 using CanalSharp.Client;
 using CanalSharp.Client.Impl;
+using CanalSharp.Protocol;
+using Com.Alibaba.Otter.Canal.Protocol;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Canal
 {
-    public class CanalClient : ICanalClient
+    public class CanalClient : ICanalClient, IDisposable
     {
         private ICanalConnector _connector;
 
@@ -27,29 +31,131 @@ namespace Canal
             _connector.Subscribe(config.Subscribe);
         }
 
+        public void Dispose()
+        {
+            _connector?.Disconnect();
+        }
+
 
         /// <summary>
         /// 接收消息
         /// </summary>
         /// <param name="action"></param>
-        public void Receive(Action<CanalMessage<string>> action)
+        public void Receive(Action<List<CanalMessage>> action)
         {
             while (true)
             {
-                //获取数据 1024表示数据大小 单位为字节
-                var message = _connector.Get(1024);
-
                 //批次id 可用于回滚
-                var batchId = message.Id;
-                if (batchId == -1 || message.Entries.Count <= 0)
+                long batchId = -1;
+
+                try
                 {
-                    Thread.Sleep(300);
+                    //获取数据 1024表示数据大小 单位为字节
+                    var message = _connector.Get(1024);
+
+                    batchId = message.Id;
+
+                    if (batchId == -1 || message.Entries.Count <= 0)
+                    {
+                        Thread.Sleep(300);
+                        continue;
+                    }
+
+                    var canalMessage = BuildMessages(message);
+                    action(canalMessage);
+                }
+                catch (Exception)
+                {
+                    if (batchId != -1)
+                    {
+                        _connector.Rollback(batchId);
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 生成消息
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private List<CanalMessage> BuildMessages(Message message)
+        {
+            var canalMessages = new List<CanalMessage>();
+            var entries = message.Entries;
+            var now = DateTime.Now;
+
+            foreach (var entry in entries)
+            {
+                if (entry.EntryType == EntryType.Transactionbegin || entry.EntryType == EntryType.Transactionend)
+                {
                     continue;
                 }
 
-                var canalMessage = new CanalMessage<string>();
-                action(canalMessage);
+                RowChange rowChange = null;
+
+                try
+                {
+                    rowChange = RowChange.Parser.ParseFrom(entry.StoreValue);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                    //_logger.LogError(e.ToString());
+                }
+
+                if (rowChange != null)
+                {
+                    EventType eventType = rowChange.EventType;
+                    CanalMessage canalMessage = new CanalMessage();
+
+                    //_logger.LogInformation(
+                    //    $"================> binlog[{entry.Header.LogfileName}:{entry.Header.LogfileOffset}] , name[{entry.Header.SchemaName},{entry.Header.TableName}] , eventType :{eventType}");
+
+                    canalMessage.Id = message.Id;
+                    canalMessage.SchemaName = entry.Header.SchemaName;
+                    canalMessage.TableName = entry.Header.TableName;
+
+                    foreach (var rowData in rowChange.RowDatas)
+                    {
+                        if (eventType == EventType.Delete)
+                        {
+                            canalMessage.Action = EActionType.Delete;
+                            canalMessage.Before = BuildDataJson(rowData.BeforeColumns.ToList());
+                        }
+                        else if (eventType == EventType.Insert)
+                        {
+                            canalMessage.Action = EActionType.Insert;
+                            canalMessage.After = BuildDataJson(rowData.AfterColumns.ToList());
+                        }
+                        else
+                        {
+                            canalMessage.Action = EActionType.Update;
+                            canalMessage.Before = BuildDataJson(rowData.BeforeColumns.ToList());
+                            canalMessage.After = BuildDataJson(rowData.AfterColumns.ToList());
+                        }
+                    }
+
+                    canalMessages.Add(canalMessage);
+                }
             }
+
+            return canalMessages;
+        }
+
+
+        private string BuildDataJson(List<Column> columns)
+        {
+            var items = new List<string>();
+
+            foreach (var column in columns)
+            {
+                //Console.WriteLine($"{column.Name} ： {column.Value}  update=  {column.Updated}");
+                items.Add($"\"{column.Name}\":\"{column.Value}\"");
+            }
+
+            return $"{{{string.Join(",", items)}}}";
         }
     }
 }

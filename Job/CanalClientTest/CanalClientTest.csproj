@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Canal\Canal.csproj" />
     <ProjectReference Include="..\..\Framework\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Framework\MQ\MQ.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
   </ItemGroup>
 

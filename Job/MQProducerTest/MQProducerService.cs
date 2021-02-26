@@ -69,7 +69,8 @@ namespace MQProducerTest
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            return null;
+            //return null;
+            return Task.CompletedTask;
             //throw new NotImplementedException();
         }
     }

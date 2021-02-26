@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Canal
 {
@@ -12,6 +12,7 @@ namespace Canal
         /// 接收消息
         /// </summary>
         /// <param name="action"></param>
-        void Receive(Action<CanalMessage<string>> action);
+        void Receive(Action<List<CanalMessage>> action);
+
     }
 }

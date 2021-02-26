@@ -4,22 +4,26 @@ using System.Text;
 
 namespace Canal
 {
+    /// <summary>
+    /// Canal消息
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class CanalMessage<T>
     {
         /// <summary>
         /// 消息Id
         /// </summary>
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// 数据库名称
         /// </summary>
-        public string Schema { get; set; }
+        public string SchemaName { get; set; }
 
         /// <summary>
         /// 表名
         /// </summary>
-        public string Table { get; set; }
+        public string TableName { get; set; }
 
         /// <summary>
         /// 操作（新增/修改/删除）
@@ -40,5 +44,14 @@ namespace Canal
         /// 消息产生时间
         /// </summary>
         public DateTime Time { get; set; }
+    }
+
+
+    /// <summary>
+    /// Canal消息
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class CanalMessage : CanalMessage<string>
+    {
     }
 }

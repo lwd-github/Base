@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Extension;
 
 namespace MQConsumerTest
 {
@@ -27,8 +28,8 @@ namespace MQConsumerTest
         private void Start()
         {
             //工作队列
-            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1");
-            consumer1.Receive(MyReceive1);
+            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1");
+            //consumer1.Receive(MyReceive1);
 
             //var consumer2 = _mqContext.CreateConsumer("Test_Queue_1");
             //consumer2.Receive(MyReceive2);
@@ -69,6 +70,13 @@ namespace MQConsumerTest
 
             //var consumer3 = _mqContext.CreateConsumer("DeadLetter_Test_Queue_1");
             //consumer3.Pull(MyPull);
+
+            //Canal消息
+            var tableName = "Test";
+            var exchangeName = $"Canal_{tableName}_Exchange";
+            var queueName = $"Canal_{tableName}_Queue";
+            var consumer4 = _mqContext.CreateConsumer(queueName, new Exchange { Name = exchangeName, Type = ExchangeType.Fanout });
+            consumer4.Receive(Receive<SysConfig>);
         }
 
         private void MyReceive1(string msg)
@@ -91,6 +99,12 @@ namespace MQConsumerTest
         private void MyReceive4(string msg)
         {
             Console.WriteLine($"接收到死信队列消息：{msg}");
+        }
+
+        private void Receive<T>(string msg)
+        {
+            var result = msg.ToObject<T>();
+            Console.WriteLine($"消息对象{result}");
         }
 
         private void MyPull(string msg)
