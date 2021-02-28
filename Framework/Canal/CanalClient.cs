@@ -116,6 +116,7 @@ namespace Canal
                     canalMessage.Id = message.Id;
                     canalMessage.SchemaName = entry.Header.SchemaName;
                     canalMessage.TableName = entry.Header.TableName;
+                    canalMessage.Time = now;
 
                     foreach (var rowData in rowChange.RowDatas)
                     {
@@ -151,6 +152,8 @@ namespace Canal
 
             foreach (var column in columns)
             {
+                if (column.Name == "Cotent") continue;
+
                 //Console.WriteLine($"{column.Name} ： {column.Value}  update=  {column.Updated}");
                 items.Add($"\"{column.Name}\":\"{column.Value}\"");
             }

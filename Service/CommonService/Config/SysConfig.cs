@@ -41,7 +41,7 @@ namespace CommonService.Config
                 new ConfigItem
                 {
                     Key ="CanalConfig",
-                    Value = "{\"host\": \"127.0.0.1\",\"port\": \"1111\",\"user\": \"\",\"password\": \"\",\"Subscribe\": \".*\\\\..*\"}"
+                    Value = "{\"host\": \"127.0.0.1\",\"port\": \"11111\",\"user\": \"\",\"password\": \"\",\"Subscribe\": \".*\\\\..*\"}"
                 },
             };
         }
