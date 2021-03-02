@@ -116,6 +116,7 @@ namespace Canal
                     canalMessage.Id = message.Id;
                     canalMessage.SchemaName = entry.Header.SchemaName;
                     canalMessage.TableName = entry.Header.TableName;
+                    canalMessage.Time = now;
 
                     foreach (var rowData in rowChange.RowDatas)
                     {

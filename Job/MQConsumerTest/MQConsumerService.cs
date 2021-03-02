@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Extension;
+using DBModel;
+using Canal;
 
 namespace MQConsumerTest
 {
@@ -72,11 +74,11 @@ namespace MQConsumerTest
             //consumer3.Pull(MyPull);
 
             //Canal消息
-            var tableName = "Test";
+            var tableName = "t1";
             var exchangeName = $"Canal_{tableName}_Exchange";
             var queueName = $"Canal_{tableName}_Queue";
             var consumer4 = _mqContext.CreateConsumer(queueName, new Exchange { Name = exchangeName, Type = ExchangeType.Fanout });
-            consumer4.Receive(Receive<SysConfig>);
+            consumer4.Receive(Receive<CanalMessage<t1>>);
         }
 
         private void MyReceive1(string msg)
