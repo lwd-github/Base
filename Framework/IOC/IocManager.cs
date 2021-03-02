@@ -22,6 +22,13 @@ namespace IOC
                 .ToArray();
 
             builder.RegisterAssemblyTypes(assemblies)
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .InstancePerDependency()
+                .WithAttributeFiltering();
+
+            //处理下面的个性化接口
+            builder.RegisterAssemblyTypes(assemblies)
                 .As<ISingleInstance>()
                 .AsSelf()
                 .AsImplementedInterfaces()

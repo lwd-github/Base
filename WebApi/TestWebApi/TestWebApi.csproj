@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Cache\Cache.csproj" />
     <ProjectReference Include="..\..\Framework\Common\Common.csproj" />
     <ProjectReference Include="..\..\Framework\Validator\Validator.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\CommonModel.csproj" />
