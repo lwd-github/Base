@@ -54,6 +54,50 @@ namespace XUnitTest.Map
 
             var person = student.Map<Person>();
         }
+
+
+        [Fact]
+        public void Test1()
+        {
+            //var items = new List<string>();
+            //items.Add($"\"Id\":\"111\"");
+            //items.Add($"\"name\":\"张三\"");
+            //var json = $"{{{string.Join(",", items)}}}";
+            //var obj = json.ToObject<Person>();
+
+            //var abc = new ABC<string> { Id = 2, Obj = json };
+            //json = abc.ToJson();
+            //var obj1 = json.ToObject<ABC<Person>>();
+
+
+            Dictionary<string, object> temp = new Dictionary<string, object>();
+            temp["id"] = 31;
+            temp["Name"] = "测试";
+            temp["Birthday"] = DateTime.Now;
+
+            dynamic obj = new System.Dynamic.ExpandoObject();
+
+            foreach (KeyValuePair<string, object> item in temp)
+            {
+                ((IDictionary<string, object>)obj).Add(item.Key, item.Value);
+            }
+
+            var json = ((object)obj).ToJson();
+            var json1 = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            //var abc = new ABC<string> { Id = 2, CreateTime = DateTime.Now, Obj = json };
+            var abc = new ABC<object> { Id = 2, CreateTime = DateTime.Now, Obj = obj };
+            json = abc.ToJson();
+            var obj1 = json.ToObject<ABC<Person>>();
+        }
+    }
+
+    public class ABC<T>
+    {
+        public int Id { get; set; }
+
+        public DateTime CreateTime { get; set; }
+
+        public T Obj { get; set;}
     }
 
 

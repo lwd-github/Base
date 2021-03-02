@@ -76,7 +76,7 @@ namespace Canal
 
 
         /// <summary>
-        /// 生成消息
+        /// 生成Canal消息
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -122,18 +122,18 @@ namespace Canal
                         if (eventType == EventType.Delete)
                         {
                             canalMessage.Action = EActionType.Delete;
-                            canalMessage.Before = BuildDataJson(rowData.BeforeColumns.ToList());
+                            canalMessage.Before = BuildDataObject(rowData.BeforeColumns.ToList());
                         }
                         else if (eventType == EventType.Insert)
                         {
                             canalMessage.Action = EActionType.Insert;
-                            canalMessage.After = BuildDataJson(rowData.AfterColumns.ToList());
+                            canalMessage.After = BuildDataObject(rowData.AfterColumns.ToList());
                         }
                         else
                         {
                             canalMessage.Action = EActionType.Update;
-                            canalMessage.Before = BuildDataJson(rowData.BeforeColumns.ToList());
-                            canalMessage.After = BuildDataJson(rowData.AfterColumns.ToList());
+                            canalMessage.Before = BuildDataObject(rowData.BeforeColumns.ToList());
+                            canalMessage.After = BuildDataObject(rowData.AfterColumns.ToList());
                         }
                     }
 
@@ -145,17 +145,31 @@ namespace Canal
         }
 
 
-        private string BuildDataJson(List<Column> columns)
+        /// <summary>
+        /// 生成数据对象
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        private object BuildDataObject(List<Column> columns)
         {
-            var items = new List<string>();
+            //var items = new List<string>();
+
+            //foreach (var column in columns)
+            //{
+            //    //Console.WriteLine($"{column.Name} ： {column.Value}  update=  {column.Updated}");
+            //    items.Add($"\"{column.Name}\":\"{column.Value}\"");
+            //}
+
+            //return $"{{{string.Join(",", items)}}}";
+
+            dynamic obj = new System.Dynamic.ExpandoObject();
 
             foreach (var column in columns)
             {
-                //Console.WriteLine($"{column.Name} ： {column.Value}  update=  {column.Updated}");
-                items.Add($"\"{column.Name}\":\"{column.Value}\"");
+                ((IDictionary<string, object>)obj).Add(column.Name, column.Value);
             }
 
-            return $"{{{string.Join(",", items)}}}";
+            return obj;
         }
     }
 }

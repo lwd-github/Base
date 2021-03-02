@@ -51,7 +51,7 @@ namespace Canal
     /// Canal消息
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CanalMessage : CanalMessage<string>
+    public class CanalMessage : CanalMessage<object>
     {
     }
 }
