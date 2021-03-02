@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="CanalSharp.Client" Version="0.3.3" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

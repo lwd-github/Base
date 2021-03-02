@@ -167,6 +167,7 @@ namespace Canal
 
             foreach (var column in columns)
             {
+                //通过NuGet安装 Microsoft.CSharp
                 ((IDictionary<string, object>)obj).Add(column.Name, column.Value);
             }
 
