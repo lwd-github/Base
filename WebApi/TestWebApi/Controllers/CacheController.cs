@@ -33,7 +33,13 @@ namespace TestWebApi.Controllers
         [HttpPost("/cache")]
         public void Post(string value)
         {
-            _localCache.Set(cacheKey, value);
+            _localCache.Set(cacheKey, value, 20);
+        }
+
+        [HttpDelete("/cache")]
+        public void Delete()
+        {
+            _localCache.Remove(cacheKey);
         }
     }
 }
