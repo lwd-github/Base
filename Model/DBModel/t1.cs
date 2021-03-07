@@ -8,7 +8,7 @@ namespace DBModel
 
         public string Name { get; set; }
 
-        public int Flag { get; set; }
+        public int? Flag { get; set; }
 
         public DateTime CreateTime { get; set; }
 

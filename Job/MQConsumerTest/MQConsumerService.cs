@@ -106,7 +106,7 @@ namespace MQConsumerTest
         private void Receive<T>(string msg)
         {
             var result = msg.ToObject<T>();
-            Console.WriteLine($"消息对象{result}");
+            Console.WriteLine($"消息对象{msg}");
         }
 
         private void MyPull(string msg)
