@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 
 namespace Map
 {
@@ -26,6 +28,14 @@ namespace Map
             double b = radLng1 - radLng2;
             double result = 2 * Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(a / 2), 2) + Math.Cos(radLat1) * Math.Cos(radLat2) * Math.Pow(Math.Sin(b / 2), 2))) * EARTH_RADIUS;
             return result;
+        }
+
+
+        public static GeoCodeForGaoDe GetLocationByGaoDe(string key, IList<string> addresses)
+        {
+            HttpClient httpClient = new HttpClient();
+            
+            return null;
         }
 
 
