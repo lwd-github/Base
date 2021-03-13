@@ -1,0 +1,22 @@
+﻿CREATE DEFINER=`jxcW`@`%` FUNCTION `f_GetMapDistance`(
+	`lat1` DOUBLE,
+	`lng1` DOUBLE,
+	`lat2` DOUBLE,
+	`lng2` DOUBLE
+)
+RETURNS double
+LANGUAGE SQL
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+COMMENT '计算2个经纬坐标之间的距离'
+BEGIN
+
+DECLARE EARTH_RADIUS DOUBLE;
+SET EARTH_RADIUS = 6378137; /*地球半径，单位米*/
+RETURN 2 * EARTH_RADIUS * ASIN(SQRT(POW(SIN((lat1 * PI() / 180 - lat2 * PI() / 180) / 2),2) + COS(lat1 * PI() / 180) * COS(lat2 * PI() / 180) * POW(SIN((lng1 * PI() / 180 - lng2 * PI() / 180) / 2),2)));
+
+END
+
+/*测试，传入参数：纬度1，经度1，纬度2，经度2*/
+SELECT f_GetMapDistance(36.981149, 107.948021, 41.245658, 115.357613);
