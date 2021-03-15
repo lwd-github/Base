@@ -19,7 +19,7 @@ namespace Map
         /// <summary>
         /// 返回状态码
         /// </summary>
-        public string Infocode { get; set; }
+        public string InfoCode { get; set; }
 
         /// <summary>
         /// 返回结果数目

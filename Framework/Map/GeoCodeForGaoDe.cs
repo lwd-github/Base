@@ -22,14 +22,14 @@ namespace Map
         public string Province { get; set; }
 
         /// <summary>
-        /// 地址所在的城市名
-        /// </summary>
-        public string City { get; set; }
-
-        /// <summary>
         /// 城市编码
         /// </summary>
         public string CityCode { get; set; }
+
+        /// <summary>
+        /// 地址所在的城市名
+        /// </summary>
+        public string City { get; set; }
 
         /// <summary>
         /// 地址所在的区
@@ -39,12 +39,12 @@ namespace Map
         /// <summary>
         /// 街道
         /// </summary>
-        public string Street { get; set; }
+        public IList<string> Street { get; set; }
 
         /// <summary>
         /// 门牌
         /// </summary>
-        public string Number { get; set; }
+        public IList<string> Number { get; set; }
 
         /// <summary>
         /// 区域编码

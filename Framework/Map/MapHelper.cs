@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Extension;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
@@ -31,11 +32,14 @@ namespace Map
         }
 
 
-        public static GeoCodeForGaoDe GetLocationByGaoDe(string key, IList<string> addresses)
+        public static LocationOutputForGaoDe GetLocationByGaoDe(string key, IList<string> addresses)
         {
             HttpClient httpClient = new HttpClient();
-            
-            return null;
+            string parameter = $"batch=true&key={key}&address={string.Join("|", addresses)}";
+            string url = $"https://restapi.amap.com/v3/geocode/geo?{parameter}";
+            var response = httpClient.GetAsync(url);
+            string responseBody = response.Result.Content.ReadAsStringAsync().Result;
+            return responseBody.ToObject<LocationOutputForGaoDe>();
         }
 
 
