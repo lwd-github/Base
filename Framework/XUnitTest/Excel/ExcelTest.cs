@@ -1,4 +1,5 @@
-﻿using Spire.Xls;
+﻿using Spire.Pdf;
+using Spire.Xls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,11 +28,20 @@ namespace XUnitTest.Excel
             MemoryStream outputStream = new MemoryStream();
             workbook.SaveToStream(outputStream, Spire.Xls.FileFormat.PDF);
 
-            //保存文件
-            FileStream fs = new FileStream("C:\\Users\\future\\Desktop\\test.pdf", FileMode.OpenOrCreate);
-            BinaryWriter w = new BinaryWriter(fs);
-            w.Write(outputStream.GetBuffer().ToArray());
-            fs.Close();
+            ////保存文件
+            //FileStream fs = new FileStream("C:\\Users\\future\\Desktop\\test.pdf", FileMode.OpenOrCreate);
+            //BinaryWriter w = new BinaryWriter(fs);
+            //w.Write(outputStream.GetBuffer().ToArray());
+            //fs.Close();
+
+            //string fileName = @"C:\\Users\\future\\Desktop\\test.pdf";
+            //创建一个新的PDF实例,导入PDF文件            
+            PdfDocument pdf = new PdfDocument(outputStream);
+            //pdf.LoadFromFile(fileName);
+            //PdfPageBase pb = pdf.Pages.Add(); //新增一页
+            //pdf.Pages.Remove(pb); //去除第一页水印
+            //pdf.Pages.RemoveAt(pdf.Pages.Count-1); //去除第一页水印
+            pdf.SaveToFile("C:\\Users\\future\\Desktop\\test.pdf");
         }
     }
 }
