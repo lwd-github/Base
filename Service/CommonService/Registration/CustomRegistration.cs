@@ -19,17 +19,21 @@ namespace CommonService.Registration
         /// <param name="containerBuilder"></param>
         public static void Register(ContainerBuilder containerBuilder)
         {
+            var container = containerBuilder.Build();
+            var lifetimeScope = container.BeginLifetimeScope();
+            var sysConfig = lifetimeScope.Resolve<SysConfig>();
+
             //注册MQ
             containerBuilder.Register<IMQContext>(c =>
             {
-                var content = new RabbitMQContext(new SysConfig().Value<MQConfig>());
+                var content = new RabbitMQContext(sysConfig.Value<MQConfig>());
                 return content;
             }).SingleInstance();
 
             //注册Canal客户端
             containerBuilder.Register<ICanalClient>(c =>
             {
-                var content = new CanalClient(new SysConfig().Value<CanalConfig>());
+                var content = new CanalClient(sysConfig.Value<CanalConfig>());
                 return content;
             }).SingleInstance();
         }

@@ -1,6 +1,6 @@
 ﻿using Cache.Local;
 using Common.Results;
-using CommonModel.Constant;
+using DTO.Constant;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

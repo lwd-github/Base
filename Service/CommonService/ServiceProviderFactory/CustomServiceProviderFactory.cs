@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using CommonModel.Constant;
+using DTO.Constant;
 using CommonService.Config;
 using CommonService.Registration;
 using MQ;

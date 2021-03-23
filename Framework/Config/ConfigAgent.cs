@@ -12,10 +12,10 @@ namespace Config
         //static IEnumerable<ConfigItem> _configs;
 
         /// <summary>
-        /// 加载配置信息
+        /// 获取配置信息
         /// </summary>
         /// <returns></returns>
-        protected abstract IEnumerable<ConfigItem> LoadConfig();
+        protected abstract IEnumerable<ConfigItem> GetConfig();
 
         /// <summary>
         /// 配置值
@@ -29,7 +29,7 @@ namespace Config
 
             var name = typeof(T).Name.ToLower();
             //var config = _configs.FirstOrDefault(p => p.Key.ToLower() == name);
-            var config = LoadConfig().FirstOrDefault(p => p.Key.ToLower() == name);
+            var config = GetConfig().FirstOrDefault(p => p.Key.ToLower() == name);
 
             if (config.IsNotNull())
             {

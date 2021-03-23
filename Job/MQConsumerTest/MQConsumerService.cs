@@ -1,4 +1,4 @@
-﻿using CommonModel.Constant;
+﻿using DTO.Constant;
 using CommonService.Config;
 using Microsoft.Extensions.Hosting;
 using MQ;

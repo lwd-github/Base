@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\MQ\MQ.csproj" />
-    <ProjectReference Include="..\..\Model\CommonModel\CommonModel.csproj" />
+    <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
   </ItemGroup>
 

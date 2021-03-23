@@ -17,7 +17,7 @@ namespace XUnitTest.Map
         [Fact]
         public void GetLocationByGaoDe()
         {
-            var result = MapHelper.GetLocationByGaoDe("10b17eb8743753de4e04f784c87c8761", new List<string> { "广东省广州市天河区银汇大厦", "广东省汕尾区城区" });
+            var result = MapHelper.GetLocationByGaoDe("10b17eb8743753de4e04f784c87c8761", new List<string> {"abc","乌鲁木齐", "广州市", "广东省广州市天河区车陂高地大街南1号", "广东省广州市天河区银汇大厦", "广东省汕尾区城区" });
         }
     }
 }

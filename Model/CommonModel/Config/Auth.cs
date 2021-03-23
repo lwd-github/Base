@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CommonModel.Config
+namespace DTO.Config
 {
     public class Auth
     {

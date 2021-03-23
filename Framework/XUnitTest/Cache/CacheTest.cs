@@ -1,4 +1,5 @@
-﻿using Cache.Local;
+﻿using Autofac;
+using Cache.Local;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,19 +7,27 @@ using Xunit;
 
 namespace XUnitTest.Cache
 {
-    public class CacheTest
+    public class CacheTest: BaseTest
     {
+        readonly ILocalCache _localCache;
+
+        public CacheTest()
+        {
+            _localCache = LifetimeScope.Resolve<ILocalCache>();
+        }
+
+
         [Fact]
         public void Test()
         {
             string key = "cache_key1";
 
-            ILocalCache localCache = new LocalCache();
-            var i = localCache.GetOrSet<int?>(key, () => { return 2; });
+            //ILocalCache localCache = new LocalCache();
+            var i = _localCache.GetOrSet<int?>(key, () => { return 2; });
 
-            var j = localCache.Get<int?>(key);
-            localCache.Remove(key);
-            j = localCache.Get<int?>(key);
+            var j = _localCache.Get<int?>(key);
+            _localCache.Remove(key);
+            j = _localCache.Get<int?>(key);
         }
     }
 }

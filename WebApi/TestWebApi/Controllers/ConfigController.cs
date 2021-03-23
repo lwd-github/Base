@@ -1,5 +1,5 @@
 ﻿using Common.Results;
-using CommonModel.Config;
+using DTO.Config;
 using CommonService.Config;
 using Microsoft.AspNetCore.Mvc;
 using System;

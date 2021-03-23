@@ -6,16 +6,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IOC.LifetimeScope;
+using Cache.Local;
+using DTO.Constant;
 
 namespace CommonService.Config
 {
     public class BusinessConfig: ConfigAgent, ISingleInstance
     {
+        private ILocalCache _localCache;
+
+        public BusinessConfig(ILocalCache localCache)
+        {
+            _localCache = localCache;
+        }
+
+
         /// <summary>
-        /// 加载配置信息
+        /// 获取配置信息
         /// </summary>
         /// <returns></returns>
-        protected override IEnumerable<ConfigItem> LoadConfig()
+        protected override IEnumerable<ConfigItem> GetConfig()
+        {
+            return _localCache.GetOrSet(CacheKeys.BusinessConfigKey, GetConfigFromDB, 30 * 60);
+        }
+
+
+        private IEnumerable<ConfigItem> GetConfigFromDB()
         {
             return new List<ConfigItem>
             {

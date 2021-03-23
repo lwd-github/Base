@@ -18,7 +18,7 @@ namespace IOC
             .ToList().ForEach(file => AssemblyLoadContext.Default.LoadFromAssemblyPath(file));
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(t => assemblyNames.Contains(Path.GetFileName(t.Location)))
+                .Where(t => !t.IsDynamic && assemblyNames.Contains(Path.GetFileName(t.Location)))
                 .ToArray();
 
             builder.RegisterAssemblyTypes(assemblies)

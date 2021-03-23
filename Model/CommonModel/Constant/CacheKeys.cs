@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CommonModel.Constant
+namespace DTO.Constant
 {
     /// <summary>
     /// 缓存Key
@@ -20,5 +20,15 @@ namespace CommonModel.Constant
         /// <param name="phone"></param>
         /// <returns></returns>
         public static string SmsCodeKey(string phone) => $"{Prefix}_smscode_{phone}";
+
+        /// <summary>
+        /// 系统配置key
+        /// </summary>
+        public static string SysConfigKey => $"{Prefix}_SysConfig";
+
+        /// <summary>
+        /// 业务配置key
+        /// </summary>
+        public static string BusinessConfigKey => $"{Prefix}_BusinessConfig";
     }
 }

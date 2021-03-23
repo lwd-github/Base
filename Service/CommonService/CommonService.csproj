@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Cache\Cache.csproj" />
     <ProjectReference Include="..\..\Framework\Canal\Canal.csproj" />
     <ProjectReference Include="..\..\Framework\Config\Config.csproj" />
     <ProjectReference Include="..\..\Framework\IOC\IOC.csproj" />
     <ProjectReference Include="..\..\Framework\MQ\MQ.csproj" />
-    <ProjectReference Include="..\..\Model\CommonModel\CommonModel.csproj" />
+    <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
   </ItemGroup>
 
 </Project>

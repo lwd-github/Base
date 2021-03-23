@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -21,10 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
     <ProjectReference Include="..\Cache\Cache.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Map\Map.csproj" />
     <ProjectReference Include="..\Validator\Validator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ServiceTest\" />
   </ItemGroup>
 
 </Project>

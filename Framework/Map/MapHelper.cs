@@ -1,7 +1,9 @@
 ﻿using Common.Extension;
+using Map.GaoDe;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Linq;
 
 namespace Map
 {
@@ -32,14 +34,32 @@ namespace Map
         }
 
 
-        public static LocationOutputForGaoDe GetLocationByGaoDe(string key, IList<string> addresses)
+        /// <summary>
+        /// 将详细的结构化地址转换为高德经纬度坐标
+        /// </summary>
+        /// <param name="key">API Key（需申请）</param>
+        /// <param name="addresses">地址</param>
+        /// <returns>返回经纬坐标</returns>
+        public static List<string> GetLocationByGaoDe(string key, IList<string> addresses)
         {
+            //高德API文档：https://developer.amap.com/api/webservice/guide/api/georegeo
+
             HttpClient httpClient = new HttpClient();
             string parameter = $"batch=true&key={key}&address={string.Join("|", addresses)}";
             string url = $"https://restapi.amap.com/v3/geocode/geo?{parameter}";
             var response = httpClient.GetAsync(url);
             string responseBody = response.Result.Content.ReadAsStringAsync().Result;
-            return responseBody.ToObject<LocationOutputForGaoDe>();
+            var responseObj = responseBody.ToObject<LocationOutput>();
+
+            List<string> result = new List<string>();
+            responseObj.GeoCodes.ForEach(item => {
+
+                var location = item.Location as string;
+                result.Add(location);
+
+            });
+
+            return result;
         }
 
 

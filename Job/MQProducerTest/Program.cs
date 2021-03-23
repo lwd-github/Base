@@ -1,4 +1,4 @@
-﻿using CommonModel.Constant;
+﻿using DTO.Constant;
 using CommonService.ServiceProviderFactory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

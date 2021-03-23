@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Map
+namespace Map.GaoDe
 {
-    public class LocationOutputForGaoDe
+    public class LocationOutput
     {
         /// <summary>
         /// 返回结果状态值：0 表示请求失败；1 表示请求成功
@@ -29,6 +29,6 @@ namespace Map
         /// <summary>
         /// 地理编码信息列表
         /// </summary>
-        public IList<GeoCodeForGaoDe> GeoCodes { get; set; }
+        public List<GeoCode> GeoCodes { get; set; }
     }
 }
