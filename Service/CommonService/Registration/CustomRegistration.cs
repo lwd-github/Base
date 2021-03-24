@@ -2,6 +2,7 @@
 using Canal;
 using Canal.Config;
 using CommonService.Config;
+using IOC;
 using MQ;
 using MQ.Config;
 using MQ.RabbitMQ;
@@ -19,9 +20,7 @@ namespace CommonService.Registration
         /// <param name="containerBuilder"></param>
         public static void Register(ContainerBuilder containerBuilder)
         {
-            var container = containerBuilder.Build();
-            var lifetimeScope = container.BeginLifetimeScope();
-            var sysConfig = lifetimeScope.Resolve<SysConfig>();
+            var sysConfig = IocManager.Resolve<SysConfig>();
 
             //注册MQ
             containerBuilder.Register<IMQContext>(c =>

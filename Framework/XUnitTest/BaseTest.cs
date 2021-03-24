@@ -10,29 +10,14 @@ using System.Text;
 
 namespace XUnitTest
 {
-    public class BaseTest : IDisposable
+    public class BaseTest
     {
-        private static IContainer _container;
-        protected ILifetimeScope LifetimeScope;
-
         static BaseTest()
         {
-            var factory = new ServiceProviderFactory(MQConstant.IOCAssemblies.Split(';'));
-            var containerBuilder = factory.CreateBuilder(new ServiceCollection());
+            var containerBuilder = new ContainerBuilder();
+            IocManager.Init(containerBuilder, MQConstant.IOCAssemblies.Split(';'));
+            IocManager.SetContainer(containerBuilder.Build());
             CustomRegistration.Register(containerBuilder);//自定义接口注册
-            _container = containerBuilder.Build();
-        }
-
-
-        public BaseTest()
-        {
-            LifetimeScope = _container.BeginLifetimeScope();
-        }
-
-
-        public void Dispose()
-        {
-            _container?.Dispose();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Cache.Local;
+using IOC;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace XUnitTest.Cache
 
         public CacheTest()
         {
-            _localCache = LifetimeScope.Resolve<ILocalCache>();
+            _localCache = IocManager.Resolve<ILocalCache>();
         }
 
 

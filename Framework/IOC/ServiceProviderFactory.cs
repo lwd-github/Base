@@ -9,27 +9,34 @@ namespace IOC
 {
     public class ServiceProviderFactory : IServiceProviderFactory<ContainerBuilder>
     {
-        protected ContainerBuilder ContainerBuilder;
+        private ContainerBuilder _containerBuilder;
         private string[] _iocAssemblies;
+        private Action<ContainerBuilder> _action;
 
-        public ServiceProviderFactory(string[] iocAssemblies)
+        public ServiceProviderFactory(ContainerBuilder containerBuilder, string[] iocAssemblies, Action<ContainerBuilder> action = null)
         {
-            ContainerBuilder = new ContainerBuilder();
             _iocAssemblies = iocAssemblies;
+            _action = action;
+            _containerBuilder = containerBuilder;
+            //ContainerBuilder = new ContainerBuilder();
+            //IocManager.Init(ContainerBuilder, _iocAssemblies);
         }
 
         public ContainerBuilder CreateBuilder(IServiceCollection services)
         {
-            //ContainerBuilder = new ContainerBuilder();
-            IocManager.Init(ContainerBuilder, _iocAssemblies);
-            ContainerBuilder.Populate(services);
-            return ContainerBuilder;
+            //var containerBuilder = new ContainerBuilder();
+            IocManager.Init(_containerBuilder, _iocAssemblies);
+            //_action?.Invoke(containerBuilder);
+            _containerBuilder.Populate(services);
+            return _containerBuilder;
         }
 
         public IServiceProvider CreateServiceProvider(ContainerBuilder containerBuilder)
         {
-            var container = containerBuilder.Build();
-            return new AutofacServiceProvider(container);
+            IocManager.SetContainer(containerBuilder.Build());
+            //_action?.Invoke(containerBuilder);
+            return new AutofacServiceProvider(IocManager.GetContainer());
+
         }
     }
 }

@@ -30,11 +30,11 @@ namespace MQConsumerTest
         private void Start()
         {
             //工作队列
-            //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1");
-            //consumer1.Receive(MyReceive1);
+            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1");
+            consumer1.Receive(MyReceive1);
 
-            //var consumer2 = _mqContext.CreateConsumer("Test_Queue_1");
-            //consumer2.Receive(MyReceive2);
+            var consumer2 = _mqContext.CreateConsumer("Test_Queue_1");
+            consumer2.Receive(MyReceive2);
 
             //发布/订阅（广播）
             //var consumer1 = _mqContext.CreateConsumer("Test_Queue_1", new Exchange { Name = "Test_Exchange_1", Type = ExchangeType.Fanout });
@@ -74,11 +74,11 @@ namespace MQConsumerTest
             //consumer3.Pull(MyPull);
 
             //Canal消息
-            var tableName = "t1";
-            var exchangeName = $"Canal_{tableName}_Exchange";
-            var queueName = $"Canal_{tableName}_Queue";
-            var consumer4 = _mqContext.CreateConsumer(queueName, new Exchange { Name = exchangeName, Type = ExchangeType.Fanout });
-            consumer4.Receive(Receive<CanalMessage<t1>>);
+            //var tableName = "t1";
+            //var exchangeName = $"Canal_{tableName}_Exchange";
+            //var queueName = $"Canal_{tableName}_Queue";
+            //var consumer4 = _mqContext.CreateConsumer(queueName, new Exchange { Name = exchangeName, Type = ExchangeType.Fanout });
+            //consumer4.Receive(Receive<CanalMessage<t1>>);
         }
 
         private void MyReceive1(string msg)

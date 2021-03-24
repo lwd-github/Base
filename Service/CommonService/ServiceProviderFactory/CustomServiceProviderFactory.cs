@@ -18,10 +18,10 @@ namespace CommonService.ServiceProviderFactory
     /// </summary>
     public class CustomServiceProviderFactory : IOC.ServiceProviderFactory
     {
-        public CustomServiceProviderFactory() : base(MQConstant.IOCAssemblies.Split(';'))
+        public CustomServiceProviderFactory() : base(null, MQConstant.IOCAssemblies.Split(';'), CustomRegistration.Register)
         {
             //自定义接口注册
-            CustomRegistration.Register(ContainerBuilder);
+            //CustomRegistration.Register(ContainerBuilder);
         }
     }
 }

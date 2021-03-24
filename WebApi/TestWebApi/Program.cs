@@ -1,13 +1,9 @@
-using Autofac.Extensions.DependencyInjection;
-using CommonService.ServiceProviderFactory;
+using Autofac;
+using CommonService.Registration;
+using DTO.Constant;
+using IOC;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TestWebApi
 {
@@ -15,10 +11,13 @@ namespace TestWebApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var containerBuilder = new ContainerBuilder();
+            var host = CreateHostBuilder(args, containerBuilder).Build();
+            CustomRegistration.Register(containerBuilder);
+            host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args, ContainerBuilder containerBuilder) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -28,6 +27,6 @@ namespace TestWebApi
                 //.UseServiceProviderFactory(new AutofacServiceProviderFactory()); //指定 Autofac 工厂替换默认工厂
 
                 //方式二
-                .UseServiceProviderFactory(new CustomServiceProviderFactory());
+                .UseServiceProviderFactory(new ServiceProviderFactory(containerBuilder, MQConstant.IOCAssemblies.Split(';')));
     }
 }
