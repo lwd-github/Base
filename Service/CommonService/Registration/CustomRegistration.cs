@@ -20,19 +20,17 @@ namespace CommonService.Registration
         /// <param name="containerBuilder"></param>
         public static void Register(ContainerBuilder containerBuilder)
         {
-            var sysConfig = IocManager.Resolve<SysConfig>();
-
             //注册MQ
             containerBuilder.Register<IMQContext>(c =>
             {
-                var content = new RabbitMQContext(sysConfig.Value<MQConfig>());
+                var content = new RabbitMQContext(new MQConfig());
                 return content;
             }).SingleInstance();
 
             //注册Canal客户端
             containerBuilder.Register<ICanalClient>(c =>
             {
-                var content = new CanalClient(sysConfig.Value<CanalConfig>());
+                var content = new CanalClient(new CanalConfig());
                 return content;
             }).SingleInstance();
         }
