@@ -1,5 +1,4 @@
-﻿using CommonService.Config;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using MQ;
 using MQ.Config;
 using MQ.RabbitMQ;
@@ -14,12 +13,10 @@ namespace MQProducerTest
 {
     public class MQProducerService : IHostedService
     {
-        readonly SysConfig _sysConfig;
         readonly IMQContext _mqContext;
 
-        public MQProducerService(SysConfig sysConfig, IMQContext mqContext)
+        public MQProducerService(IMQContext mqContext)
         {
-            _sysConfig = sysConfig;
             _mqContext = mqContext;
         }
 

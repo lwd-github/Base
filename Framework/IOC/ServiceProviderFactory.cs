@@ -35,7 +35,6 @@ namespace IOC
         {
             IocManager.SetContainer(containerBuilder.Build());
             return new AutofacServiceProvider(IocManager.GetContainer());
-
         }
     }
 }

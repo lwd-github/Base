@@ -2,6 +2,7 @@
 using Canal;
 using Canal.Config;
 using CommonService.Config;
+using Config;
 using IOC;
 using MQ;
 using MQ.Config;
@@ -23,14 +24,14 @@ namespace CommonService.Registration
             //注册MQ
             containerBuilder.Register<IMQContext>(c =>
             {
-                var content = new RabbitMQContext(new MQConfig());
+                var content = new RabbitMQContext(ConfigAgent.Value<MQConfig>());
                 return content;
             }).SingleInstance();
 
             //注册Canal客户端
             containerBuilder.Register<ICanalClient>(c =>
             {
-                var content = new CanalClient(new CanalConfig());
+                var content = new CanalClient(ConfigAgent.Value <CanalConfig>());
                 return content;
             }).SingleInstance();
         }

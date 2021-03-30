@@ -1,7 +1,8 @@
 ﻿using Common.Results;
+using Config;
 using DTO.Config;
-using CommonService.Config;
 using Microsoft.AspNetCore.Mvc;
+using MQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,11 @@ namespace TestWebApi.Controllers
     [ApiController]
     public class ConfigController : ControllerBase
     {
-        readonly SysConfig _sysConfig;
-        readonly BusinessConfig _businessConfig;
-
-        public ConfigController(SysConfig sysConfig, BusinessConfig businessConfig)
+        readonly IMQContext _mqContext;
+        
+        public ConfigController(IMQContext mqContext)
         {
-            _sysConfig = sysConfig;
-            _businessConfig = businessConfig;
+            _mqContext = mqContext;
         }
 
         [HttpGet("/config/auth")]
@@ -27,17 +26,25 @@ namespace TestWebApi.Controllers
         {
             return new Result<Auth>
             {
-                Data = _sysConfig.Value<Auth>()
+                Data = ConfigAgent.Value<Auth>()
             };
         }
 
-        [HttpGet("/config/wms")]
-        public Result<WMS> GetWMS()
+
+        [HttpGet("/mq/message")]
+        public Result GetMQ()
         {
-            return new Result<WMS>
-            {
-                Data = _businessConfig.Value<WMS>()
-            };
+            //工作队列
+            var consumer1 = _mqContext.CreateConsumer("Test_Queue_1");
+            consumer1.Receive(MyReceive1);
+            return new Result();
         }
+
+        private void MyReceive1(string msg)
+        {
+            Console.WriteLine($"第1个消费者获取的MQ消息：{msg}");
+            //throw new Exception("测试队列消费异常");
+        }
+
     }
 }

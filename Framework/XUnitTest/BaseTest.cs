@@ -16,8 +16,8 @@ namespace XUnitTest
         {
             var containerBuilder = new ContainerBuilder();
             IocManager.Init(containerBuilder, MQConstant.IOCAssemblies.Split(';'));
-            IocManager.SetContainer(containerBuilder.Build());
             CustomRegistration.Register(containerBuilder);//自定义接口注册
+            IocManager.SetContainer(containerBuilder.Build());
         }
     }
 }
