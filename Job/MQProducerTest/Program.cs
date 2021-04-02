@@ -1,8 +1,10 @@
-﻿using DTO.Constant;
+﻿using Common.Extension;
 using CommonService.ServiceProviderFactory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Config;
+using Microsoft.Extensions.Configuration;
 
 namespace MQProducerTest
 {
@@ -17,8 +19,17 @@ namespace MQProducerTest
         static IHost BuildWebHost(string[] args)
         {
             return new HostBuilder()
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                    if (env.EnvironmentName.IsNotNullOrEmpty() && env.EnvironmentName != Environments.Production)
+                        config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
+
+                })
                 .ConfigureServices((hostingContext, services) =>
                 {
+                    ConfigAgent.Configuration = hostingContext.Configuration;
                     services.AddHostedService<MQProducerService>();
                 })
                 .UseServiceProviderFactory(new CustomServiceProviderFactory())

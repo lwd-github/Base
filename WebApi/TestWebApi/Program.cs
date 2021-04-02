@@ -1,6 +1,7 @@
 using Autofac;
 using CommonService.Registration;
 using CommonService.ServiceProviderFactory;
+using Config;
 using DTO.Constant;
 using IOC;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,10 @@ namespace TestWebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices((hostingContext, services) =>
+                {
+                    ConfigAgent.Configuration = hostingContext.Configuration;
                 })
                 //方式一：需在Startup.cs 增加方法注册接口：public void ConfigureContainer(Autofac.ContainerBuilder builder)
                 //.UseServiceProviderFactory(new AutofacServiceProviderFactory()); //指定 Autofac 工厂替换默认工厂

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Cache.Local;
+using Config;
 using IOC;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace XUnitTest.Cache
 
         public CacheTest()
         {
+            var connectionString = ConfigAgent.Configuration["DB:ConnectionString"];
             _localCache = IocManager.Resolve<ILocalCache>();
         }
 

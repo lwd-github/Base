@@ -1,4 +1,5 @@
 ﻿using Common.Extension;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,8 +19,17 @@ namespace Config
         //protected abstract IEnumerable<ConfigItem> GetConfig();
 
 
-        public static IEnumerable<ConfigItem> GetConfig()
+        /// <summary>
+        /// 配置文件
+        /// </summary>
+        /// Nuget安装Microsoft.Extensions.Configuration
+        public static IConfiguration Configuration { get; set; }
+
+
+        static IEnumerable<ConfigItem> GetConfig()
         {
+            var connectionString = Configuration["DB:ConnectionString"];
+
             return new List<ConfigItem>
             {
                 new ConfigItem
