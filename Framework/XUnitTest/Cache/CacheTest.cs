@@ -20,6 +20,9 @@ namespace XUnitTest.Cache
         }
 
 
+        /// <summary>
+        /// 测试缓存
+        /// </summary>
         [Fact]
         public void Test()
         {
@@ -31,6 +34,28 @@ namespace XUnitTest.Cache
             var j = _localCache.Get<int?>(key);
             _localCache.Remove(key);
             j = _localCache.Get<int?>(key);
+        }
+
+
+        /// <summary>
+        /// 测试类型转换
+        /// </summary>
+        [Fact]
+        public void ChangeType()
+        {
+            var result = Get<string>();
+        }
+
+
+        public T Get<T>()
+        {
+            T result = default(T);
+               
+            if(typeof(T).FullName == "System.String")
+            {
+                result = (T)Convert.ChangeType("1", typeof(T));
+            }
+            return result;
         }
     }
 }
