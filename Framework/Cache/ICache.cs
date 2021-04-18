@@ -32,7 +32,7 @@ namespace Cache
         /// <summary>
         /// 移除缓存
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">缓存key</param>
         void Remove(string key);
 
         /// <summary>

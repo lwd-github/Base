@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Xunit;
 using Common.Extension;
 using System.Diagnostics;
+using XUnitTest.Model;
+using XUnitTest.Enum;
 
 namespace XUnitTest.Map
 {
@@ -104,38 +106,5 @@ namespace XUnitTest.Map
         public DateTime CreateTime { get; set; }
 
         public T Obj { get; set;}
-    }
-
-
-    public enum ESex
-    {
-        未知 = 0,
-        男 = 1,
-        女 = 2,
-    }
-
-
-    public class Person
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public DateTime? Birthday { get; set; }
-
-        public ESex Sex { get; set; }
-
-        public Dictionary<string, int> Attribute { get; set; }
-
-        public List<int> Test;
-    }
-
-    public class Student : Person
-    {
-        public DateTime AdmissionDate { get; set; }
-
-        public new string Id { get; set; } //类型不一致，测试转换
-
-        public new string Birthday { get; set; } //类型不一致，测试转换
     }
 }

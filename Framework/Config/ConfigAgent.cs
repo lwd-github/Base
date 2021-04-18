@@ -49,6 +49,11 @@ namespace Config
                 //}
                 new ConfigItem
                 {
+                    Key ="RedisConfig",
+                    Value = "{\"host\": \"127.0.0.1\",\"port\": \"6379\"}"
+                },
+                new ConfigItem
+                {
                     Key ="MQConfig",
                     Value = "{\"host\": \"47.242.83.236\",\"port\": \"5672\",\"user\": \"admin\",\"password\": \"admin@689\",\"virtualHost\": \"/\"}"
                 },

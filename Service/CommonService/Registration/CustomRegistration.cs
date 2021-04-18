@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Cache.Redis;
+using Cache.Redis.Config;
 using Canal;
 using Canal.Config;
 using CommonService.Config;
@@ -21,6 +23,13 @@ namespace CommonService.Registration
         /// <param name="containerBuilder"></param>
         public static void Register(ContainerBuilder containerBuilder)
         {
+            //注册Redis
+            containerBuilder.Register<RedisCache>(c =>
+            {
+                var content = new RedisCache(ConfigAgent.Value<RedisConfig>());
+                return content;
+            }).SingleInstance();
+
             //注册MQ
             containerBuilder.Register<IMQContext>(c =>
             {
