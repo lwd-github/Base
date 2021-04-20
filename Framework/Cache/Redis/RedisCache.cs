@@ -50,16 +50,17 @@ namespace Cache.Redis
                 {
                     return default;
                 }
-                else if (type == typeof(string) || type.IsValueType)
+                else if (type == typeof(string))
                 {
-                    if (type.IsEnum)
-                    {
-                        return (T)Enum.Parse(type, value);
-                    }
-                    else
-                    {
-                        return (T)Convert.ChangeType(value, type);
-                    }
+                    //if (type.IsEnum)
+                    //{
+                    //    return (T)Enum.Parse(type, value);
+                    //}
+                    //else
+                    //{
+                    //    return (T)Convert.ChangeType(value, type);
+                    //}
+                    return (T)Convert.ChangeType(value, type);
                 }
                 else
                 {
@@ -92,7 +93,7 @@ namespace Cache.Redis
 
                 Type type = typeof(T).GetUnderlyingType();
 
-                var valueFormat = type.IsClass && type != typeof(string) ? value.ToJson() : value.ToString();
+                var valueFormat = type != typeof(string) ? value.ToJson() : value.ToString();
 
                 return expiration > 0 ? db.StringSet(key, valueFormat, TimeSpan.FromSeconds(expiration)) : db.StringSet(key, valueFormat);
             });

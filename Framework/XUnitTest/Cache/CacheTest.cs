@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using XUnitTest.Model;
+using Common.Extension;
 
 namespace XUnitTest.Cache
 {
@@ -88,6 +89,21 @@ namespace XUnitTest.Cache
             var result = Get<string>();
             var result1 = Get<int>();
             var result2 = Get<ETest>();
+        }
+
+
+        [Fact]
+        public void ToObject()
+        {
+            var s = ETest.失败;
+            var type = s.GetType();
+            var isSerializable = type.IsSerializable;
+
+            if((type.IsValueType || type.IsClass) && type != typeof(string))
+            {
+                var js = s.ToJson();
+                var sO = js.ToObject<ETest>();
+            }
         }
 
 
