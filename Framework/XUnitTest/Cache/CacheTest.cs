@@ -75,8 +75,8 @@ namespace XUnitTest.Cache
 
             string key4 = "redisCache_key4";
             _redisCache.Remove(key4);
-            var i4 = _redisCache.GetOrSet(key4, () => { return new Location { Lat = 1.2, Lng = 2.3 }; });
-            i4 = _redisCache.Get<Location>(key4);
+            var i4 = _redisCache.GetOrSet<Location?>(key4, () => { return new Location { Lat = 1.2, Lng = 2.3 }; });
+            i4 = _redisCache.Get<Location?>(key4);
         }
 
 
