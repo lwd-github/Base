@@ -37,6 +37,7 @@
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
     <ProjectReference Include="..\Cache\Cache.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\IdGenerator\IdGenerator.csproj" />
     <ProjectReference Include="..\Map\Map.csproj" />
     <ProjectReference Include="..\Validator\Validator.csproj" />
   </ItemGroup>
