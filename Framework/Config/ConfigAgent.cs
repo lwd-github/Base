@@ -47,10 +47,15 @@ namespace Config
                 //    Key ="MQConfig",
                 //    Value = "{\"host\": \"127.0.0.1\",\"port\": \"5673\",\"user\": \"guest\",\"password\": \"guest\",\"virtualHost\": \"/\"}"
                 //}
+                //new ConfigItem
+                //{
+                //    Key ="RedisConfig",
+                //    Value = "{\"host\": \"127.0.0.1\",\"port\": \"6379\"}"
+                //},
                 new ConfigItem
                 {
                     Key ="RedisConfig",
-                    Value = "{\"host\": \"127.0.0.1\",\"port\": \"6379\"}"
+                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"6379\"}"
                 },
                 new ConfigItem
                 {

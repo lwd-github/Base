@@ -4,5 +4,10 @@
 [Oo]bj
 [Pp]roperties
 
+# User-specific files
+*.suo
+*.user
+*.userosscache
+
 #忽略以.sqlite结尾的文件
 *.sqlite
