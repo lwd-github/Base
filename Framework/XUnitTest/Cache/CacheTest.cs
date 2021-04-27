@@ -9,6 +9,8 @@ using System.Text;
 using Xunit;
 using XUnitTest.Model;
 using Common.Extension;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace XUnitTest.Cache
 {
@@ -77,6 +79,71 @@ namespace XUnitTest.Cache
             _redisCache.Remove(key4);
             var i4 = _redisCache.GetOrSet<Location?>(key4, () => { return new Location { Lat = 1.2, Lng = 2.3 }; });
             i4 = _redisCache.Get<Location?>(key4);
+        }
+
+
+        [Fact]
+        public void RedisLockTest()
+        {
+            Parallel.Invoke(
+                () => LockRun1(),
+                () => LockRun2(),
+                () => LockRun3()
+                );
+        }
+
+
+        private void LockRun1()
+        {
+            using (var redisLock = _redisCache.CreateLock("lock1"))
+            {
+                if (redisLock.LockTake())
+                {
+                    //doing
+                    Thread.Sleep(30 * 1000);
+                }
+                else
+                {
+                    Console.WriteLine("获取锁失败");
+                }
+            } 
+        }
+
+
+        private void LockRun2()
+        {
+            using (var redisLock = _redisCache.CreateLock("lock1"))
+            {
+                if (redisLock.LockTake())
+                {
+                    //doing
+                    Thread.Sleep(30 * 1000);
+                }
+                else
+                {
+                    Console.WriteLine("获取锁失败");
+                }
+
+                redisLock.LockRelease();
+            }
+        }
+
+
+        private void LockRun3()
+        {
+            var redisLock = _redisCache.CreateLock("lock1");
+
+            if (redisLock.LockTake())
+            {
+                //doing
+                Thread.Sleep(30 * 1000);
+            }
+            else
+            {
+                Console.WriteLine("获取锁失败");
+            }
+
+            redisLock.LockRelease();
         }
 
 

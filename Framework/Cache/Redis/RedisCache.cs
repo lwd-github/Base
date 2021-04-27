@@ -87,7 +87,7 @@ namespace Cache.Redis
         /// <param name="key">缓存key</param>
         /// <param name="value">缓存值</param>
         /// <param name="expiration">缓存有效期（单位：秒）</param>
-        public override void Set<T>(string key, T value, uint expiration = 0)
+        public override void Set<T>(string key, T value, ulong expiration = 0)
         {
             Do(db => {
 
@@ -97,6 +97,18 @@ namespace Cache.Redis
 
                 return expiration > 0 ? db.StringSet(key, valueFormat, TimeSpan.FromSeconds(expiration)) : db.StringSet(key, valueFormat);
             });
+        }
+
+
+        /// <summary>
+        /// 创建锁
+        /// </summary>
+        /// <param name="key">锁键</param>
+        /// <returns></returns>
+        public RedisLock CreateLock(string key)
+        {
+            var database = _conn.GetDatabase(_dbNum);
+            return new RedisLock(database, key);
         }
 
 

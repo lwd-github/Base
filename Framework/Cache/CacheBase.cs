@@ -35,7 +35,7 @@ namespace Cache
         /// <param name="func">委托方法</param>
         /// <param name="expiration">缓存有效期（单位：秒）</param>
         /// <returns></returns>
-        public T GetOrSet<T>(string key, Func<T> func, uint expiration = 0)
+        public T GetOrSet<T>(string key, Func<T> func, ulong expiration = 0)
         {
             var value = Get<T>(key);
 
@@ -62,7 +62,7 @@ namespace Cache
         /// <param name="key">缓存key</param>
         /// <param name="value">缓存值</param>
         /// <param name="second">缓存有效期（单位：秒）</param>
-        public void Set(string key, string value, uint expiration = 0)
+        public void Set(string key, string value, ulong expiration = 0)
         {
             Set<string>(key, value, expiration);
         }
@@ -75,6 +75,6 @@ namespace Cache
         /// <param name="key">缓存key</param>
         /// <param name="value">缓存值</param>
         /// <param name="expiration">缓存有效期（单位：秒）</param>
-        public abstract void Set<T>(string key, T value, uint expiration = 0);
+        public abstract void Set<T>(string key, T value, ulong expiration = 0);
     }
 }
