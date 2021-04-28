@@ -82,6 +82,9 @@ namespace XUnitTest.Cache
         }
 
 
+        /// <summary>
+        /// Redis锁测试
+        /// </summary>
         [Fact]
         public void RedisLockTest()
         {

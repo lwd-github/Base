@@ -34,12 +34,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Cache\Cache.csproj" />
+    <ProjectReference Include="..\..\Framework\Config\Config.csproj" />
+    <ProjectReference Include="..\..\Framework\IdGenerator\IdGenerator.csproj" />
+    <ProjectReference Include="..\..\Framework\IOC\IOC.csproj" />
+    <ProjectReference Include="..\..\Framework\Map\Map.csproj" />
+    <ProjectReference Include="..\..\Framework\MQ\MQ.csproj" />
+    <ProjectReference Include="..\..\Framework\Validator\Validator.csproj" />
+    <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
-    <ProjectReference Include="..\Cache\Cache.csproj" />
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\IdGenerator\IdGenerator.csproj" />
-    <ProjectReference Include="..\Map\Map.csproj" />
-    <ProjectReference Include="..\Validator\Validator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
