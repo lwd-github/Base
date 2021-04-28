@@ -20,16 +20,18 @@ namespace Cache.Redis
         /// </summary>
         private readonly ConnectionMultiplexer _conn;
 
+        public RedisHash Hash { get; private set; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="config">Redis配置</param>
         /// <param name="dbNum">Redis的数据库序号</param>
-        public RedisCache(RedisConfig config, int dbNum=0)
+        public RedisCache(RedisConfig config, int dbNum = 0)
         {
             _dbNum = dbNum;
             _conn = RedisConnection.GetConnectionMultiplexer($"{config.Host}:{config.Port}");
+            Hash = new RedisHash(GetDatabase());
         }
 
 
@@ -41,7 +43,8 @@ namespace Cache.Redis
         /// <returns></returns>
         public override T Get<T>(string key)
         {
-            return Do(db => {
+            return Do(db =>
+            {
 
                 Type type = typeof(T).GetUnderlyingType();
                 var value = db.StringGet(key).ToString();
@@ -89,14 +92,31 @@ namespace Cache.Redis
         /// <param name="expiration">缓存有效期（单位：秒）</param>
         public override void Set<T>(string key, T value, ulong expiration = 0)
         {
-            Do(db => {
+            var result = Do(db =>
+            {
 
                 Type type = typeof(T).GetUnderlyingType();
-
                 var valueFormat = type != typeof(string) ? value.ToJson() : value.ToString();
 
                 return expiration > 0 ? db.StringSet(key, valueFormat, TimeSpan.FromSeconds(expiration)) : db.StringSet(key, valueFormat);
             });
+
+            if (!result)
+            {
+                throw new RedisException($"设置键值失败，键名：{key}");
+            }
+        }
+
+
+        /// <summary>
+        /// 设置缓存的有效期
+        /// </summary>
+        /// <param name="key">缓存key</param>
+        /// <param name="expiration">缓存有效期（单位：秒）</param>
+        /// <returns></returns>
+        public bool KeyExpire(string key, ulong expiration)
+        {
+            return Do(db => db.KeyExpire(key, TimeSpan.FromSeconds(expiration)));
         }
 
 
@@ -107,15 +127,25 @@ namespace Cache.Redis
         /// <returns></returns>
         public RedisLock CreateLock(string key)
         {
-            var database = _conn.GetDatabase(_dbNum);
+            var database = GetDatabase();
             return new RedisLock(database, key);
         }
 
 
         private T Do<T>(Func<IDatabase, T> func)
         {
-            var database = _conn.GetDatabase(_dbNum);
+            var database = GetDatabase();
             return func(database);
+        }
+
+
+        /// <summary>
+        /// 获取Redis数据库对象
+        /// </summary>
+        /// <returns></returns>
+        private IDatabase GetDatabase()
+        { 
+            return _conn.GetDatabase(_dbNum);
         }
     }
 }

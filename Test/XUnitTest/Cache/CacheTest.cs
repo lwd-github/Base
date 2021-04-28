@@ -79,6 +79,20 @@ namespace XUnitTest.Cache
             _redisCache.Remove(key4);
             var i4 = _redisCache.GetOrSet<Location?>(key4, () => { return new Location { Lat = 1.2, Lng = 2.3 }; });
             i4 = _redisCache.Get<Location?>(key4);
+
+            _redisCache.KeyExpire(key4, 10);
+        }
+
+
+        /// <summary>
+        /// RedisHash测试
+        /// </summary>
+        [Fact]
+        public void RedisHashTest()
+        {
+            string key1 = "redisHashCache_key1";
+            _redisCache.Hash.Set(key1, "product1", "1");
+            _redisCache.Hash.Set(key1, "product1", 2);
         }
 
 

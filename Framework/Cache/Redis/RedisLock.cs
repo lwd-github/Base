@@ -8,8 +8,8 @@ namespace Cache.Redis
     public class RedisLock : IDisposable
     {
         IDatabase _database;
-        string _key;
-        string _token;
+        string _key; //锁键
+        string _token; //令牌
         bool _isReleased; //是否释放锁
 
         /// <summary>
