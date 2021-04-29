@@ -109,6 +109,17 @@ namespace Cache.Redis
 
 
         /// <summary>
+        /// 判断缓存key是否存在
+        /// </summary>
+        /// <param name="key">缓存key</param>
+        /// <returns></returns>
+        public virtual bool Exists(string key)
+        {
+            return Do(db => db.KeyExists(key));
+        }
+
+
+        /// <summary>
         /// 设置缓存的有效期
         /// </summary>
         /// <param name="key">缓存key</param>

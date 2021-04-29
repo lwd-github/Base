@@ -11,6 +11,7 @@ using XUnitTest.Model;
 using Common.Extension;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace XUnitTest.Cache
 {
@@ -60,6 +61,7 @@ namespace XUnitTest.Cache
 
             var j = _redisCache.Get<int?>(key1);
             _redisCache.Remove(key1);
+            _redisCache.Set<int?>(key1, null);
             j = _redisCache.Get<int?>(key1);
 
             var k = _redisCache.GetOrSet<string>(key1, () => { return "8"; }, 30);
@@ -80,7 +82,10 @@ namespace XUnitTest.Cache
             var i4 = _redisCache.GetOrSet<Location?>(key4, () => { return new Location { Lat = 1.2, Lng = 2.3 }; });
             i4 = _redisCache.Get<Location?>(key4);
 
-            _redisCache.KeyExpire(key4, 10);
+            if(_redisCache.Exists(key4))
+            {
+                _redisCache.KeyExpire(key4, 10);
+            }  
         }
 
 
@@ -91,8 +96,33 @@ namespace XUnitTest.Cache
         public void RedisHashTest()
         {
             string key1 = "redisHashCache_key1";
-            _redisCache.Hash.Set(key1, "product1", "1");
-            _redisCache.Hash.Set(key1, "product1", 2);
+            _redisCache.Hash.Set(key1, "product1", "68");
+            _redisCache.Hash.Set(key1, "product2", 86);
+            var value1 = _redisCache.Hash.Get(key1, "product2");
+            var value1_1 = _redisCache.Hash.Get(key1, new string[] { "product2", "af" });
+            var value1_2 = _redisCache.Hash.GetAll(key1);
+            var value1_3 = _redisCache.Hash.GetValues(key1);
+
+            if (_redisCache.Hash.Exists(key1, "product1"))
+            {
+                _redisCache.Hash.Remove(key1, "product1");
+                _redisCache.Hash.Remove(key1, new[] { "product1" , "product2" });
+            }
+
+            string key2 = "redisHashCache_key2";
+            List<Person> value2 = new List<Person>();
+            value2.Add(new Person { Id = 1, Name = "Test1" });
+            value2.Add(new Person { Id = 2, Name = "Test2" });
+            _redisCache.Hash.Set(key2, value2.ToDictionary(t => t.Id.ToString(), t => t));
+            var value2_1 = _redisCache.Hash.Get<Person>(key2, "1");
+            var value2_2 = _redisCache.Hash.Get<Person>(key2, new string[] { "1", "af" });
+            var value2_3 = _redisCache.Hash.GetAll<Person>(key2);
+            var value2_4 = _redisCache.Hash.GetValues<Person>(key2);
+
+            if (_redisCache.Hash.Exists(key2, "2"))
+            {
+                _redisCache.Remove(key2);
+            }
         }
 
 
