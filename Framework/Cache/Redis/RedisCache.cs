@@ -20,6 +20,9 @@ namespace Cache.Redis
         /// </summary>
         private readonly ConnectionMultiplexer _conn;
 
+        /// <summary>
+        /// Hash
+        /// </summary>
         public RedisHash Hash { get; private set; }
 
         /// <summary>
@@ -31,7 +34,7 @@ namespace Cache.Redis
         {
             _dbNum = dbNum;
             _conn = RedisConnection.GetConnectionMultiplexer($"{config.Host}:{config.Port}");
-            Hash = new RedisHash(GetDatabase());
+            Hash = new RedisHash(GetDatabase);
         }
 
 
@@ -45,11 +48,10 @@ namespace Cache.Redis
         {
             return Do(db =>
             {
-
                 Type type = typeof(T).GetUnderlyingType();
-                var value = db.StringGet(key).ToString();
+                var value = db.StringGet(key);
 
-                if (value.IsNull())
+                if (value.IsNull)
                 {
                     return default;
                 }
@@ -94,6 +96,16 @@ namespace Cache.Redis
         {
             var result = Do(db =>
             {
+                if (value.IsNull())
+                {
+                    if (db.KeyExists(key))
+                    {
+                        db.KeyDelete(key);
+                    }
+
+                    return true;
+                    //throw new RedisException($"键[{key}]的值为null");
+                }
 
                 Type type = typeof(T).GetUnderlyingType();
                 var valueFormat = type != typeof(string) ? value.ToJson() : value.ToString();
@@ -103,7 +115,7 @@ namespace Cache.Redis
 
             if (!result)
             {
-                throw new RedisException($"设置键值失败，键名：{key}");
+                throw new RedisException($"设置键[{key}]失败");
             }
         }
 
@@ -138,15 +150,7 @@ namespace Cache.Redis
         /// <returns></returns>
         public RedisLock CreateLock(string key)
         {
-            var database = GetDatabase();
-            return new RedisLock(database, key);
-        }
-
-
-        private T Do<T>(Func<IDatabase, T> func)
-        {
-            var database = GetDatabase();
-            return func(database);
+            return new RedisLock(GetDatabase, key);
         }
 
 
@@ -157,6 +161,13 @@ namespace Cache.Redis
         private IDatabase GetDatabase()
         { 
             return _conn.GetDatabase(_dbNum);
+        }
+
+
+        private T Do<T>(Func<IDatabase, T> func)
+        {
+            var database = GetDatabase();
+            return func(database);
         }
     }
 }

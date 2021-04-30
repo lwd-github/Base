@@ -61,9 +61,9 @@ namespace XUnitTest.Cache
 
             var j = _redisCache.Get<int?>(key1);
             _redisCache.Remove(key1);
-            _redisCache.Set<int?>(key1, null);
             j = _redisCache.Get<int?>(key1);
 
+            _redisCache.Set(key1, null);
             var k = _redisCache.GetOrSet<string>(key1, () => { return "8"; }, 30);
             k = _redisCache.Get<string>(key1);
 
@@ -98,6 +98,7 @@ namespace XUnitTest.Cache
             string key1 = "redisHashCache_key1";
             _redisCache.Hash.Set(key1, "product1", "68");
             _redisCache.Hash.Set(key1, "product2", 86);
+            _redisCache.Hash.Set(key1, "product3", null);
             var value1 = _redisCache.Hash.Get(key1, "product2");
             var value1_1 = _redisCache.Hash.Get(key1, new string[] { "product2", "af" });
             var value1_2 = _redisCache.Hash.GetAll(key1);
@@ -111,9 +112,14 @@ namespace XUnitTest.Cache
 
             string key2 = "redisHashCache_key2";
             List<Person> value2 = new List<Person>();
-            value2.Add(new Person { Id = 1, Name = "Test1" });
-            value2.Add(new Person { Id = 2, Name = "Test2" });
+            value2.Add(new Person { Id = 1, Name = "Test1-1" });
+            value2.Add(new Person { Id = 2, Name = "Test2-1" });
             _redisCache.Hash.Set(key2, value2.ToDictionary(t => t.Id.ToString(), t => t));
+
+            var dic = new Dictionary<string, Person>();
+            dic.Add("3", null);
+            _redisCache.Hash.Set<Person>(key2, dic);
+
             var value2_1 = _redisCache.Hash.Get<Person>(key2, "1");
             var value2_2 = _redisCache.Hash.Get<Person>(key2, new string[] { "1", "af" });
             var value2_3 = _redisCache.Hash.GetAll<Person>(key2);

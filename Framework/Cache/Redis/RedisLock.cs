@@ -7,7 +7,7 @@ namespace Cache.Redis
 {
     public class RedisLock : IDisposable
     {
-        IDatabase _database;
+        Func<IDatabase> _getDatabase;
         string _key; //锁键
         string _token; //令牌
         bool _isReleased; //是否释放锁
@@ -17,9 +17,9 @@ namespace Cache.Redis
         /// </summary>
         /// <param name="database">Redis 数据库对象</param>
         /// <param name="key">锁键</param>
-        public RedisLock(IDatabase database, string key)
+        public RedisLock(Func<IDatabase> getDatabase, string key)
         {
-            _database = database;
+            _getDatabase = getDatabase;
             _key = key;
             _token = Guid.NewGuid().ToString();
         }
@@ -32,8 +32,11 @@ namespace Cache.Redis
         /// <returns></returns>
         public bool LockTake(ulong expiration = 60)
         {
-            ulong expirationNew = expiration > 0 ? expiration : ulong.MaxValue;
-            return _database.LockTake(_key, _token, TimeSpan.FromSeconds(expirationNew));
+            return Do(db =>
+            {
+                ulong expirationNew = expiration > 0 ? expiration : ulong.MaxValue;
+                return db.LockTake(_key, _token, TimeSpan.FromSeconds(expirationNew));
+            });
         }
 
 
@@ -43,16 +46,28 @@ namespace Cache.Redis
         /// <returns></returns>
         public bool LockRelease()
         {
-            return _isReleased = _database.LockRelease(_key, _token);
+            return Do(db =>
+            {
+                _isReleased = db.LockRelease(_key, _token);
+                return _isReleased;
+            });
         }
 
 
         public void Dispose()
         {
-            if(!_isReleased)
+            if (!_isReleased)
             {
-                _database.LockRelease(_key, _token); //释放锁
+                //释放锁
+                Do(db => db.LockRelease(_key, _token));
             }
+        }
+
+
+        private T Do<T>(Func<IDatabase, T> func)
+        {
+            var database = _getDatabase();
+            return func(database);
         }
     }
 }

@@ -9,11 +9,11 @@ namespace Cache.Redis
 {
     public class RedisHash
     {
-        IDatabase _database;
+        Func<IDatabase> _getDatabase;
 
-        public RedisHash(IDatabase database)
+        public RedisHash(Func<IDatabase> getDatabase)
         {
-            _database = database;
+            _getDatabase = getDatabase;
         }
 
 
@@ -112,11 +112,11 @@ namespace Cache.Redis
 
                 if (type == typeof(string))
                 {
-                    return values.Select(t => t.IsNull ? default : (T)Convert.ChangeType(t, type)).ToList();
+                    return values.Select(t => (T)Convert.ChangeType(t, type)).ToList();
                 }
                 else
                 {
-                    return values.Select(t => t.IsNull ? default : t.ToString().ToObject<T>()).ToList();
+                    return values.Select(t => t.ToString().ToObject<T>()).ToList();
                 }
             });
         }
@@ -132,11 +132,21 @@ namespace Cache.Redis
         {
             Do(db =>
             {
+                if (value.IsNull())
+                {
+                    if (db.HashExists(key, hashField))
+                    {
+                        db.HashDelete(key, hashField);
+                    }
+
+                    return true;
+                }
+
                 Type type = typeof(T).GetUnderlyingType();
                 var valueFormat = type != typeof(string) ? value.ToJson() : value.ToString();
 
                 //如果字段是哈希中的新字段并且设置了值，则返回1。如果哈希中已存在字段且值已更新，则为0。
-                return _database.HashSet(key, hashField, valueFormat);
+                return db.HashSet(key, hashField, valueFormat);
             });
         }
 
@@ -145,11 +155,18 @@ namespace Cache.Redis
         {
             Do(db =>
             {
+                var removeFields = values.Where(t => t.Value.IsNull()).Select(t => (RedisValue)t.Key).ToArray();
+
+                if (removeFields.Any())
+                {
+                    db.HashDelete(key, removeFields);
+                }
+
                 Type type = typeof(T).GetUnderlyingType();
                 var isString = type == typeof(string);
                 //var valueFormat = type != typeof(string) ? value.ToJson() : value.ToString();
-                var hashEntries = values.Select(t => new HashEntry(t.Key, isString ? t.Value.ToString() : t.Value.ToJson())).ToArray();
-                _database.HashSet(key, hashEntries);
+                var hashEntries = values.Where(t => t.Value.IsNotNull()).Select(t => new HashEntry(t.Key, isString ? t.Value.ToString() : t.Value.ToJson())).ToArray();
+                db.HashSet(key, hashEntries);
                 return true;
             });
         }
@@ -179,7 +196,8 @@ namespace Cache.Redis
 
         private T Do<T>(Func<IDatabase, T> func)
         {
-            return func(_database);
+            var database = _getDatabase();
+            return func(database);
         }
     }
 }
