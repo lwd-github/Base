@@ -11,6 +11,6 @@ namespace DTO.Constant
         /// </summary>
         public const string DeadLetterExchange = "Sys1-DeadLetter-Exchange";
 
-        public const string IOCAssemblies = "CommonService.dll;Cache.dll";
+        public const string IOCAssemblies = "CommonService.dll;TestService.dll;Cache.dll";
     }
 }

@@ -45,8 +45,4 @@
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ServiceTest\" />
-  </ItemGroup>
-
 </Project>

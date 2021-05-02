@@ -28,6 +28,12 @@ namespace TestWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ////×¢²áRedis
+            //services.AddSingleton(typeof(Cache.Redis.RedisCache), sp =>
+            //{
+            //    var content = new Cache.Redis.RedisCache(Config.ConfigAgent.Value<Cache.Redis.Config.RedisConfig>());
+            //    return content;
+            //});
 
             services.AddControllers();
 

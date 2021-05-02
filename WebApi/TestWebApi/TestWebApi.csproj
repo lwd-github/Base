@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\Framework\Validator\Validator.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
+    <ProjectReference Include="..\..\Service\TestService\TestService.csproj" />
   </ItemGroup>
 
 </Project>
