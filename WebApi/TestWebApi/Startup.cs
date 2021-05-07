@@ -46,6 +46,8 @@ namespace TestWebApi
             services.AddMvc(o => {
                 //全局注册异常过滤器
                 o.Filters.Add(typeof(ExceptionHandling));
+                //o.ModelBinderProviders.Add(new ModelBinder.CustomModelBinderProvider());
+                o.ModelBinderProviders.Insert(0, new ModelBinder.CustomModelBinderProvider());
             });
         }
 
