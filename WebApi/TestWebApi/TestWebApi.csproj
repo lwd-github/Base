@@ -4,6 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\..\..\projxmldoc\TestWebApi.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.5" NoWarn="NU1605" />
@@ -15,6 +19,8 @@
     <ProjectReference Include="..\..\Framework\Common\Common.csproj" />
     <ProjectReference Include="..\..\Framework\Config\Config.csproj" />
     <ProjectReference Include="..\..\Framework\Validator\Validator.csproj" />
+    <ProjectReference Include="..\..\Helper\Extensions\Helper.Extension.csproj" />
+    <ProjectReference Include="..\..\Helper\Middleware\Helper.Middleware.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
     <ProjectReference Include="..\..\Service\TestService\TestService.csproj" />

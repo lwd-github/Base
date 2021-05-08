@@ -1,4 +1,6 @@
 using DTO.Constant;
+using Helper.Extensions.Swagger;
+using Helper.Middleware;
 using IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +43,7 @@ namespace TestWebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestWebApi", Version = "v1" });
+                c.AddXmlComments("TestWebApi.xml"); //Ìí¼ÓxmlÎÄµµ×¢ÊÍ
             });
 
             services.AddMvc(o => {
@@ -79,6 +82,8 @@ namespace TestWebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //app.UseMiddleware<HttpRequestBodyEnableBuffering>();
 
             app.UseEndpoints(endpoints =>
             {

@@ -11,11 +11,11 @@ namespace TestWebApi.ModelBinder
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
-            if (context.BindingInfo.BinderType == typeof(LoginInfo))
+            if (context.Metadata.ModelType == typeof(LoginInfo))
             {
-                
+                return new LoginInfoBinder();
             }
-            return new LoginInfoBinder();
+            return null; 
         }
     }
 }
