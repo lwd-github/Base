@@ -1,8 +1,8 @@
-﻿using Common.Results;
-using Config;
+﻿using Framework.Common.Results;
+using Framework.Config;
 using DTO.Config;
 using Microsoft.AspNetCore.Mvc;
-using MQ;
+using Framework.MQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;

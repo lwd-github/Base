@@ -1,5 +1,5 @@
 ﻿
-namespace Validator.AttributeValidator
+namespace Framework.Validator.AttributeValidator
 {
     /// <summary>
     /// 字符长度特性

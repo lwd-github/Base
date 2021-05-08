@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\MQ\MQ.csproj" />
+    <ProjectReference Include="..\..\Framework\MQ\Framework.MQ.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
   </ItemGroup>

@@ -15,10 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Cache\Cache.csproj" />
-    <ProjectReference Include="..\..\Framework\Common\Common.csproj" />
-    <ProjectReference Include="..\..\Framework\Config\Config.csproj" />
-    <ProjectReference Include="..\..\Framework\Validator\Validator.csproj" />
+    <ProjectReference Include="..\..\Framework\Cache\Framework.Cache.csproj" />
+    <ProjectReference Include="..\..\Framework\Common\Framework.Common.csproj" />
+    <ProjectReference Include="..\..\Framework\Config\Framework.Config.csproj" />
+    <ProjectReference Include="..\..\Framework\Validator\Framework.Validator.csproj" />
     <ProjectReference Include="..\..\Helper\Extensions\Helper.Extension.csproj" />
     <ProjectReference Include="..\..\Helper\Middleware\Helper.Middleware.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />

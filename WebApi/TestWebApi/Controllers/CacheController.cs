@@ -1,10 +1,10 @@
-﻿using Cache.Local;
-using Cache.Redis;
-using Common.Results;
+﻿using Framework.Cache.Local;
+using Framework.Cache.Redis;
+using Framework.Common.Results;
 using DTO.Constant;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MQ;
+using Framework.MQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;

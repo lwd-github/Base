@@ -1,10 +1,10 @@
-﻿using Common.Exceptions;
+﻿using Framework.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Common.Extension
+namespace Framework.Common.Extension
 {
     public static class EnumExtension
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MQ.Config
+namespace Framework.MQ.Config
 {
     /// <summary>
     /// 消息队列配置信息

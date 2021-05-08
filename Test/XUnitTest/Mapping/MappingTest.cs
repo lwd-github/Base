@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xunit;
-using Common.Extension;
+using Framework.Common.Extension;
 using System.Diagnostics;
 using XUnitTest.Model;
 using XUnitTest.Enum;

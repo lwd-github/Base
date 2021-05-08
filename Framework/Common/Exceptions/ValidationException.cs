@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Exceptions
+namespace Framework.Common.Exceptions
 {
     /// <summary>
     /// 验证异常

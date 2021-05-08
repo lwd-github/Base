@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IdGenerator
+namespace Framework.IdGenerator
 {
     public class IdWorker
     {

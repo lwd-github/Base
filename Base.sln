@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{A9BF77BC-4734-4BF4-96B9-C3261C188366}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validator", "Framework\Validator\Validator.csproj", "{905388DC-BCF0-48E9-9B94-2A6257823B21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Validator", "Framework\Validator\Framework.Validator.csproj", "{905388DC-BCF0-48E9-9B94-2A6257823B21}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Framework\Common\Common.csproj", "{7EB6DD12-1BEF-4C88-995D-F497C60B8FCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Common", "Framework\Common\Framework.Common.csproj", "{7EB6DD12-1BEF-4C88-995D-F497C60B8FCE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{D84BB42B-C0AD-494B-A190-D5980D97569D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebApi", "WebApi\TestWebApi\TestWebApi.csproj", "{DF92355F-C4CF-4BFD-8C31-3FB4B48B7A10}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Config", "Framework\Config\Config.csproj", "{7E0965E8-C239-41DD-BE72-C696DA9F4CE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Config", "Framework\Config\Framework.Config.csproj", "{7E0965E8-C239-41DD-BE72-C696DA9F4CE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{22C6F06A-1DAF-423D-AC58-BC7C177D2414}"
 EndProject
@@ -23,31 +23,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{B8AFD344
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "Model\CommonModel\DTO.csproj", "{8A8D5EB3-FE4B-4A8E-B2AD-1672C6A12A9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQ", "Framework\MQ\MQ.csproj", "{9144136B-EB6E-4AE5-9EAC-CD25E2175D1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.MQ", "Framework\MQ\Framework.MQ.csproj", "{9144136B-EB6E-4AE5-9EAC-CD25E2175D1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Job", "Job", "{87B015B7-1D87-4F1B-A1F2-8588BE33F882}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQConsumerTest", "Job\MQConsumerTest\MQConsumerTest.csproj", "{97E6D91B-2B59-4D8C-B123-11265CDFC1E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job.MQConsumerTest", "Job\MQConsumerTest\Job.MQConsumerTest.csproj", "{97E6D91B-2B59-4D8C-B123-11265CDFC1E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQProducerTest", "Job\MQProducerTest\MQProducerTest.csproj", "{ED52C225-F5C0-4BEF-B1C1-B490A305F0BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job.MQProducerTest", "Job\MQProducerTest\Job.MQProducerTest.csproj", "{ED52C225-F5C0-4BEF-B1C1-B490A305F0BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOC", "Framework\IOC\IOC.csproj", "{D4CE462F-0E61-4284-9609-2C13D254271E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.IOC", "Framework\IOC\Framework.IOC.csproj", "{D4CE462F-0E61-4284-9609-2C13D254271E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CanalTest", "CanalTest", "{1D8B986A-9992-434B-A75B-D347F7AF0F29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CanalTest", "CanalTest\CanalTest.csproj", "{5A31CC67-D5F7-4702-B335-F48C152C4BDD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Canal", "Framework\Canal\Canal.csproj", "{CA6868B7-8E00-48CC-B921-FF6950502663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Canal", "Framework\Canal\Framework.Canal.csproj", "{CA6868B7-8E00-48CC-B921-FF6950502663}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CanalClientTest", "Job\CanalClientTest\CanalClientTest.csproj", "{BD4B450D-D382-4C34-A92F-32795546F820}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job.CanalClientTest", "Job\CanalClientTest\Job.CanalClientTest.csproj", "{BD4B450D-D382-4C34-A92F-32795546F820}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBModel", "Model\DBModel\DBModel.csproj", "{7A6AC204-BF29-4268-8193-10A0F8479408}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache", "Framework\Cache\Cache.csproj", "{CDBF7398-D70E-47EF-9A82-F08040233641}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Cache", "Framework\Cache\Framework.Cache.csproj", "{CDBF7398-D70E-47EF-9A82-F08040233641}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Map", "Framework\Map\Map.csproj", "{63AEE9EF-9DFA-4F96-9F4B-A7D534C777CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Map", "Framework\Map\Framework.Map.csproj", "{63AEE9EF-9DFA-4F96-9F4B-A7D534C777CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdGenerator", "Framework\IdGenerator\IdGenerator.csproj", "{F95324DF-D990-46E8-8E0A-DF7D66D71E53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.IdGenerator", "Framework\IdGenerator\Framework.IdGenerator.csproj", "{F95324DF-D990-46E8-8E0A-DF7D66D71E53}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{AD0FEF0D-4AFD-453B-ACFF-AB063465980E}"
 EndProject
@@ -59,9 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserApi", "WebApi\UserApi\U
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helper", "Helper", "{2217C58B-8840-4F04-9ED8-E17783A16915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper.Middleware", "Helper\Middleware\Helper.Middleware.csproj", "{4CA1D587-0876-43C0-BD93-D956D9A2D04D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helper.Middleware", "Helper\Middleware\Helper.Middleware.csproj", "{4CA1D587-0876-43C0-BD93-D956D9A2D04D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper.Extension", "Helper\Extensions\Helper.Extension.csproj", "{98D201F6-C90D-4E82-92B9-5F457061088F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helper.Extension", "Helper\Extensions\Helper.Extension.csproj", "{98D201F6-C90D-4E82-92B9-5F457061088F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

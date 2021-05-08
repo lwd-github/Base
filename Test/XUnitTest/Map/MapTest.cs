@@ -1,4 +1,4 @@
-﻿using Map;
+﻿using Framework.Map;
 using System;
 using System.Collections.Generic;
 using Xunit;

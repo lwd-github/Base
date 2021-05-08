@@ -1,13 +1,13 @@
 ﻿using Autofac;
 using Autofac.Features.AttributeFilters;
-using Common.Extension;
-using IOC.LifetimeScope;
+using Framework.Common.Extension;
+using Framework.IOC.LifetimeScope;
 using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Loader;
 
-namespace IOC
+namespace Framework.IOC
 {
     public class IocManager
     {

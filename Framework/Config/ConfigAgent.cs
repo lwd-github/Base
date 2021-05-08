@@ -1,9 +1,9 @@
-﻿using Common.Extension;
+﻿using Framework.Common.Extension;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Config
+namespace Framework.Config
 {
     public class ConfigAgent
     {

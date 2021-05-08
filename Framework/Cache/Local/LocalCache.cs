@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using System;
 
-namespace Cache.Local
+namespace Framework.Cache.Local
 {
     /// <summary>
     /// 本地缓存

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Canal
+namespace Framework.Canal
 {
     /// <summary>
     /// Canal客户端

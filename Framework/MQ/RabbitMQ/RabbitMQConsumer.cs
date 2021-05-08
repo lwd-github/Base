@@ -1,12 +1,12 @@
-﻿using Common.Extension;
-using MQ.Config;
+﻿using Framework.Common.Extension;
+using Framework.MQ.Config;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MQ.RabbitMQ
+namespace Framework.MQ.RabbitMQ
 {
     /// <summary>
     /// RabbitMQ消息队列消费者

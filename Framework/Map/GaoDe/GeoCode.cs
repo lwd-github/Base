@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Map.GaoDe
+namespace Framework.Map.GaoDe
 {
     public class GeoCode
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IOC.LifetimeScope
+namespace Framework.IOC.LifetimeScope
 {
     /// <summary>
     /// IOC单例模式

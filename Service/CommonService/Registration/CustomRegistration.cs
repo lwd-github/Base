@@ -1,14 +1,12 @@
 ﻿using Autofac;
-using Cache.Redis;
-using Cache.Redis.Config;
-using Canal;
-using Canal.Config;
-using CommonService.Config;
-using Config;
-using IOC;
-using MQ;
-using MQ.Config;
-using MQ.RabbitMQ;
+using Framework.Cache.Redis;
+using Framework.Cache.Redis.Config;
+using Framework.Canal;
+using Framework.Canal.Config;
+using Framework.Config;
+using Framework.MQ;
+using Framework.MQ.Config;
+using Framework.MQ.RabbitMQ;
 
 namespace CommonService.Registration
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
-using MQ;
-using MQ.Config;
-using MQ.RabbitMQ;
+using Framework.MQ;
+using Framework.MQ.Config;
+using Framework.MQ.RabbitMQ;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MQProducerTest
+namespace Job.MQProducerTest
 {
     public class MQProducerService : IHostedService
     {

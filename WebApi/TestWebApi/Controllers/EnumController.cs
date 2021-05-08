@@ -1,7 +1,7 @@
-﻿using Common;
-using Common.Exceptions;
-using Common.Extension;
-using Common.Results;
+﻿using Framework.Common;
+using Framework.Common.Exceptions;
+using Framework.Common.Extension;
+using Framework.Common.Results;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

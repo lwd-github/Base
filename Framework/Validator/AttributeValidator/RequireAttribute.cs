@@ -1,7 +1,7 @@
-﻿using Common.Extension;
+﻿using Framework.Common.Extension;
 using System;
 
-namespace Validator.AttributeValidator
+namespace Framework.Validator.AttributeValidator
 {
     /// <summary>
     /// 必填特性

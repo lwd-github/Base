@@ -1,4 +1,4 @@
-﻿using Common.Results;
+﻿using Framework.Common.Results;
 using DTO.Config;
 using DTO.User;
 using Microsoft.AspNetCore.Mvc;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MQ
+namespace Framework.MQ
 {
     /// <summary>
     /// 消息队列消费者

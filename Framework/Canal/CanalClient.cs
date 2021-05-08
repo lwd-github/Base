@@ -1,4 +1,4 @@
-﻿using Canal.Config;
+﻿using Framework.Canal.Config;
 using CanalSharp.Client;
 using CanalSharp.Client.Impl;
 using CanalSharp.Protocol;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Canal
+namespace Framework.Canal
 {
     public class CanalClient : ICanalClient, IDisposable
     {

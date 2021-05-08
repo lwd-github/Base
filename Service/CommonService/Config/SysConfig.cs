@@ -1,11 +1,11 @@
-﻿using Config;
-using Common.Extension;
+﻿using Framework.Config;
+using Framework.Common.Extension;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IOC.LifetimeScope;
-using Cache.Local;
+using Framework.IOC.LifetimeScope;
+using Framework.Cache.Local;
 using DTO.Constant;
 
 namespace CommonService.Config

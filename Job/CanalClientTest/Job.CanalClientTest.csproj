@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Canal\Canal.csproj" />
-    <ProjectReference Include="..\..\Framework\Common\Common.csproj" />
-    <ProjectReference Include="..\..\Framework\MQ\MQ.csproj" />
+    <ProjectReference Include="..\..\Framework\Canal\Framework.Canal.csproj" />
+    <ProjectReference Include="..\..\Framework\Common\Framework.Common.csproj" />
+    <ProjectReference Include="..\..\Framework\MQ\Framework.MQ.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
   </ItemGroup>
 

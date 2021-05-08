@@ -1,9 +1,9 @@
-﻿using MQ.Config;
+﻿using Framework.MQ.Config;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MQ
+namespace Framework.MQ
 {
     /// <summary>
     /// 消息队列操作的上下文（建议使用单例）

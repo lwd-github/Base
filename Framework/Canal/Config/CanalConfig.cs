@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Canal.Config
+namespace Framework.Canal.Config
 {
     /// <summary>
     /// Canal配置

@@ -1,20 +1,14 @@
-﻿using DTO.Constant;
-using Microsoft.Extensions.Hosting;
-using MQ;
-using MQ.Config;
-using MQ.RabbitMQ;
+﻿using Microsoft.Extensions.Hosting;
+using Framework.MQ;
+using Framework.MQ.Config;
+using Framework.MQ.RabbitMQ;
 using RabbitMQ.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Extension;
-using DBModel;
-using Canal;
+using Framework.Common.Extension;
 
-namespace MQConsumerTest
+namespace Job.MQConsumerTest
 {
     public class MQConsumerService : IHostedService
     {

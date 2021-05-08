@@ -1,4 +1,4 @@
-﻿using Canal;
+﻿using Framework.Canal;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Extension;
-using MQ;
-using MQ.Config;
+using Framework.Common.Extension;
+using Framework.MQ;
+using Framework.MQ.Config;
 using RabbitMQ.Client;
 
-namespace CanalClientTest
+namespace Job.CanalClientTest
 {
     public class CanalClientService : IHostedService
     {

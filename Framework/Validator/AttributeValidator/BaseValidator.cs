@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Validator.AttributeValidator
+namespace Framework.Validator.AttributeValidator
 {
     /// <summary>
     /// 特性验证器

@@ -1,5 +1,5 @@
-﻿using Common.Exceptions;
-using Common.Results;
+﻿using Framework.Common.Exceptions;
+using Framework.Common.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace Common.Extension
+namespace Framework.Common.Extension
 {
     public static class TypeExtension
     {

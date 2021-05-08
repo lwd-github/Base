@@ -1,6 +1,6 @@
 ﻿using Xunit;
-using Validator.AttributeValidator;
-using Validator.AttributeValidator.Extension;
+using Framework.Validator.AttributeValidator;
+using Framework.Validator.AttributeValidator.Extension;
 using System;
 
 namespace XUnitTest.Validator.AttributeValidator

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cache.Local
+namespace Framework.Cache.Local
 {
     /// <summary>
     /// 本地缓存接口

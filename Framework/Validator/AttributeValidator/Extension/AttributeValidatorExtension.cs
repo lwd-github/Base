@@ -1,9 +1,9 @@
-﻿using Common.Results;
+﻿using Framework.Common.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Validator.AttributeValidator.Extension
+namespace Framework.Validator.AttributeValidator.Extension
 {
     public static class AttributeValidatorExtension
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MQ
+namespace Framework.MQ
 {
     /// <summary>
     /// 消息队列生产者

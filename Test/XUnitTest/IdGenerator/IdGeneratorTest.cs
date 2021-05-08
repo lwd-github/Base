@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using IdGenerator;
+using Framework.IdGenerator;
 using System.Collections.Concurrent;
 
 namespace XUnitTest.IdGenerator

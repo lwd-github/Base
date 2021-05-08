@@ -1,9 +1,9 @@
 using Autofac;
 using CommonService.Registration;
 using CommonService.ServiceProviderFactory;
-using Config;
+using Framework.Config;
 using DTO.Constant;
-using IOC;
+using Framework.IOC;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

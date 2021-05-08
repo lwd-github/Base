@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Cache\Cache.csproj" />
-    <ProjectReference Include="..\..\Framework\Canal\Canal.csproj" />
-    <ProjectReference Include="..\..\Framework\Config\Config.csproj" />
-    <ProjectReference Include="..\..\Framework\IOC\IOC.csproj" />
-    <ProjectReference Include="..\..\Framework\MQ\MQ.csproj" />
+    <ProjectReference Include="..\..\Framework\Cache\Framework.Cache.csproj" />
+    <ProjectReference Include="..\..\Framework\Canal\Framework.Canal.csproj" />
+    <ProjectReference Include="..\..\Framework\Config\Framework.Config.csproj" />
+    <ProjectReference Include="..\..\Framework\IOC\Framework.IOC.csproj" />
+    <ProjectReference Include="..\..\Framework\MQ\Framework.MQ.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
   </ItemGroup>
 

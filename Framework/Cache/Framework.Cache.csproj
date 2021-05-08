@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\Validator\Validator.csproj" />
+    <ProjectReference Include="..\Common\Framework.Common.csproj" />
+    <ProjectReference Include="..\Validator\Framework.Validator.csproj" />
   </ItemGroup>
 
 </Project>

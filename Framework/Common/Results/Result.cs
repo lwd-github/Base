@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Results
+namespace Framework.Common.Results
 {
     public class Result<T>
     {

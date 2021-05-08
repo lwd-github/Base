@@ -1,7 +1,7 @@
 using DTO.Constant;
 using Helper.Extensions.Swagger;
 using Helper.Middleware;
-using IOC;
+using Framework.IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

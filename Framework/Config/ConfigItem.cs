@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Config
+namespace Framework.Config
 {
     public class ConfigItem
     {

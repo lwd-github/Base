@@ -1,9 +1,10 @@
 ﻿using CommonService.ServiceProviderFactory;
+using Framework.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace MQConsumerTest
+namespace Job.MQConsumerTest
 {
     class Program
     {
@@ -18,6 +19,7 @@ namespace MQConsumerTest
             return new HostBuilder()
                 .ConfigureServices((hostingContext, services) =>
                 {
+                    ConfigAgent.Configuration = hostingContext.Configuration;
                     services.AddHostedService<MQConsumerService>();
                 })
                 .UseServiceProviderFactory(new CustomServiceProviderFactory())

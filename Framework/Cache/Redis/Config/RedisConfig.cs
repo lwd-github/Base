@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cache.Redis.Config
+namespace Framework.Cache.Redis.Config
 {
     /// <summary>
     /// Redis配置

@@ -1,12 +1,12 @@
-﻿using Common.Extension;
+﻿using Framework.Common.Extension;
 using CommonService.ServiceProviderFactory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using Config;
+using Framework.Config;
 using Microsoft.Extensions.Configuration;
 
-namespace MQProducerTest
+namespace Job.MQProducerTest
 {
     class Program
     {

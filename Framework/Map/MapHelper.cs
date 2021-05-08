@@ -1,11 +1,11 @@
-﻿using Common.Extension;
-using Map.GaoDe;
+﻿using Framework.Common.Extension;
+using Framework.Map.GaoDe;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Linq;
 
-namespace Map
+namespace Framework.Map
 {
     public class MapHelper
     {

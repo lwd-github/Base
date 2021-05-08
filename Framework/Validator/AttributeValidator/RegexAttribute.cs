@@ -1,6 +1,6 @@
-﻿using Common.Extension;
+﻿using Framework.Common.Extension;
 
-namespace Validator.AttributeValidator
+namespace Framework.Validator.AttributeValidator
 {
     /// <summary>
     /// 正则表达式特性

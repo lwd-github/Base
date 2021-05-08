@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IOC
+namespace Framework.IOC
 {
     public class ServiceProviderFactory : IServiceProviderFactory<ContainerBuilder>
     {

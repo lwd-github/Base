@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cache.Redis
+namespace Framework.Cache.Redis
 {
     public class RedisLock : IDisposable
     {

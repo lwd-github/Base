@@ -2,13 +2,13 @@
 using DTO.Constant;
 using CommonService.Registration;
 using CommonService.ServiceProviderFactory;
-using IOC;
+using Framework.IOC;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using Config;
+using Framework.Config;
 using Microsoft.Extensions.Configuration.Json;
 
 namespace XUnitTest

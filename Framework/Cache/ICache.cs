@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cache
+namespace Framework.Cache
 {
     public interface ICache
     {

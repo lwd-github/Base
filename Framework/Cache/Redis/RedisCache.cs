@@ -1,12 +1,12 @@
-﻿using Cache.Local;
+﻿using Framework.Cache.Local;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Common.Extension;
-using Cache.Redis.Config;
+using Framework.Common.Extension;
+using Framework.Cache.Redis.Config;
 
-namespace Cache.Redis
+namespace Framework.Cache.Redis
 {
     public class RedisCache : CacheBase, ILocalCache
     {

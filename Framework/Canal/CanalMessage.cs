@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Canal
+namespace Framework.Canal
 {
     /// <summary>
     /// Canal消息

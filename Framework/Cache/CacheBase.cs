@@ -1,9 +1,9 @@
-﻿using Common.Extension;
+﻿using Framework.Common.Extension;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cache
+namespace Framework.Cache
 {
     public abstract class CacheBase : ICache
     {
