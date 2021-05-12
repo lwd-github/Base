@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace UserApi
@@ -34,18 +34,6 @@ namespace UserApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserApi", Version = "v1" });
             });
-
-            // Ìí¼ÓIdentityServer4
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()// 1¡¢ÅäÖÃÇ©ÊðÖ¤Êé
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                    {
-                        var connectionString = Configuration.GetConnectionString("DefaultConnection");
-                        builder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-                    };
-                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
