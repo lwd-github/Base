@@ -1,3 +1,4 @@
+using Framework.IdentityServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,9 @@ namespace UserApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserApi", Version = "v1" });
             });
+
+            //IdentityServer4
+            services.AddIdentity1();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

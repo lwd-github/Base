@@ -63,6 +63,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helper.Middleware", "Helper
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helper.Extension", "Helper\Extensions\Helper.Extension.csproj", "{98D201F6-C90D-4E82-92B9-5F457061088F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.IdentityServer", "Framework\IdentityServer\Framework.IdentityServer.csproj", "{F2882A7B-D4B8-42ED-B95B-75FF1D674B82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,10 @@ Global
 		{98D201F6-C90D-4E82-92B9-5F457061088F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98D201F6-C90D-4E82-92B9-5F457061088F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98D201F6-C90D-4E82-92B9-5F457061088F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2882A7B-D4B8-42ED-B95B-75FF1D674B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2882A7B-D4B8-42ED-B95B-75FF1D674B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2882A7B-D4B8-42ED-B95B-75FF1D674B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2882A7B-D4B8-42ED-B95B-75FF1D674B82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +190,7 @@ Global
 		{2A4D33AA-1619-4E71-A9FF-FA2C8A15C7DC} = {D84BB42B-C0AD-494B-A190-D5980D97569D}
 		{4CA1D587-0876-43C0-BD93-D956D9A2D04D} = {2217C58B-8840-4F04-9ED8-E17783A16915}
 		{98D201F6-C90D-4E82-92B9-5F457061088F} = {2217C58B-8840-4F04-9ED8-E17783A16915}
+		{F2882A7B-D4B8-42ED-B95B-75FF1D674B82} = {A9BF77BC-4734-4BF4-96B9-C3261C188366}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C236F4BC-3294-477F-BB79-AE6AF49168CD}
