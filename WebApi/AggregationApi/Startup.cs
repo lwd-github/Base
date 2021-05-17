@@ -39,7 +39,7 @@ namespace AggregationApi
                     .AddIdentityServerAuthentication(options =>
                     {
                         options.Authority = "https://localhost:5010"; // 1、授权中心地址
-                        options.ApiName = "TeamService"; // 2、api名称(项目具体名称)
+                        options.ApiName = "AggregationApi"; // 2、api名称(项目具体名称)
                         options.RequireHttpsMetadata = false; // 3、https元数据，不需要
                     });
         }

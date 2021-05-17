@@ -108,10 +108,10 @@ namespace UserApi
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "第一个api接口")
+                new ApiResource("AggregationApi", "第一个api接口")
                 {
                     //!!!重要
-                    Scopes = { "scope1"}
+                    Scopes = { "scope1" }
                 },
             };
         }
@@ -132,7 +132,7 @@ namespace UserApi
                 {
                     SubjectId = "1",
                     Username = "mail@qq.com",
-                    Password = "password"
+                    Password = "123"
                 }
             };
         }
@@ -144,7 +144,7 @@ namespace UserApi
             {
                  new Client
                 {
-                    ClientId = "app1",
+                    ClientId = "client1",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     AllowedScopes = new List<string>
@@ -152,7 +152,8 @@ namespace UserApi
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "scope1",
-                    }
+                    },
+                    AccessTokenLifetime = 60 //有效时间，单位秒
                  }
             };
         }

@@ -21,7 +21,7 @@ namespace AggregationApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("Login")]
-        public Result<IdentityDto> Login([FromForm] LoginInput input)
+        public Result<IdentityDto> Login([FromBody] LoginInput input)
         {
             var httpClient = new HttpClient();
 
@@ -36,11 +36,11 @@ namespace AggregationApi.Controllers
             TokenResponse tokenResponse = httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
-                ClientId = "app1",
+                ClientId = "client1",
                 ClientSecret = "secret",
                 GrantType = "password",
-                UserName = "mail@qq.com",//input.UserName,
-                Password = "password"//input.UserPassword
+                UserName = "mail@qq.com", //input.UserName
+                Password = "123" //input.UserPassword
             }).Result;
 
             // 3、返回AccessToken
@@ -67,8 +67,43 @@ namespace AggregationApi.Controllers
         }
 
 
+        [HttpPost("Logout")]
+        [Authorize]
+        public Result<string> Logout([FromBody] IdentityDto input)
+        {
+            var httpClient = new HttpClient();
+
+            // 1、获取IdentityServer接口文档
+            DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            if (discoveryDocument.IsError)
+            {
+                Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
+            }
+
+            var result = httpClient.RevokeTokenAsync(new TokenRevocationRequest
+            {
+                Address = discoveryDocument.RevocationEndpoint,
+                ClientId = "client1",
+                ClientSecret = "secret",
+                Token = input.AccessToken
+                //TokenTypeHint = "refresh_token"
+            }).Result;
+
+            if (result.IsError)
+            {
+                Console.WriteLine(result.Error);
+                return new Result<string> { Status = false, Data = "Error" };
+            }
+            else
+            {
+                Console.WriteLine(result.HttpErrorReason);
+                return new Result<string> { Status = true, Data = result.HttpErrorReason };
+            }
+        }
+
+
         [HttpGet]
-        [Authorize] //角色
+        [Authorize]
         public Result<string> Get()
         {
             return new Result<string> { Status = true, Data = "OK!" };
