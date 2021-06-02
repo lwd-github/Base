@@ -18,5 +18,10 @@ namespace Framework.Cache.Redis.Config
         /// 端口
         /// </summary>
         public ushort Port { get; set; } = 6379;
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string Password { get; set; }
     }
 }

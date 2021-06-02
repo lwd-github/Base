@@ -33,7 +33,7 @@ namespace Framework.Cache.Redis
         public RedisCache(RedisConfig config, int dbNum = 0)
         {
             _dbNum = dbNum;
-            _conn = RedisConnection.GetConnectionMultiplexer($"{config.Host}:{config.Port}");
+            _conn = RedisConnection.GetConnectionMultiplexer($"{config.Host}:{config.Port},password={config.Password}");
             Hash = new RedisHash(GetDatabase);
         }
 

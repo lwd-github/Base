@@ -55,7 +55,7 @@ namespace Framework.Config
                 new ConfigItem
                 {
                     Key ="RedisConfig",
-                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"6379\"}"
+                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"6379\",\"password\": \"redis@123qaz\"}"
                 },
                 new ConfigItem
                 {
