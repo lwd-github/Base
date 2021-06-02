@@ -11,6 +11,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Framework.Common.Extension;
 using Framework.Common.Results;
+using Microsoft.AspNetCore.Authentication;
+using IdentityServer4;
 
 namespace MVCClient.Controllers
 {
@@ -192,6 +194,8 @@ namespace MVCClient.Controllers
 
                 // 3、输出结果到页面
                 //return JArray.Parse(content).ToString();
+
+                HttpContext.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
             }
         }
     }
