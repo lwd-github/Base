@@ -67,6 +67,11 @@ namespace Framework.Config
                     Key ="CanalConfig",
                     Value = "{\"host\": \"127.0.0.1\",\"port\": \"11111\",\"user\": \"\",\"password\": \"\",\"Subscribe\": \".*\\\\..*\"}"
                 },
+                new ConfigItem
+                {
+                    Key ="FtpConfig",
+                    Value = "{\"host\": \"47.242.83.236\",\"port\": \"21\",\"user\": \"lwd\",\"password\": \"lwd123\"}"
+                },
             };
         }
 

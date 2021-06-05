@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\Framework\Cache\Framework.Cache.csproj" />
     <ProjectReference Include="..\..\Framework\Canal\Framework.Canal.csproj" />
     <ProjectReference Include="..\..\Framework\Config\Framework.Config.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Ftp\Framework.Ftp.csproj" />
     <ProjectReference Include="..\..\Framework\IOC\Framework.IOC.csproj" />
     <ProjectReference Include="..\..\Framework\MQ\Framework.MQ.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
