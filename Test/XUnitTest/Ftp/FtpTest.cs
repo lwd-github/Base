@@ -2,6 +2,7 @@
 using Framework.IOC;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,11 @@ namespace XUnitTest.Ftp
         [Fact]
         public void Test()
         {
-            var result = _ftpClient.Upload(@"C:\Users\future\Desktop\RcPI5BqGtPQjcu.jpg", $"{DateTime.Now.ToString("yyyyMMdd")}/test.jpg");
+            var path = @"C:\Users\future\Desktop\test.jpg";
+            var result = _ftpClient.Upload(path, $"{DateTime.Now.ToString("yyyyMMdd")}/test.jpg");
+
+            var fileStream = File.OpenRead(path);
+            result = _ftpClient.Upload(fileStream, $"{DateTime.Now.ToString("yyyyMMdd")}/test.jpg");
             Assert.True(result);
         }
     }
