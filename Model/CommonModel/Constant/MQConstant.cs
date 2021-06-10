@@ -4,13 +4,14 @@ using System.Text;
 
 namespace DTO.Constant
 {
+    /// <summary>
+    /// MQ常量
+    /// </summary>
     public static class MQConstant
     {
         /// <summary>
         /// 死信交换机
         /// </summary>
-        public const string DeadLetterExchange = "Sys1-DeadLetter-Exchange";
-
-        public const string IOCAssemblies = "CommonService.dll;TestService.dll;Framework.Cache.dll";
+        public static string DeadLetterExchange = $"{SystemConstant.SystemName}-DeadLetter-Exchange";
     }
 }

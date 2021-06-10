@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Framework.Ftp.Config
+namespace Framework.FTP.Config
 {
-    public class FtpConfig
+    public class FTPConfig
     {
         /// <summary>
         /// 主机

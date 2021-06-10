@@ -36,7 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Cache\Framework.Cache.csproj" />
     <ProjectReference Include="..\..\Framework\Config\Framework.Config.csproj" />
-    <ProjectReference Include="..\..\Framework\Framework.Ftp\Framework.Ftp.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Ftp\Framework.FTP.csproj" />
     <ProjectReference Include="..\..\Framework\IdGenerator\Framework.IdGenerator.csproj" />
     <ProjectReference Include="..\..\Framework\IOC\Framework.IOC.csproj" />
     <ProjectReference Include="..\..\Framework\Map\Framework.Map.csproj" />

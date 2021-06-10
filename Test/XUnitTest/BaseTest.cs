@@ -25,7 +25,7 @@ namespace XUnitTest
 
             //IOC注册
             var containerBuilder = new ContainerBuilder();
-            IocManager.Init(containerBuilder, MQConstant.IOCAssemblies.Split(';'));
+            IocManager.Init(containerBuilder, SystemConstant.IOCAssemblies.Split(';'));
             CustomRegistration.Register(containerBuilder);//自定义接口注册
             IocManager.SetContainer(containerBuilder.Build());
         }

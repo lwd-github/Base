@@ -71,7 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{D123EC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCClient", "Client\MVCClient\MVCClient.csproj", "{731C1EF6-0E7B-4D25-8DF2-2ACADFE01E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Ftp", "Framework\Framework.Ftp\Framework.Ftp.csproj", "{40A8439F-F0E2-4819-8487-FF6C4C910B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.FTP", "Framework\Framework.Ftp\Framework.FTP.csproj", "{40A8439F-F0E2-4819-8487-FF6C4C910B23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

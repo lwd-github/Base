@@ -4,8 +4,8 @@ using Framework.Cache.Redis.Config;
 using Framework.Canal;
 using Framework.Canal.Config;
 using Framework.Config;
-using Framework.Ftp;
-using Framework.Ftp.Config;
+using Framework.FTP;
+using Framework.FTP.Config;
 using Framework.MQ;
 using Framework.MQ.Config;
 using Framework.MQ.RabbitMQ;
@@ -45,9 +45,9 @@ namespace CommonService.Registration
             }).SingleInstance();
 
             //注册Ftp客户端
-            containerBuilder.Register<IFtpClient>(c =>
+            containerBuilder.Register<IFTPClient>(c =>
             {
-                var content = new FtpClient(ConfigAgent.Value<FtpConfig>());
+                var content = new FTPClient(ConfigAgent.Value<FTPConfig>());
                 return content;
             }).SingleInstance();
         }

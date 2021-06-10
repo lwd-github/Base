@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 
-namespace Framework.Ftp
+namespace Framework.FTP
 {
     /// <summary>
-    /// Ftp客户端
+    /// FTP客户端
     /// </summary>
-    public interface IFtpClient
+    public interface IFTPClient
     {
         /// <summary>
         /// 上传文件
@@ -14,7 +15,7 @@ namespace Framework.Ftp
         /// <param name="localPath">本地文件路径</param>
         /// <param name="remotePath">远程文件路径</param>
         /// <returns></returns>
-        bool Upload(string localPath, string remotePath);
+        Task<bool> UploadFileAsync(string localPath, string remotePath);
 
         /// <summary>
         /// 上传文件
@@ -22,6 +23,6 @@ namespace Framework.Ftp
         /// <param name="fileStream">文件流</param>
         /// <param name="remotePath">远程文件路径</param>
         /// <returns></returns>
-        bool Upload(Stream fileStream, string remotePath);
+        Task<bool> UploadAsync(Stream fileStream, string remotePath);
     }
 }
