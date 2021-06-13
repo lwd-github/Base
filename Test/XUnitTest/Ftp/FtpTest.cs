@@ -1,4 +1,6 @@
-﻿using Framework.FTP;
+﻿using DTO.Constant;
+using Framework.FTP;
+using Framework.IdGenerator;
 using Framework.IOC;
 using System;
 using System.Collections.Generic;
@@ -26,11 +28,19 @@ namespace XUnitTest.Ftp
         [Fact]
         public async void Test()
         {
-            var path = @"C:\Users\future\Desktop\test.jpg";
-            var result = await _ftpClient.UploadFileAsync(path, $"{DateTime.Now.ToString("yyyyMMdd")}/test1.jpg");
+            var now = DateTime.Now;
 
+            //本地文件
+            //var path = @"C:\Users\future\Desktop\test.jpg";
+            var path = @"C:\Users\duan\Desktop\timg.jpg";
+            var extension = Path.GetExtension(path);
+
+            var fileName = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            var result = await _ftpClient.UploadFileAsync(path, $"{SystemConstant.SystemName}/{Enumeration.System.EModule.Product}/{now.Year}/{now.Month.ToString().PadLeft(2, '0')}/{now.Day.ToString().PadLeft(2, '0')}/{fileName}{extension}");
+
+            fileName = new IdWorker(1, 1).NextId().ToString();
             var fileStream = File.OpenRead(path);
-            result = await _ftpClient.UploadAsync(fileStream, $"{DateTime.Now.ToString("yyyyMMdd")}/test2.jpg");
+            result = await _ftpClient.UploadAsync(fileStream, $"{SystemConstant.SystemName}/{Enumeration.System.EModule.Product}/{now.Year}/{now.Month.ToString().PadLeft(2, '0')}/{now.Day.ToString().PadLeft(2, '0')}/{fileName}{extension}");
             Assert.True(result);
         }
     }

@@ -73,6 +73,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCClient", "Client\MVCClie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.FTP", "Framework\Framework.Ftp\Framework.FTP.csproj", "{40A8439F-F0E2-4819-8487-FF6C4C910B23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enumeration", "Model\Enum\Enumeration.csproj", "{90557D79-EF02-410E-BDF3-696BD8F9478C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,10 @@ Global
 		{40A8439F-F0E2-4819-8487-FF6C4C910B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40A8439F-F0E2-4819-8487-FF6C4C910B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40A8439F-F0E2-4819-8487-FF6C4C910B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90557D79-EF02-410E-BDF3-696BD8F9478C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90557D79-EF02-410E-BDF3-696BD8F9478C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90557D79-EF02-410E-BDF3-696BD8F9478C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90557D79-EF02-410E-BDF3-696BD8F9478C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -214,6 +220,7 @@ Global
 		{084D860C-57EC-49B3-BBC4-F145BB3DBEEE} = {D84BB42B-C0AD-494B-A190-D5980D97569D}
 		{731C1EF6-0E7B-4D25-8DF2-2ACADFE01E8A} = {D123ECDD-5B4D-4B69-9DA1-57507F2DAA75}
 		{40A8439F-F0E2-4819-8487-FF6C4C910B23} = {A9BF77BC-4734-4BF4-96B9-C3261C188366}
+		{90557D79-EF02-410E-BDF3-696BD8F9478C} = {B8AFD344-916C-4CFF-9F11-C79372D10882}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C236F4BC-3294-477F-BB79-AE6AF49168CD}

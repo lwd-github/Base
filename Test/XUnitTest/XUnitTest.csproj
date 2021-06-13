@@ -43,6 +43,7 @@
     <ProjectReference Include="..\..\Framework\MQ\Framework.MQ.csproj" />
     <ProjectReference Include="..\..\Framework\Validator\Framework.Validator.csproj" />
     <ProjectReference Include="..\..\Model\CommonModel\DTO.csproj" />
+    <ProjectReference Include="..\..\Model\Enum\Enumeration.csproj" />
     <ProjectReference Include="..\..\Service\CommonService\CommonService.csproj" />
   </ItemGroup>
 
