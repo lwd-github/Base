@@ -73,7 +73,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCClient", "Client\MVCClie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.FTP", "Framework\Framework.Ftp\Framework.FTP.csproj", "{40A8439F-F0E2-4819-8487-FF6C4C910B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enumeration", "Model\Enum\Enumeration.csproj", "{90557D79-EF02-410E-BDF3-696BD8F9478C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enumeration", "Model\Enum\Enumeration.csproj", "{90557D79-EF02-410E-BDF3-696BD8F9478C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Security", "Framework\Framework.Security\Framework.Security.csproj", "{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +191,10 @@ Global
 		{90557D79-EF02-410E-BDF3-696BD8F9478C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90557D79-EF02-410E-BDF3-696BD8F9478C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90557D79-EF02-410E-BDF3-696BD8F9478C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,6 +227,7 @@ Global
 		{731C1EF6-0E7B-4D25-8DF2-2ACADFE01E8A} = {D123ECDD-5B4D-4B69-9DA1-57507F2DAA75}
 		{40A8439F-F0E2-4819-8487-FF6C4C910B23} = {A9BF77BC-4734-4BF4-96B9-C3261C188366}
 		{90557D79-EF02-410E-BDF3-696BD8F9478C} = {B8AFD344-916C-4CFF-9F11-C79372D10882}
+		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9} = {A9BF77BC-4734-4BF4-96B9-C3261C188366}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C236F4BC-3294-477F-BB79-AE6AF49168CD}

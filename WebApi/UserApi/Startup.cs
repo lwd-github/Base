@@ -58,8 +58,8 @@ namespace UserApi
                   .AddInMemoryIdentityResources(Config.GetIdentityResources()) //添加内存apiresource
                   .AddInMemoryApiResources(Config.GetApiResources())
                   .AddInMemoryApiScopes(Config.GetApiScopes())
-                  .AddInMemoryClients(Config.GetClients())//把配置文件的Client配置资源放到内存
-                  .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();// 2、自定义用户校验
+                  .AddInMemoryClients(Config.GetClients()) //把配置文件的Client配置资源放到内存
+                  .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>(); // 2、自定义用户校验
 
         }
 

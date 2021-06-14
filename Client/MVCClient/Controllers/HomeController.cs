@@ -13,6 +13,7 @@ using Framework.Common.Extension;
 using Framework.Common.Results;
 using Microsoft.AspNetCore.Authentication;
 using IdentityServer4;
+using Framework.Security.Cryptography;
 
 namespace MVCClient.Controllers
 {
@@ -169,6 +170,8 @@ namespace MVCClient.Controllers
                 //return JArray.Parse(content).ToString();
             }
 
+            var payload = JwtHelper.GetPayload(AccessToken);
+            DateTime dtStart = payload.exp.ConvertToDateTime();
             return "";
         }
 

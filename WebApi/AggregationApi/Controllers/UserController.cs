@@ -39,8 +39,8 @@ namespace AggregationApi.Controllers
                 ClientId = "client1",
                 ClientSecret = "secret",
                 GrantType = "password",
-                UserName = "mail@qq.com", //input.UserName
-                Password = "123" //input.UserPassword
+                UserName = input.UserName, //"mail@qq.com",
+                Password = input.UserPassword //"123"
             }).Result;
 
             // 3、返回AccessToken
