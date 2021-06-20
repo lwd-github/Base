@@ -19,8 +19,8 @@ namespace UserApi.IdentityServer
             var password = context.Password;
 
             context.Result = new GrantValidationResult(
-                        subject: "1",
-                        authenticationMethod: "mail@qq.com",
+                        subject: "0",
+                        authenticationMethod: "password",
                         claims: GetUserClaims()
                         );
             await Task.CompletedTask;
@@ -33,7 +33,8 @@ namespace UserApi.IdentityServer
             {
                 new Claim(JwtClaimTypes.Subject, "1"),
                 new Claim(JwtClaimTypes.Id, "1"),
-                new Claim(JwtClaimTypes.Name, "mail@qq.com")
+                new Claim(JwtClaimTypes.Name, "mail@qq.com"),
+                new Claim(JwtClaimTypes.NickName, "林生")
             };
         }
 

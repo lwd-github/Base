@@ -1,3 +1,4 @@
+using Enumeration.System;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,16 @@ namespace AggregationApi
                         options.ApiName = "AggregationApi"; // 2、api名称(项目具体名称)
                         options.RequireHttpsMetadata = false; // 3、https元数据，不需要
                     });
+
+            //命名客户端
+            services.AddHttpClient(EWebApiName.UserApi.ToString(), c =>
+            {
+                c.BaseAddress = new Uri("https://localhost:5010");
+                // UserAPI versioning
+                c.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+                // UserAPI requires a user-agent
+                c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

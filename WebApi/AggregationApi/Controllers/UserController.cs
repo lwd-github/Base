@@ -1,4 +1,5 @@
 ﻿using DTO.User;
+using Enumeration.System;
 using Framework.Common.Results;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,13 @@ namespace AggregationApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IHttpClientFactory _clientFactory;
+
+        public UserController(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
+
         /// <summary>
         /// 用户登录
         /// </summary>
@@ -23,10 +31,12 @@ namespace AggregationApi.Controllers
         [HttpPost("Login")]
         public Result<IdentityDto> Login([FromBody] LoginInput input)
         {
-            var httpClient = new HttpClient();
+            //var httpClient = new HttpClient();
+            var httpClient = _clientFactory.CreateClient(EWebApiName.UserApi.ToString());
 
             // 1、获取IdentityServer接口文档
-            DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            //DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync().Result;
             if (discoveryDocument.IsError)
             {
                 Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
