@@ -72,11 +72,73 @@ namespace AggregationApi.Controllers
             identityDto.UserName = input.UserName;
             identityDto.AccessToken = tokenResponse.AccessToken;
             identityDto.ExpiresIn = tokenResponse.ExpiresIn;
+            identityDto.TokenType = tokenResponse.TokenType;
+            identityDto.RefreshToken = tokenResponse.RefreshToken;
 
             return new Result<IdentityDto> { Status = true, Data = identityDto };
         }
 
 
+        /// <summary>
+        /// 刷新令牌
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpPost("RefreshToken")]
+        public Result<IdentityDto> RefreshToken([FromBody] RefreshTokenInput input)
+        {
+            var httpClient = new HttpClient();
+
+            // 1、获取IdentityServer接口文档
+            DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            if (discoveryDocument.IsError)
+            {
+                Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
+            }
+
+            // 2、根据用户名和密码建立token
+            TokenResponse tokenResponse = httpClient.RequestRefreshTokenAsync(new RefreshTokenRequest()
+            {
+                Address = discoveryDocument.TokenEndpoint,
+                ClientId = "client1",
+                ClientSecret = "secret",
+                GrantType = "refresh_token",
+                //UserName = input.UserName, //"mail@qq.com",
+                //Password = input.UserPassword //"123"
+                RefreshToken = input.RefreshToken
+            }).Result;
+
+            // 3、返回AccessToken
+            if (tokenResponse.IsError)
+            {
+                throw new Exception(tokenResponse.Error + "," + tokenResponse.Raw);
+            }
+
+            // 4、获取用户信息
+            UserInfoResponse userInfoResponse = httpClient.GetUserInfoAsync(new UserInfoRequest()
+            {
+                Address = discoveryDocument.UserInfoEndpoint,
+                Token = tokenResponse.AccessToken
+            }).Result;
+
+            // 5、返回UserDto信息
+            IdentityDto identityDto = new IdentityDto();
+            identityDto.UserId = userInfoResponse.Json.TryGetString("sub");
+            //identityDto.UserName = input.UserName;
+            identityDto.AccessToken = tokenResponse.AccessToken;
+            identityDto.ExpiresIn = tokenResponse.ExpiresIn;
+            identityDto.TokenType = tokenResponse.TokenType;
+            identityDto.RefreshToken = tokenResponse.RefreshToken;
+
+            return new Result<IdentityDto> { Status = true, Data = identityDto };
+        }
+
+
+        /// <summary>
+        /// 用户登出
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPost("Logout")]
         [Authorize]
         public Result<string> Logout([FromBody] IdentityDto input)

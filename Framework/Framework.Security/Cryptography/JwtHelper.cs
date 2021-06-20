@@ -69,7 +69,7 @@ namespace Framework.Security.Cryptography
         /// <summary>
         /// jwt的签发时间
         /// </summary>
-        public string iat { get; set; }
+        public long iat { get; set; }
 
         public List<string> scope { get; set; }
 

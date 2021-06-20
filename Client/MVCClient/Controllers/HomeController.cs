@@ -55,6 +55,8 @@ namespace MVCClient.Controllers
                 // 2、使用AccessToken 进行资源访问
                 string result = UseAccessToken(dentityDto.AccessToken).Result;
 
+                result = RefreshToken(dentityDto.RefreshToken).Result;
+
                 LogOut(dentityDto);
 
                 result = UseAccessToken(dentityDto.AccessToken).Result;
@@ -151,7 +153,7 @@ namespace MVCClient.Controllers
         /// <summary>
         /// 2、使用token
         /// </summary>
-        public static async Task<string> UseAccessToken(string AccessToken)
+        public async Task<string> UseAccessToken(string AccessToken)
         {
             HttpClient apiClient = new HttpClient();
             apiClient.SetBearerToken(AccessToken); // 1、设置token到请求头
@@ -171,7 +173,43 @@ namespace MVCClient.Controllers
             }
 
             var payload = JwtHelper.GetPayload(AccessToken);
-            DateTime dtStart = payload.exp.ConvertToDateTime();
+            DateTime exp = payload.exp.ConvertToDateTime();
+
+            var now = DateTime.Now;
+            var sec = now.ConvertToSecond();
+            return "";
+        }
+
+
+        /// <summary>
+        /// 刷新令牌
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <returns></returns>
+        public async Task<string> RefreshToken(string refreshToken)
+        {
+            HttpClient apiClient = new HttpClient();
+            //apiClient.SetBearerToken(AccessToken); // 1、设置token到请求头
+            HttpContent httpContent = new StringContent(new RefreshTokenInput { RefreshToken = refreshToken }.ToJson());
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await apiClient.PostAsync("https://localhost:5020/api/User/RefreshToken", httpContent);
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"API Request Error, StatusCode is : {response.StatusCode}");
+            }
+            else
+            {
+                string content = await response.Content.ReadAsStringAsync();
+
+                var payload = JwtHelper.GetPayload(content);
+
+                Console.WriteLine(content);
+                //Console.WriteLine($"Result: {JArray.Parse(content)}");
+
+                // 3、输出结果到页面
+                //return JArray.Parse(content).ToString();
+            }
+
             return "";
         }
 
