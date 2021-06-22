@@ -158,7 +158,8 @@ namespace UserApi
 
                     //在测试中我们发现，当过了 60s 的设置期后Token仍然能用。这是因为资源端在校验 Token 的时候会有一个默认的时间偏移量，在偏移量范围的Token会被认为没过期
                     //https://www.cnblogs.com/stulzq/p/8998274.html
-                    AccessTokenLifetime = 60 //AccessToken有效时间，单位秒
+                    AccessTokenLifetime = 60, //AccessToken有效时间，单位秒
+                    //AccessTokenType = AccessTokenType.Reference //reference token
                  }
             };
         }

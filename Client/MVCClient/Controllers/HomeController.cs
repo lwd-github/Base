@@ -188,6 +188,7 @@ namespace MVCClient.Controllers
         /// <returns></returns>
         public async Task<string> RefreshToken(string refreshToken)
         {
+            IdentityDto dentityDto = new IdentityDto();
             HttpClient apiClient = new HttpClient();
             //apiClient.SetBearerToken(AccessToken); // 1、设置token到请求头
             HttpContent httpContent = new StringContent(new RefreshTokenInput { RefreshToken = refreshToken }.ToJson());
@@ -199,11 +200,11 @@ namespace MVCClient.Controllers
             }
             else
             {
-                string content = await response.Content.ReadAsStringAsync();
+                var content = response.Content.ReadAsStringAsync().Result.ToObject<Result<IdentityDto>>();
+                dentityDto = content.Data;
+                var payload = JwtHelper.GetPayload(dentityDto.AccessToken);
 
-                var payload = JwtHelper.GetPayload(content);
-
-                Console.WriteLine(content);
+                Console.WriteLine($"RefreshToken is {dentityDto.AccessToken}");
                 //Console.WriteLine($"Result: {JArray.Parse(content)}");
 
                 // 3、输出结果到页面

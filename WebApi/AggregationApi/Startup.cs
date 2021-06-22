@@ -35,6 +35,14 @@ namespace AggregationApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AggregationApi", Version = "v1" });
             });
 
+            services.AddMvc(o => {
+                //注册权限过滤器
+                o.Filters.Add(typeof(AuthorizationHandler));
+                ////全局注册异常过滤器
+                //o.Filters.Add(typeof(ExceptionHandling));
+                //o.ModelBinderProviders.Insert(0, new ModelBinder.CustomModelBinderProvider());
+            });
+
             //添加身份认证
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                     .AddIdentityServerAuthentication(options =>

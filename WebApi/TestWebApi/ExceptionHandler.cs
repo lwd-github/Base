@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace TestWebApi
 {
-    public class ExceptionHandling : ExceptionFilterAttribute
+    /// <summary>
+    /// 异常处理器
+    /// </summary>
+    public class ExceptionHandler : ExceptionFilterAttribute
     {
         public override void OnException(ExceptionContext context)
         {

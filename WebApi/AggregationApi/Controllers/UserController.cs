@@ -2,6 +2,7 @@
 using Enumeration.System;
 using Framework.Common.Results;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,13 @@ namespace AggregationApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IHttpClientFactory _clientFactory;
+        readonly IHttpClientFactory _clientFactory;
+        readonly HttpClient _userApiClient;
 
         public UserController(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
+            _userApiClient = _clientFactory.CreateClient(EWebApiName.UserApi.ToString());
         }
 
         /// <summary>
@@ -32,18 +35,17 @@ namespace AggregationApi.Controllers
         public Result<IdentityDto> Login([FromBody] LoginInput input)
         {
             //var httpClient = new HttpClient();
-            var httpClient = _clientFactory.CreateClient(EWebApiName.UserApi.ToString());
 
             // 1、获取IdentityServer接口文档
             //DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
-            DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync().Result;
+            DiscoveryDocumentResponse discoveryDocument = _userApiClient.GetDiscoveryDocumentAsync().Result;
             if (discoveryDocument.IsError)
             {
                 Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
             }
 
             // 2、根据用户名和密码建立token
-            TokenResponse tokenResponse = httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest()
+            TokenResponse tokenResponse = _userApiClient.RequestPasswordTokenAsync(new PasswordTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = "client1",
@@ -60,7 +62,7 @@ namespace AggregationApi.Controllers
             }
 
             // 4、获取用户信息
-            UserInfoResponse userInfoResponse = httpClient.GetUserInfoAsync(new UserInfoRequest()
+            UserInfoResponse userInfoResponse = _userApiClient.GetUserInfoAsync(new UserInfoRequest()
             {
                 Address = discoveryDocument.UserInfoEndpoint,
                 Token = tokenResponse.AccessToken
@@ -87,17 +89,18 @@ namespace AggregationApi.Controllers
         [HttpPost("RefreshToken")]
         public Result<IdentityDto> RefreshToken([FromBody] RefreshTokenInput input)
         {
-            var httpClient = new HttpClient();
+            //var httpClient = new HttpClient();
 
             // 1、获取IdentityServer接口文档
-            DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            //DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            DiscoveryDocumentResponse discoveryDocument = _userApiClient.GetDiscoveryDocumentAsync().Result;
             if (discoveryDocument.IsError)
             {
                 Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
             }
 
             // 2、根据用户名和密码建立token
-            TokenResponse tokenResponse = httpClient.RequestRefreshTokenAsync(new RefreshTokenRequest()
+            TokenResponse tokenResponse = _userApiClient.RequestRefreshTokenAsync(new RefreshTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = "client1",
@@ -115,7 +118,7 @@ namespace AggregationApi.Controllers
             }
 
             // 4、获取用户信息
-            UserInfoResponse userInfoResponse = httpClient.GetUserInfoAsync(new UserInfoRequest()
+            UserInfoResponse userInfoResponse = _userApiClient.GetUserInfoAsync(new UserInfoRequest()
             {
                 Address = discoveryDocument.UserInfoEndpoint,
                 Token = tokenResponse.AccessToken
@@ -143,16 +146,18 @@ namespace AggregationApi.Controllers
         [Authorize]
         public Result<string> Logout([FromBody] IdentityDto input)
         {
-            var httpClient = new HttpClient();
+            //var httpClient = new HttpClient();
 
             // 1、获取IdentityServer接口文档
-            DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            //DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
+            DiscoveryDocumentResponse discoveryDocument = _userApiClient.GetDiscoveryDocumentAsync().Result;
             if (discoveryDocument.IsError)
             {
                 Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
             }
 
-            var result = httpClient.RevokeTokenAsync(new TokenRevocationRequest
+            //令牌注销只针对引用令牌（reference token）
+            var result = _userApiClient.RevokeTokenAsync(new TokenRevocationRequest
             {
                 Address = discoveryDocument.RevocationEndpoint,
                 ClientId = "client1",
@@ -178,6 +183,37 @@ namespace AggregationApi.Controllers
         [Authorize]
         public Result<string> Get()
         {
+            var accessToken = HttpContext.GetTokenAsync("Bearer", "access_token").Result;
+            DiscoveryDocumentResponse discoveryDocument = _userApiClient.GetDiscoveryDocumentAsync().Result;
+
+            //var result = _userApiClient.IntrospectTokenAsync(new TokenIntrospectionRequest
+            //{
+            //    Address = discoveryDocument.IntrospectionEndpoint,
+
+            //    ClientId = "client1",　　　　//资源名称
+            //    ClientSecret = "secret",　　 //资源私钥
+            //    Token = accessToken
+            //}).Result;
+
+            //if (result.IsError)
+            //{
+            //    Console.WriteLine(result.Error);
+            //    throw new Exception(result.Error);
+            //}
+            //else
+            //{
+            //    if (result.IsActive)　　//返回看IsActive->true表示有效,false表示无效
+            //    {
+            //        result.Claims.ToList().ForEach(c => Console.WriteLine("{0}: {1}",
+            //            c.Type, c.Value));
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("token is not active");
+            //        throw new Exception("token is not active");
+            //    }
+            //}
+
             return new Result<string> { Status = true, Data = "OK!" };
         }
     }
