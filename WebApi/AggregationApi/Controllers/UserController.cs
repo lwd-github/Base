@@ -1,5 +1,7 @@
-﻿using DTO.User;
+﻿using DTO.Constant;
+using DTO.User;
 using Enumeration.System;
+using Framework.Cache.Redis;
 using Framework.Common.Results;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
@@ -20,11 +22,13 @@ namespace AggregationApi.Controllers
     {
         readonly IHttpClientFactory _clientFactory;
         readonly HttpClient _userApiClient;
+        readonly RedisCache _redisCache;
 
-        public UserController(IHttpClientFactory clientFactory)
+        public UserController(IHttpClientFactory clientFactory, RedisCache redisCache)
         {
             _clientFactory = clientFactory;
             _userApiClient = _clientFactory.CreateClient(EWebApiName.UserApi.ToString());
+            _redisCache = redisCache;
         }
 
         /// <summary>
@@ -76,6 +80,9 @@ namespace AggregationApi.Controllers
             identityDto.ExpiresIn = tokenResponse.ExpiresIn;
             identityDto.TokenType = tokenResponse.TokenType;
             identityDto.RefreshToken = tokenResponse.RefreshToken;
+
+            //6、写入缓存
+            _redisCache.Hash.Set(CacheKeys.AccessTokenKey, identityDto.UserId, identityDto.AccessToken);
 
             return new Result<IdentityDto> { Status = true, Data = identityDto };
         }
@@ -146,6 +153,9 @@ namespace AggregationApi.Controllers
         [Authorize]
         public Result<string> Logout([FromBody] IdentityDto input)
         {
+
+            _redisCache.Hash.Remove(CacheKeys.AccessTokenKey, input.UserId);
+
             //var httpClient = new HttpClient();
 
             // 1、获取IdentityServer接口文档

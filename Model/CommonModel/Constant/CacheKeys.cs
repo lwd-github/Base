@@ -15,6 +15,11 @@ namespace DTO.Constant
         //private static string Prefix = "erp";
 
         /// <summary>
+        /// 访问令牌key
+        /// </summary>
+        public static string AccessTokenKey => $"{SystemConstant.SystemName}_AccessToken";
+
+        /// <summary>
         /// 短信验证码key
         /// </summary>
         /// <param name="phone"></param>

@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using DTO.Constant;
+using Framework.Cache.Redis;
+using Framework.Common.Results;
+using Framework.Security.Cryptography;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Framework.Common.Extension;
 
 namespace AggregationApi
 {
@@ -12,9 +21,35 @@ namespace AggregationApi
     /// </summary>
     public class AuthorizationHandler : IAuthorizationFilter
     {
+        readonly RedisCache _redisCache;
+
+        public AuthorizationHandler(RedisCache redisCache)
+        {
+            _redisCache = redisCache;
+        }
+
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var allAttrs = GetAttributes(context.ActionDescriptor as ControllerActionDescriptor);
+            var attrs = GetAttributes(context.ActionDescriptor as ControllerActionDescriptor);
+
+            if (attrs.OfType<AuthorizeAttribute>().Any())
+            {
+                var accessToken = context.HttpContext.GetTokenAsync("Bearer", "access_token").Result;
+                var payload = JwtHelper.GetPayload(accessToken);
+                var userId = payload.sub;
+
+                var cacheValue = _redisCache.Hash.Get(CacheKeys.AccessTokenKey, userId);
+
+                if (cacheValue.IsNullOrWhiteSpace() || cacheValue != accessToken)
+                {
+                    context.Result = new JsonResult(new Result
+                    {
+                        Status = false,
+                        Code = (int)HttpStatusCode.Unauthorized,
+                        Message = "未授权"
+                    });
+                }
+            }
         }
 
 
