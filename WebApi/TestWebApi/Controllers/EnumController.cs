@@ -1,5 +1,6 @@
-﻿using Framework.Common;
-using Framework.Common.Exceptions;
+﻿using Enumeration.System;
+using Framework.Common;
+using Framework.Common.Exception;
 using Framework.Common.Extension;
 using Framework.Common.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace TestWebApi.Controllers
 
             if (dicEnum.ContainsKey(name))
             {
-                result.Status = true;
+                result.Code = EResultCode.OK.ToInt();
                 result.Data = dicEnum[name].GetEnumItems();
                 return result;
             }

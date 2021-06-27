@@ -1,8 +1,10 @@
 ﻿using DTO.Constant;
+using DTO.Results;
 using DTO.User;
 using Enumeration.System;
 using Framework.Cache.Redis;
 using Framework.Common.Results;
+using Framework.Common.Extension;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -84,7 +86,7 @@ namespace AggregationApi.Controllers
             //6、写入缓存
             _redisCache.Hash.Set(CacheKeys.AccessTokenKey, identityDto.UserId, identityDto.AccessToken);
 
-            return new Result<IdentityDto> { Status = true, Data = identityDto };
+            return new ResultSuccess<IdentityDto> { Data = identityDto };
         }
 
 
@@ -140,7 +142,7 @@ namespace AggregationApi.Controllers
             identityDto.TokenType = tokenResponse.TokenType;
             identityDto.RefreshToken = tokenResponse.RefreshToken;
 
-            return new Result<IdentityDto> { Status = true, Data = identityDto };
+            return new ResultSuccess<IdentityDto> { Data = identityDto };
         }
 
 
@@ -179,12 +181,12 @@ namespace AggregationApi.Controllers
             if (result.IsError)
             {
                 Console.WriteLine(result.Error);
-                return new Result<string> { Status = false, Data = "Error" };
+                return new Result<string> { Code = EResultCode.Error.ToInt(),  Data = result.Error };
             }
             else
             {
                 Console.WriteLine(result.HttpErrorReason);
-                return new Result<string> { Status = true, Data = result.HttpErrorReason };
+                return new ResultSuccess<string> { Data = result.HttpErrorReason };
             }
         }
 
@@ -224,7 +226,7 @@ namespace AggregationApi.Controllers
             //    }
             //}
 
-            return new Result<string> { Status = true, Data = "OK!" };
+            return new ResultSuccess<string> { Data = "OK!" };
         }
     }
 }

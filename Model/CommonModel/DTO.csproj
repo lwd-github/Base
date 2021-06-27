@@ -8,4 +8,9 @@
     <DocumentationFile>..\..\..\projxmldoc\DTO.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Common\Framework.Common.csproj" />
+    <ProjectReference Include="..\Enum\Enumeration.csproj" />
+  </ItemGroup>
+
 </Project>

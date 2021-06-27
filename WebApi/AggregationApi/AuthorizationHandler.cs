@@ -44,8 +44,7 @@ namespace AggregationApi
                 {
                     context.Result = new JsonResult(new Result
                     {
-                        Status = false,
-                        Code = (int)HttpStatusCode.Unauthorized,
+                        Code = (int)Enumeration.System.EResultCode.Unauthorized, //(int)HttpStatusCode.Unauthorized,
                         Message = "未授权"
                     });
                 }

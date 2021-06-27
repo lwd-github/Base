@@ -1,4 +1,4 @@
-﻿using Framework.Common.Exceptions;
+﻿using Framework.Common.Exception;
 using Framework.Common.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -24,7 +24,7 @@ namespace TestWebApi
                 context.Result = new JsonResult(
                     new Result
                     {
-                        Status = false,
+                        Code = context.Exception.HResult,
                         Message = isValidationException ? context.Exception.Message : "系统发生了未知异常，请联系管理员"
                     }
                  );

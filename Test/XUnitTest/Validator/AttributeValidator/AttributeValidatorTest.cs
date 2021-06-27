@@ -18,7 +18,7 @@ namespace XUnitTest.Validator.AttributeValidator
                 Email = "a"
             };
 
-            Assert.True(student.Validate().Status);
+            Assert.True(student.Validate().Code == 1);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using Framework.Common.Results;
+﻿using DTO.Results;
+using Framework.Common.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,7 +26,7 @@ namespace TestWebApi.Controllers
         public Result<string> Get()
         {
             var value = _test.FirstOrDefault(t => t.Type == 2).GetValue();
-            return new Result<string> { Status = true, Data = value };
+            return new ResultSuccess<string> {  Data = value };
         }
     }
 }

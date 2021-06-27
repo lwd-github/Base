@@ -8,18 +8,18 @@ namespace Framework.Common.Results
     {
         public Result()
         {
-            Status = true;
+
         }
 
-        public Result(bool status)
+        public Result(int code)
         {
-            Status = status;
+            Code = code;
         }
 
-        /// <summary>
-        /// true:成功；false:失败
-        /// </summary>
-        public bool Status { get; set; }
+        ///// <summary>
+        ///// true:成功；false:失败
+        ///// </summary>
+        //public bool Status { get; set; }
 
         /// <summary>
         /// 业务编码
@@ -38,7 +38,7 @@ namespace Framework.Common.Results
     }
 
 
-    public class Result : Result<object>
+    public class Result: Result<object>
     { 
     }
 }

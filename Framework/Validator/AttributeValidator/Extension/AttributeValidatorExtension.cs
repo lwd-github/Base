@@ -7,6 +7,12 @@ namespace Framework.Validator.AttributeValidator.Extension
 {
     public static class AttributeValidatorExtension
     {
+        /// <summary>
+        /// 验证
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns>Result.Code：0=验证失败；1=验证成功</returns>
         public static Result Validate<T>(this T obj)
         {
             List<string> ErrorMessageList = new List<string>();
@@ -30,7 +36,7 @@ namespace Framework.Validator.AttributeValidator.Extension
 
             return new Result
             {
-                Status = !ErrorMessageList.Any(),
+                Code = ErrorMessageList.Any() ? 1 : 0,
                 Message = string.Join(";", ErrorMessageList)
             };
         }
