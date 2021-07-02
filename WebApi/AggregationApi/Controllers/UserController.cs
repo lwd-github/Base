@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Framework.Validator;
+using Framework.Common.Exception;
 
 namespace AggregationApi.Controllers
 {
@@ -45,10 +47,13 @@ namespace AggregationApi.Controllers
             // 1、获取IdentityServer接口文档
             //DiscoveryDocumentResponse discoveryDocument = httpClient.GetDiscoveryDocumentAsync("https://localhost:5010").Result;
             DiscoveryDocumentResponse discoveryDocument = _userApiClient.GetDiscoveryDocumentAsync().Result;
-            if (discoveryDocument.IsError)
-            {
-                Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
-            }
+            
+            //if (discoveryDocument.IsError)
+            //{
+            //    Console.WriteLine($"[DiscoveryDocumentResponse Error]: {discoveryDocument.Error}");
+            //}
+
+            Verify.If(discoveryDocument.IsError, new ValidationException((int)EResultCode.ServiceUnavailable, discoveryDocument.Error));
 
             // 2、根据用户名和密码建立token
             TokenResponse tokenResponse = _userApiClient.RequestPasswordTokenAsync(new PasswordTokenRequest()
