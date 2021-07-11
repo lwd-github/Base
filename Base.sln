@@ -75,7 +75,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.FTP", "Framework\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enumeration", "Model\Enum\Enumeration.csproj", "{90557D79-EF02-410E-BDF3-696BD8F9478C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Security", "Framework\Framework.Security\Framework.Security.csproj", "{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Security", "Framework\Framework.Security\Framework.Security.csproj", "{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SignalR", "SignalR", "{CD0809E8-1A9A-4F7B-AE89-9C12BA3BF59B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRService", "SignalR\SignalRService\SignalRService.csproj", "{734644CF-E62C-4B9E-A6D0-83961986E16D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRClient", "SignalR\SignalRClient\SignalRClient.csproj", "{5265A392-FDA0-4271-AD8C-3D1FFB0CB6B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +201,14 @@ Global
 		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{734644CF-E62C-4B9E-A6D0-83961986E16D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{734644CF-E62C-4B9E-A6D0-83961986E16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{734644CF-E62C-4B9E-A6D0-83961986E16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{734644CF-E62C-4B9E-A6D0-83961986E16D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5265A392-FDA0-4271-AD8C-3D1FFB0CB6B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5265A392-FDA0-4271-AD8C-3D1FFB0CB6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5265A392-FDA0-4271-AD8C-3D1FFB0CB6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5265A392-FDA0-4271-AD8C-3D1FFB0CB6B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,6 +242,8 @@ Global
 		{40A8439F-F0E2-4819-8487-FF6C4C910B23} = {A9BF77BC-4734-4BF4-96B9-C3261C188366}
 		{90557D79-EF02-410E-BDF3-696BD8F9478C} = {B8AFD344-916C-4CFF-9F11-C79372D10882}
 		{A4D2AD9F-8198-44C2-A5B2-2DABD744CAF9} = {A9BF77BC-4734-4BF4-96B9-C3261C188366}
+		{734644CF-E62C-4B9E-A6D0-83961986E16D} = {CD0809E8-1A9A-4F7B-AE89-9C12BA3BF59B}
+		{5265A392-FDA0-4271-AD8C-3D1FFB0CB6B7} = {CD0809E8-1A9A-4F7B-AE89-9C12BA3BF59B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C236F4BC-3294-477F-BB79-AE6AF49168CD}
