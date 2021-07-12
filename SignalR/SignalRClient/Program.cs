@@ -9,7 +9,10 @@ namespace SignalRClient
         static async Task Main(string[] args)
         {
             HubConnection connection = new HubConnectionBuilder()
-               .WithUrl("https://localhost:5001/msghub")
+               .WithUrl("https://localhost:5001/msghub", options =>
+               {
+                   options.AccessTokenProvider = () => Task.FromResult("abc123");
+               })
                .Build();
 
             connection.On<string>("Self", cid =>

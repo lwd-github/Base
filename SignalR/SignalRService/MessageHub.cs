@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,21 @@ namespace SignalRService
 {
     public class MessageHub : Hub
     {
+        IHttpContextAccessor _httpContextAccessor;
+
+        public MessageHub(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         /// <summary>
         /// 客户连接成功时触发
         /// </summary>
         /// <returns></returns>
         public override async Task OnConnectedAsync()
         {
+            var token = _httpContextAccessor.HttpContext.Request.Query["access_token"];
+
             var cid = Context.ConnectionId;
             Console.WriteLine($"[{cid}]连接成功");
 
