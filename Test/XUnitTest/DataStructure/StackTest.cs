@@ -10,6 +10,9 @@ namespace XUnitTest.DataStructure
 {
     public class StackTest
     {
+        /// <summary>
+        /// 创建树
+        /// </summary>
         [Fact]
         public void BuildTree()
         {
@@ -31,6 +34,21 @@ namespace XUnitTest.DataStructure
             }
         }
 
+
+        /// <summary>
+        /// 最长公共前缀
+        /// </summary>
+        [Fact]
+        public void LongestCommonPrefix()
+        {
+            var strs = new List<string> { "flower", "flow", "flight" };
+            var commonPrefix = GetLongestCommonPrefix(strs);
+
+            strs = new List<string> { "dog", "racecar", "car" }; 
+            commonPrefix = GetLongestCommonPrefix(strs);
+        }
+
+
         private List<Tree> GetDataSource()
         {
             return new List<Tree> {
@@ -43,6 +61,22 @@ namespace XUnitTest.DataStructure
                 new Tree { Id = 7, ParentId = 3, Name ="T3-1", Level =1},
                 new Tree { Id = 8, ParentId = 4, Name ="T1-1-1", Level =2}
             };
+        }
+
+
+        private string GetLongestCommonPrefix(List<string> input)
+        {
+            var commonPrefix = input[0];
+
+            for (int i = 1; i < input.Count; i++)
+            {
+                var except = commonPrefix.Intersect(input[i]);
+                commonPrefix = string.Concat(except);
+
+                if (commonPrefix.IsNullOrWhiteSpace()) break;
+            }
+
+            return commonPrefix;
         }
     }
 
