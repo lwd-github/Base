@@ -8,11 +8,14 @@ namespace SignalRClient
     {
         static async Task Main(string[] args)
         {
+            var enterpriseId = Console.ReadLine();
+
             HubConnection connection = new HubConnectionBuilder()
-               .WithUrl("https://localhost:5001/msghub", options =>
+               .WithUrl("https://localhost:5801/msghub?access_token=a1", options =>
                {
-                   options.AccessTokenProvider = () => Task.FromResult("abc123");
+                   options.AccessTokenProvider = () => Task.FromResult(enterpriseId);
                })
+               .WithAutomaticReconnect()
                .Build();
 
             connection.On<string>("Self", cid =>
@@ -27,6 +30,11 @@ namespace SignalRClient
                 var newMessage = $"{user}: {message}";
 
                 Console.WriteLine($"From Service => {newMessage}");
+            });
+
+            connection.On<string>("ReceiveGroupMsg", msg =>
+            {
+                Console.WriteLine($"From Service => {msg}");
             });
 
             await connection.StartAsync();
