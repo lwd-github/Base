@@ -5,6 +5,8 @@ using Framework.Common.Extension;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using System.Text.RegularExpressions;
+using Framework.Common.Tree;
 
 namespace XUnitTest.DataStructure
 {
@@ -14,24 +16,48 @@ namespace XUnitTest.DataStructure
         /// 创建树
         /// </summary>
         [Fact]
-        public void BuildTree()
+        public MenuTreeView BuildTree()
         {
             var datas = GetDataSource();
+            var result = TreeHelper.BuildTree<MenuTree, MenuTreeView>(datas);
+            return result;
+        }
 
-            var root = datas.Where(x => x.ParentId <= 0 && x.Level == 0).Map<List<TreeDto>>(); //第一级
+        /// <summary>
+        /// 查找树
+        /// </summary>
+        [Fact]
+        public void FindTree()
+        {
+            var tree = BuildTree();
+            var result = tree.Find("8");
+            result = tree.Find("9");
 
-            var stack = new Stack<TreeDto>(root); //栈解递归，首批顶级对象入栈
+            var results = FindTrees(tree, "8");
+            results = FindTrees(tree, "9");
+        }
 
-            while (stack.Any())
-            {
-                var item = stack.Pop();
-                item.Children = datas.Where(it => it.ParentId == item.Id).Map<List<TreeDto>>();
+        /// <summary>
+        /// 新增树节点
+        /// </summary>
+        [Fact]
+        public void AddTree()
+        {
+            var tree = BuildTree();
+            var node = new MenuTreeView { Id = "9", ParentId = "8", Name = "T1-1-1-1", Url = "http:/9", Sort = 1 };
+            tree.Add(node);
+        }
 
-                foreach (var child in item.Children)
-                {
-                    stack.Push(child);
-                }
-            }
+
+        [Fact]
+        public void UpdateTree()
+        {
+            var tree = BuildTree();
+            var nodeAdd = new MenuTreeView { Id = "9", ParentId = "8", Name = "T1-1-1-1", Url = "http:/9", Sort = 1 };
+            tree.Add(nodeAdd);
+
+            var nodeUpdate = new MenuTreeView { Id = "8", ParentId = "4", Name = "T1-1-1update", Url = "http:/8/update", Sort = 1 };
+            tree.Update(nodeUpdate);
         }
 
 
@@ -44,23 +70,68 @@ namespace XUnitTest.DataStructure
             var strs = new List<string> { "flower", "flow", "flight" };
             var commonPrefix = GetLongestCommonPrefix(strs);
 
-            strs = new List<string> { "dog", "racecar", "car" }; 
+            strs = new List<string> { "dog", "racecar", "car" };
             commonPrefix = GetLongestCommonPrefix(strs);
         }
 
 
-        private List<Tree> GetDataSource()
+        /// <summary>
+        /// 校验有效括号
+        /// </summary>
+        [Fact]
+        public void SymbolPair()
         {
-            return new List<Tree> {
-                new Tree { Id = 1, ParentId = 0, Name ="T1", Level =0},
-                new Tree { Id = 2, ParentId = 0, Name ="T2", Level =0},
-                new Tree { Id = 3, ParentId = 0, Name ="T3", Level =0},
-                new Tree { Id = 4, ParentId = 1, Name ="T1-1", Level =1},
-                new Tree { Id = 5, ParentId = 2, Name ="T2-1", Level =1},
-                new Tree { Id = 6, ParentId = 2, Name ="T2-2", Level =1},
-                new Tree { Id = 7, ParentId = 3, Name ="T3-1", Level =1},
-                new Tree { Id = 8, ParentId = 4, Name ="T1-1-1", Level =2}
+            var str = "\"我们\"是一年级（2）班的“优秀”学生[敬礼]";
+            var result = IsSymbolPair(str);
+
+            str = "([)]";
+            result = IsSymbolPair(str);
+
+            str = "{[]}";
+            result = IsSymbolPair(str);
+        }
+
+
+        private List<MenuTree> GetDataSource()
+        {
+            return new List<MenuTree> {
+                new MenuTree { Id = "0", ParentId = null, Name ="根节点", Url ="http:/0", Sort =0},
+                new MenuTree { Id = "1", ParentId = "0", Name ="T1", Url ="http:/1", Sort =1},
+                new MenuTree { Id = "2", ParentId = "0", Name ="T2", Url ="http:/2", Sort =2},
+                new MenuTree { Id = "3", ParentId = "0", Name ="T3", Url ="http:/3", Sort =3},
+                new MenuTree { Id = "4", ParentId = "1", Name ="T1-1", Url ="http:/4", Sort =1},
+                new MenuTree { Id = "5", ParentId = "2", Name ="T2-1", Url ="http:/5", Sort =1},
+                new MenuTree { Id = "6", ParentId = "2", Name ="T2-2", Url ="http:/6", Sort =2},
+                new MenuTree { Id = "7", ParentId = "3", Name ="T3-1", Url ="http:/7", Sort =1},
+                new MenuTree { Id = "8", ParentId = "4", Name ="T1-1-1", Url ="http:/8", Sort =1}
             };
+        }
+
+
+        /// <summary>
+        /// 查找树(返回结果包含父级节点)
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IEnumerable<MenuTreeView> FindTrees(MenuTreeView tree, string id)
+        {
+            List<MenuTreeView> trees = new List<MenuTreeView>();
+            var result = TreeHelper.Find(tree, id);
+
+            if (result != null)
+            {
+                trees.Insert(0, result);
+                var parent = result.Parent;
+
+                while (parent != null)
+                {
+                    trees.Insert(0, (MenuTreeView)parent);
+                    parent = parent.Parent;
+                }
+            }
+
+            return trees;
         }
 
 
@@ -78,21 +149,64 @@ namespace XUnitTest.DataStructure
 
             return commonPrefix;
         }
+
+
+        /// <summary>
+        /// 校验有效括号
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private bool IsSymbolPair(string str)
+        {
+            str = Regex.Replace(str, "[^]‘’“”()（）[【】{}]", string.Empty);
+
+            if (str == null || !str.Any() || str.Length % 2 != 0)
+            {
+                return false;
+            }
+
+            var stack = new Stack<char>();
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (symbolPair.ContainsKey(str[i]))
+                {
+                    if (!stack.Any() || stack.Pop() != symbolPair[str[i]])
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    stack.Push(str[i]);
+                }
+            }
+
+            return !stack.Any();
+        }
+
+
+        Dictionary<char, char> symbolPair = new Dictionary<char, char>
+        {
+            //{ '\'', '\''},
+            { '’', '‘'},
+            //{ '"', '"'},
+            { '”', '“'},
+            { ')', '('},
+            { '）', '（'},
+            { ']', '['},
+            { '】', '【'},
+            { '}', '{'}
+        };
     }
 
-    public class Tree
+    public class MenuTree : BaseTree
     {
-        public int Id { get; set; }
-        public int ParentId { get; set; }
-        public string Name { get; set; }
-        public int Level { get; set; }
+        public string Url { get; set; }
     }
 
-    public class TreeDto
+    public class MenuTreeView : TreeView
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public List<TreeDto> Children { get; set; }
+        public string Url { get; set; }
     }
 }
