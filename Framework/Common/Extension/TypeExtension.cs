@@ -21,7 +21,7 @@ namespace Framework.Common.Extension
         /// <returns></returns>
         public static Type GetUnderlyingType(this Type type)
         {
-            return type.IsNullable() ? Nullable.GetUnderlyingType(type) : type;
+            return Nullable.GetUnderlyingType(type) ?? type;
         }
 
         /// <summary>

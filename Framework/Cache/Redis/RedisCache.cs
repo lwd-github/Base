@@ -26,6 +26,11 @@ namespace Framework.Cache.Redis
         public RedisHash Hash { get; private set; }
 
         /// <summary>
+        /// SortedSet
+        /// </summary>
+        public RedisSortedSet SortedSet { get; private set; }
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="config">Redis配置</param>
@@ -35,6 +40,7 @@ namespace Framework.Cache.Redis
             _dbNum = dbNum;
             _conn = RedisConnection.GetConnectionMultiplexer($"{config.Host}:{config.Port},password={config.Password}");
             Hash = new RedisHash(GetDatabase);
+            SortedSet = new RedisSortedSet(GetDatabase);
         }
 
 
@@ -159,7 +165,7 @@ namespace Framework.Cache.Redis
         /// </summary>
         /// <returns></returns>
         private IDatabase GetDatabase()
-        { 
+        {
             return _conn.GetDatabase(_dbNum);
         }
 

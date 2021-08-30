@@ -82,10 +82,10 @@ namespace XUnitTest.Cache
             var i4 = _redisCache.GetOrSet<Location?>(key4, () => { return new Location { Lat = 1.2, Lng = 2.3 }; });
             i4 = _redisCache.Get<Location?>(key4);
 
-            if(_redisCache.Exists(key4))
+            if (_redisCache.Exists(key4))
             {
                 _redisCache.KeyExpire(key4, 10);
-            }  
+            }
         }
 
 
@@ -107,7 +107,7 @@ namespace XUnitTest.Cache
             if (_redisCache.Hash.Exists(key1, "product1"))
             {
                 _redisCache.Hash.Remove(key1, "product1");
-                _redisCache.Hash.Remove(key1, new[] { "product1" , "product2" });
+                _redisCache.Hash.Remove(key1, new[] { "product1", "product2" });
             }
 
             string key2 = "redisHashCache_key2";
@@ -128,6 +128,39 @@ namespace XUnitTest.Cache
             if (_redisCache.Hash.Exists(key2, "2"))
             {
                 _redisCache.Remove(key2);
+            }
+        }
+
+
+        /// <summary>
+        /// RedisSortedSet测试
+        /// </summary>
+        [Fact]
+        public void RedisSortedSetTest()
+        {
+            string key = "redisSortedSet_key";
+            Parallel.Invoke(
+                () => SortedSetIncrementRun(key, 20, 300),
+                () => SortedSetIncrementRun(key, 20, 200),
+                () => SortedSetIncrementRun(key, 20, 500)
+                );
+
+            var values = _redisCache.SortedSet.SortedSetRangeByRank(key, stop: 4, order: RedisOrder.Descending);
+            var rank = _redisCache.SortedSet.SortedSetRank(key, "22");
+            rank = _redisCache.SortedSet.SortedSetRank(key, "16");
+            rank = _redisCache.SortedSet.SortedSetRank(key, "16", RedisOrder.Descending);
+
+            _redisCache.SortedSet.SortedSetAdd(key, "100", 135);
+            _redisCache.SortedSet.SortedSetRemove(key, "100");
+        }
+
+        private void SortedSetIncrementRun(string key, int memberCount, int voterCount)
+        {
+            while (voterCount > 0)
+            {
+                var memberNo = new Random(DateTime.Now.Millisecond).Next(1, memberCount + 1).ToString();
+                _redisCache.SortedSet.SortedSetIncrement(key, memberNo, 1);
+                voterCount--;
             }
         }
 
@@ -159,7 +192,7 @@ namespace XUnitTest.Cache
                 {
                     Console.WriteLine("获取锁失败");
                 }
-            } 
+            }
         }
 
 
@@ -219,7 +252,7 @@ namespace XUnitTest.Cache
             var type = s.GetType();
             var isSerializable = type.IsSerializable;
 
-            if((type.IsValueType || type.IsClass) && type != typeof(string))
+            if ((type.IsValueType || type.IsClass) && type != typeof(string))
             {
                 var js = s.ToJson();
                 var sO = js.ToObject<ETest>();
