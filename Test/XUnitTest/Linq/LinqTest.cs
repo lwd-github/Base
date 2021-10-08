@@ -29,6 +29,9 @@ namespace XUnitTest.Linq
         [Fact]
         public void AggregateTest()
         {
+            var p = products.Where(it => it.Id == 1).FirstOrDefault();
+            var i = products.IndexOf(p);
+
             var result = records.GroupBy(t => t.ProductId).Select(g => new Record
             {
                 ProductId = g.Key,

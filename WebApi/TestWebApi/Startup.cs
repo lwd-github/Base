@@ -15,6 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Framework.Common.Currency;
 
 namespace TestWebApi
 {
@@ -37,6 +39,13 @@ namespace TestWebApi
             //    return content;
             //});
 
+            ServiceStack.Text.JsConfig<DateTime>.SerializeFn = time => time.ToString("yyyy/MM/dd HH");
+            ServiceStack.Text.JsConfig<CNY>.SerializeFn = cny => cny.ToString();
+            ServiceStack.Text.JsConfig<float>.SerializeFn = num => string.Format("{0:N2}", num);
+            ServiceStack.Text.JsConfig<double>.SerializeFn = num => string.Format("{0:N2}", num);
+            ServiceStack.Text.JsConfig<Double>.SerializeFn = num => string.Format("{0:N2}", num);
+            ServiceStack.Text.JsConfig<decimal>.SerializeFn = num => string.Format("{0:N2}", num);
+
             services.AddControllers();
 
             //net5.0 自带swagger
@@ -46,11 +55,25 @@ namespace TestWebApi
                 c.AddXmlComments("TestWebApi.xml"); //添加xml文档注释
             });
 
-            services.AddMvc(o => {
+            services.AddMvc(o =>
+            {
                 //全局注册异常过滤器
                 o.Filters.Add(typeof(ExceptionHandler));
                 //o.ModelBinderProviders.Add(new ModelBinder.CustomModelBinderProvider());
                 o.ModelBinderProviders.Insert(0, new ModelBinder.CustomModelBinderProvider());
+            }).AddMvcOptions(t =>
+            {
+                t.OutputFormatters.Clear();
+                t.OutputFormatters.Add(new JsonOutputFormater());
+            });
+
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
             });
         }
 
