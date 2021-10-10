@@ -62,6 +62,52 @@ namespace XUnitTest.DataStructure
 
 
         /// <summary>
+        /// 反转整数
+        /// </summary>
+        [Fact]
+        public void ReverseIntegerTest()
+        {
+            int result = ReverseInteger(1213);
+            result = ReverseInteger(-1213);
+        }
+
+
+        /// <summary>
+        /// 是否回文数
+        /// </summary>
+        [Fact]
+        public void IsPalindromeTest()
+        {
+            var result = IsPalindrome1(-1221);
+            result = IsPalindrome1(1);
+            result = IsPalindrome1(0);
+            result = IsPalindrome1(121);
+            result = IsPalindrome1(120);
+            result = IsPalindrome1(1221);
+
+            result = IsPalindrome2(-1221);
+            result = IsPalindrome2(1);
+            result = IsPalindrome2(0);
+            result = IsPalindrome2(121);
+            result = IsPalindrome2(120);
+            result = IsPalindrome2(1221);
+        }
+
+
+        /// <summary>
+        /// 罗马数字转整数
+        /// </summary>
+        [Fact]
+        public void RomanToIntTest()
+        {
+            var result = RomanToInt("XXVII");
+            result = RomanToInt("IV");
+            result = RomanToInt("IX");
+            result = RomanToInt("XCIX");
+        }
+
+
+        /// <summary>
         /// 最长公共前缀
         /// </summary>
         [Fact]
@@ -135,19 +181,137 @@ namespace XUnitTest.DataStructure
         }
 
 
-        private string GetLongestCommonPrefix(List<string> input)
+        /// <summary>
+        /// 反转整数
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public int ReverseInteger(int val)
         {
-            var commonPrefix = input[0];
+            int result = 0;
+            var x = val;
 
-            for (int i = 1; i < input.Count; i++)
+            while (x != 0)
             {
-                var except = commonPrefix.Intersect(input[i]);
-                commonPrefix = string.Concat(except);
-
-                if (commonPrefix.IsNullOrWhiteSpace()) break;
+                result = result * 10 + x % 10;
+                x /= 10;
             }
 
-            return commonPrefix;
+            return result;
+        }
+
+
+        /// <summary>
+        /// 是否回文数
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public bool IsPalindrome1(int val)
+        {
+            if (val < 0 || (val % 10 == 0 && val != 0)) return false;
+
+            var reverse = val.ToString().Reverse();
+            return string.Concat(reverse) == val.ToString();
+        }
+
+
+        /// <summary>
+        /// 是否回文数
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public bool IsPalindrome2(int val)
+        {
+            // 特殊情况：
+            // 如上所述，当 x < 0 时，x 不是回文数。
+            // 同样地，如果数字的最后一位是 0，为了使该数字为回文，
+            // 则其第一位数字也应该是 0
+            // 只有 0 满足这一属性
+            if (val < 0 || (val % 10 == 0 && val != 0)) return false;
+
+            int revertedNumber = 0;
+
+            while (val > revertedNumber)
+            {
+                revertedNumber = revertedNumber * 10 + val % 10;
+                val /= 10;
+            }
+
+            return val == revertedNumber || val == revertedNumber / 10;
+        }
+
+
+        /// <summary>
+        /// 罗马数字转整数
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public int RomanToInt(string str)
+        {
+            Dictionary<char, int> symbolValues = new Dictionary<char, int>
+            {
+                {'I', 1},
+                {'V', 5},
+                {'X', 10},
+                {'L', 50},
+                {'C', 100},
+                {'D', 500},
+                {'M', 1000}
+            };
+
+            int result = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (i < str.Length - 1 && symbolValues[str[i]] < symbolValues[str[i + 1]])
+                {
+                    result -= symbolValues[str[i]];
+                }
+                else
+                {
+                    result += symbolValues[str[i]];
+                }
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// 获取最长公共前缀
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private string GetLongestCommonPrefix(List<string> input)
+        {
+            //var commonPrefix = input[0];
+
+            //for (int i = 1; i < input.Count; i++)
+            //{
+            //    var except = commonPrefix.Intersect(input[i]);
+            //    commonPrefix = string.Concat(except);
+
+            //    if (commonPrefix.IsNullOrWhiteSpace()) break;
+            //}
+
+            //return commonPrefix;
+
+            //获取长度最小
+            var min = input.Aggregate((a, b) => a.Length <= b.Length ? a : b);
+            var minLength = input.Min(t => t.Length);
+            string result = string.Empty;
+
+            for (int i = 0; i < minLength; i++)
+            {
+                int j = 0;
+                for (; j < input.Count - 1; j++)
+                {
+                    if (input[j][i] != input[j + 1][i]) return result;
+                }
+
+                result += input[0][i];
+            }
+
+            return result;
         }
 
 

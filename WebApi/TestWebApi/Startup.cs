@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Framework.Common.Currency;
+using ServiceStack.Text;
 
 namespace TestWebApi
 {
@@ -46,6 +47,13 @@ namespace TestWebApi
             ServiceStack.Text.JsConfig<Double>.SerializeFn = num => string.Format("{0:N2}", num);
             ServiceStack.Text.JsConfig<decimal>.SerializeFn = num => string.Format("{0:N2}", num);
 
+            ServiceStack.Text.JsConfig<DateTime>.DeSerializeFn = time => string.IsNullOrWhiteSpace(time) ? DateTime.MinValue : DateTime.Parse(time);
+            ServiceStack.Text.JsConfig<DateTime?>.DeSerializeFn = time => string.IsNullOrWhiteSpace(time) ? null : DateTime.Parse(time);
+            ServiceStack.Text.JsConfig.IncludeTypeInfo = false; //排除类型信息
+            ServiceStack.Text.JsConfig.ExcludeTypeInfo = true; //排除类型信息
+            ServiceStack.Text.JsConfig.TextCase = TextCase.CamelCase;
+            ServiceStack.Text.JsConfig.TreatEnumAsInteger = true;
+
             services.AddControllers();
 
             //net5.0 自带swagger
@@ -63,6 +71,8 @@ namespace TestWebApi
                 o.ModelBinderProviders.Insert(0, new ModelBinder.CustomModelBinderProvider());
             }).AddMvcOptions(t =>
             {
+                t.InputFormatters.Clear();
+                t.InputFormatters.Add(new JsonInputFormater());
                 t.OutputFormatters.Clear();
                 t.OutputFormatters.Add(new JsonOutputFormater());
             });
