@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Framework.Common.Currency
 {
-    public class CNY
+    /// <summary>
+    /// 人民币
+    /// </summary>
+    public struct CNY
     {
         decimal _val;
         public CNY(decimal value)
