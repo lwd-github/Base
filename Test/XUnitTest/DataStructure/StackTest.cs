@@ -62,6 +62,29 @@ namespace XUnitTest.DataStructure
 
 
         /// <summary>
+        /// 获取树的所有分支
+        /// </summary>
+        [Fact]
+        public void GetBranches()
+        {
+            var datas = GetDataSource();
+
+            var result = TreeHelper.GetBranches<MenuTree, TreeBranch<MenuTree>>(datas);
+        }
+
+
+        /// <summary>
+        /// 根据节点名称查询树分支
+        /// </summary>
+        [Fact]
+        public void GetBranchesByNodeName()
+        {
+            var datas = GetDataSource();
+            var result = TreeHelper.GetBranches<MenuTree, TreeBranch<MenuTree>>(datas, "2");
+        }
+
+
+        /// <summary>
         /// 反转整数
         /// </summary>
         [Fact]
@@ -135,6 +158,34 @@ namespace XUnitTest.DataStructure
 
             str = "{[]}";
             result = IsSymbolPair(str);
+        }
+
+
+        /// <summary>
+        /// 合并有序链表
+        /// </summary>
+        [Fact]
+        public void MergeOrderedLinkedListTest()
+        {
+            var l1 = new ListNode { Val = 1, Next = new ListNode { Val = 3, Next = new ListNode { Val = 5 } } };
+            var l2 = new ListNode { Val = 2, Next = new ListNode { Val = 4, Next = new ListNode { Val = 6 } } };
+            var r1 = MergeOrderedLinkedList1(l1, l2);
+
+            l1 = new ListNode { Val = 1, Next = new ListNode { Val = 3, Next = new ListNode { Val = 5 } } };
+            l2 = new ListNode { Val = 2, Next = new ListNode { Val = 4, Next = new ListNode { Val = 6 } } };
+            var r2 = MergeOrderedLinkedList2(l1, l2);
+        }
+
+
+        /// <summary>
+        /// 删除排序数组中的重复项
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public void RemoveDuplicatesTest()
+        {
+            var lst = new[] { 0, 1 };
+            var r = RemoveDuplicates(lst);
         }
 
 
@@ -362,7 +413,98 @@ namespace XUnitTest.DataStructure
             { '】', '【'},
             { '}', '{'}
         };
+
+
+        /// <summary>
+        /// 合并有序链表（递归）
+        /// </summary>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
+        /// <returns></returns>
+        public ListNode MergeOrderedLinkedList1(ListNode l1, ListNode l2)
+        {
+            if (l1 == null)
+            {
+                return l2;
+            }
+
+            if (l2 == null)
+            {
+                return l1;
+            }
+
+            if (l1.Val < l2.Val)
+            {
+                l1.Next = MergeOrderedLinkedList1(l1.Next, l2);
+                return l1;
+            }
+            else
+            {
+                l2.Next = MergeOrderedLinkedList1(l1, l2.Next);
+                return l2;
+            }
+        }
+
+
+        /// <summary>
+        /// 合并有序链表（迭代）
+        /// </summary>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
+        /// <returns></returns>
+        public ListNode MergeOrderedLinkedList2(ListNode l1, ListNode l2)
+        {
+            ListNode prehead = new ListNode(-1);
+            ListNode prev = prehead;
+
+            while (l1 != null && l2 != null)
+            {
+                if (l1.Val <= l2.Val)
+                {
+                    prev.Next = l1;
+                    l1 = l1.Next;
+                }
+                else
+                {
+                    prev.Next = l2;
+                    l2 = l2.Next;
+                }
+                prev = prev.Next;
+            }
+
+            // 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+            prev.Next = l1 == null ? l2 : l1;
+
+            return prehead.Next;
+        }
+
+
+        /// <summary>
+        /// 删除排序数组中的重复项
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int RemoveDuplicates(int[] nums)
+        {
+            int n = nums.Length;
+            if (n == 0)
+            {
+                return 0;
+            }
+            int fast = 1, slow = 1;
+            while (fast < n)
+            {
+                if (nums[fast] != nums[fast - 1])
+                {
+                    nums[slow] = nums[fast];
+                    ++slow;
+                }
+                ++fast;
+            }
+            return slow;
+        }
     }
+
 
     public class MenuTree : BaseTree
     {
@@ -372,5 +514,25 @@ namespace XUnitTest.DataStructure
     public class MenuTreeView : TreeView
     {
         public string Url { get; set; }
+    }
+
+
+    /// <summary>
+    /// 链表类
+    /// </summary>
+    public class ListNode
+    {
+        public ListNode()
+        {
+        }
+
+        public ListNode(int val)
+        {
+            this.Val = val;
+        }
+
+        public int Val { get; set; }
+
+        public ListNode Next { get; set; }
     }
 }
