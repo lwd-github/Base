@@ -17,7 +17,7 @@ namespace SignalRService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            services.AddSignalR();
+            services.AddSignalR(); //注册SignalR
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,7 +37,7 @@ namespace SignalRService
                     await context.Response.WriteAsync("Hello World!");
                 });
 
-                endpoints.MapHub<MessageHub>("/msghub");
+                endpoints.MapHub<MessageHub>("/msghub"); //配置管道终结点
             });
         }
     }

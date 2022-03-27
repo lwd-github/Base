@@ -15,7 +15,7 @@ namespace SignalRClient
                {
                    options.AccessTokenProvider = () => Task.FromResult(enterpriseId);
                })
-               .WithAutomaticReconnect()
+               .WithAutomaticReconnect() //支持重连
                .Build();
 
             connection.On<string>("Self", cid =>
@@ -37,7 +37,7 @@ namespace SignalRClient
                 Console.WriteLine($"From Service => {msg}");
             });
 
-            await connection.StartAsync();
+            await connection.StartAsync(); //连接到服务器
 
             await connection.InvokeAsync("SendMsg", "jack", "hello,world");
 
