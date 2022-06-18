@@ -150,6 +150,18 @@ namespace Framework.Cache.Redis
 
 
         /// <summary>
+        /// 按增量递增
+        /// </summary>
+        /// <param name="key">缓存key</param>
+        /// <param name="value">递增值（默认1）</param>
+        /// <returns></returns>
+        public long Increment(string key, long value = 1L)
+        {
+            return Do(db => db.StringIncrement(key, value));
+        }
+
+
+        /// <summary>
         /// 创建锁
         /// </summary>
         /// <param name="key">锁键</param>
