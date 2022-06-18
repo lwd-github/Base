@@ -133,6 +133,21 @@ namespace XUnitTest.Cache
 
 
         /// <summary>
+        /// Redis递增测试
+        /// </summary>
+        [Fact]
+        public void RedisIncrementTest()
+        {
+            string key = "redisIncrement_key";
+
+            for (int i = 0; i < 5; i++)
+            {
+                var r = _redisCache.Increment(key, 2);
+            }
+        }
+
+
+        /// <summary>
         /// RedisSortedSet测试
         /// </summary>
         [Fact]

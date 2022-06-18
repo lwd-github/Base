@@ -184,7 +184,7 @@ namespace XUnitTest.DataStructure
         [Fact]
         public void RemoveDuplicatesTest()
         {
-            var lst = new[] { 0, 1 };
+            var lst = new[] { 0, 1,1,1,2};
             var r = RemoveDuplicates(lst);
         }
 
